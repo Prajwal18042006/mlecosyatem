@@ -1,4 +1,4 @@
-// Background neural network — black/slate on light theme, white glow on dark theme
+// Background neural network — near-black on light (white) UI, bright white on dark UI
 let scene, camera, renderer, particles, lines;
 let particleMaterial;
 let lineMaterial;
@@ -9,18 +9,22 @@ function applyNetworkTheme() {
     if (!particleMaterial || !lineMaterial) return;
     const dark = document.documentElement.getAttribute('data-theme') === 'dark';
     if (dark) {
+        // Dark page: light / white network (additive glow reads well on black)
         particleMaterial.color.setHex(0xffffff);
-        particleMaterial.opacity = 0.75;
+        particleMaterial.opacity = 0.82;
+        particleMaterial.size = 3.2;
         particleMaterial.blending = THREE.AdditiveBlending;
-        lineMaterial.color.setHex(0xffffff);
-        lineMaterial.opacity = 0.22;
+        lineMaterial.color.setHex(0xf8fafc);
+        lineMaterial.opacity = 0.28;
         lineMaterial.blending = THREE.AdditiveBlending;
     } else {
-        particleMaterial.color.setHex(0x1e293b);
-        particleMaterial.opacity = 0.65;
+        // Light page: dark black / charcoal network (normal blend on pale background)
+        particleMaterial.color.setHex(0x050508);
+        particleMaterial.opacity = 0.72;
+        particleMaterial.size = 3;
         particleMaterial.blending = THREE.NormalBlending;
-        lineMaterial.color.setHex(0x334155);
-        lineMaterial.opacity = 0.2;
+        lineMaterial.color.setHex(0x0f172a);
+        lineMaterial.opacity = 0.26;
         lineMaterial.blending = THREE.NormalBlending;
     }
 }
@@ -60,10 +64,10 @@ function initBackground() {
 
     particleGeometry.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3));
     particleMaterial = new THREE.PointsMaterial({
-        color: 0x1e293b,
+        color: 0x050508,
         size: 3,
         transparent: true,
-        opacity: 0.65,
+        opacity: 0.72,
         blending: THREE.NormalBlending
     });
 
@@ -77,9 +81,9 @@ function initBackground() {
     lineGeometry.setAttribute('position', new THREE.BufferAttribute(linePositions, 3));
 
     lineMaterial = new THREE.LineBasicMaterial({
-        color: 0x334155,
+        color: 0x0f172a,
         transparent: true,
-        opacity: 0.2,
+        opacity: 0.26,
         blending: THREE.NormalBlending
     });
 

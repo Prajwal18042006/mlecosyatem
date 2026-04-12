@@ -170,10 +170,30 @@ html[data-theme="dark"] .footer-bottom p {
 }
 
 @media (max-width: 768px) {
+    .footer {
+        padding: 3.5rem max(1rem, env(safe-area-inset-right)) 1.5rem max(1rem, env(safe-area-inset-left));
+    }
+
+    .footer-container {
+        flex-direction: column;
+        gap: 2.5rem;
+    }
+
     .footer-links-group {
         flex-direction: column;
         gap: 2rem;
         justify-content: flex-start;
+        width: 100%;
+    }
+
+    .footer-bottom {
+        margin-top: 3rem;
+    }
+
+    .footer-bottom p {
+        letter-spacing: 0.12em;
+        font-size: 0.62rem;
+        padding: 0 0.5rem;
     }
 }
 </style>

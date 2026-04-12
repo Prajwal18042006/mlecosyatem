@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data in Machine Learning | ML Ecosystem</title>
+    <link rel="stylesheet" href="/shared/css/global.css">
+</head>
+<body>
+    <div id="navbar-placeholder"></div>
+
+    <div class="container">
+        <div id="breadcrumb" class="breadcrumb"></div>
+        
+        <article class="topic-content">
+            <h1>Data: The Fuel for Machine Learning</h1>
+            <p>Data is the most critical component of any machine learning project. Without high-quality data, even the most sophisticated algorithms will fail to produce meaningful results.</p>
+            
+            <h2>Types of Data</h2>
+            <ul>
+                <li><strong>Numerical Data:</strong> Discrete or continuous numbers (e.g., age, height, price).</li>
+                <li><strong>Categorical Data:</strong> Labels or categories (e.g., color, gender, country).</li>
+                <li><strong>Ordinal Data:</strong> Categorical data with a meaningful order (e.g., rating, grade).</li>
+                <li><strong>Text Data:</strong> Unstructured text used in Natural Language Processing.</li>
+                <li><strong>Image/Video/Audio:</strong> High-dimensional data used in Computer Vision and Speech Recognition.</li>
+            </ul>
+            
+            <h2>Data Preparation</h2>
+            <p>Preparing data involves several steps to ensure it's suitable for training an ML model:</p>
+            <ul>
+                <li><strong>Data Cleaning:</strong> Handling missing values, outliers, and errors.</li>
+                <li><strong>Data Integration:</strong> Combining data from multiple sources.</li>
+                <li><strong>Data Transformation:</strong> Scaling, normalizing, and encoding categorical variables.</li>
+                <li><strong>Data Reduction:</strong> Reducing the dimensionality of the data while preserving its essence.</li>
+            </ul>
+
+            <div class="topic-grid">
+                <a href="/topics/data-understanding.html" class="topic-card">
+                    <h3>Data Understanding</h3>
+                    <p>Exploring and analyzing your dataset.</p>
+                </a>
+                <a href="/topics/data-preparation.html" class="topic-card">
+                    <h3>Data Preparation</h3>
+                    <p>Cleaning and preprocessing your data.</p>
+                </a>
+                <a href="/topics/categorical-data.html" class="topic-card">
+                    <h3>Categorical Data</h3>
+                    <p>Handling non-numerical data.</p>
+                </a>
+                <a href="/topics/getting-datasets.html" class="topic-card">
+                    <h3>Getting Datasets</h3>
+                    <p>Where to find data for your ML projects.</p>
+                </a>
+            </div>
+
+            <style>
+                .topic-grid {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                    gap: 1.5rem;
+                    margin-top: 2rem;
+                }
+                .topic-card {
+                    background: #252525;
+                    padding: 1.5rem;
+                    border-radius: 8px;
+                    text-decoration: none;
+                    transition: 0.3s;
+                    border: 1px solid rgba(255, 255, 255, 0.1);
+                }
+                .topic-card:hover {
+                    transform: translateY(-3px);
+                    background: #303030;
+                    border-color: #ffa500;
+                }
+                .topic-card h3 {
+                    color: #ffa500;
+                    font-size: 1.1rem;
+                }
+            </style>
+        </article>
+
+        <div id="related-topics" class="related-topics"></div>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="/shared/js/navbar.js"></script>
+    <script src="/shared/js/breadcrumb.js"></script>
+    <script src="/shared/js/related.js"></script>
+</body>
+</html>

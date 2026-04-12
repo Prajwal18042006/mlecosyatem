@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BASICS | ML Ecosystem</title>
+    <link rel="stylesheet" href="/shared/css/global.css">
+    <style>
+        /* ─── Base Reset & Variables ─── */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --bg: #0d0f14;
+            --surface: #13161d;
+            --border: #252b38;
+            --accent: #4f8ef7;
+            --accent2: #7c5af7;
+            --accent3: #38c9b8;
+            --text: #e2e8f0;
+            --text-muted: #8892a4;
+            --heading: #f0f4ff;
+            --radius: 12px;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .breadcrumb {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 30px;
+        }
+
+        .topic-content h1 {
+            font-size: 3rem;
+            color: var(--heading);
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #fff 0%, #4f8ef7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .topic-content p {
+            margin-bottom: 20px;
+            line-height: 1.8;
+            color: var(--text-muted);
+        }
+
+        /* ─── Diagrams ─── */
+        .diagram-container {
+            margin: 40px 0;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .diagram-title {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--accent);
+            margin-bottom: 40px;
+        }
+
+        .taxonomy-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .tax-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 25px;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .tax-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-5px);
+            background: rgba(79, 142, 247, 0.05);
+        }
+
+        .tax-card h4 {
+            color: var(--heading);
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .tax-card ul {
+            list-style: none;
+            padding: 0;
+            text-align: left;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .tax-card li {
+            margin-bottom: 8px;
+            padding-left: 15px;
+            position: relative;
+        }
+
+        .tax-card li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+
+        .placeholder-text h3 {
+            color: var(--accent3);
+            margin: 30px 0 15px;
+        }
+
+        .placeholder-text ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .placeholder-text li {
+            padding: 10px 15px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            margin-bottom: 10px;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div id="navbar-placeholder"></div>
+    <div class="container">
+        <div id="breadcrumb" class="breadcrumb">ML Ecosystem / Basics</div>
+        <article class="topic-content">
+            <h1>BASICS</h1>
+            <p>Welcome to the detailed exploration of BASICS.</p>
+            
+            <div class="diagram-container">
+                <div class="diagram-title">Machine Learning Taxonomy</div>
+                <div class="taxonomy-grid">
+                    <div class="tax-card">
+                        <h4>Supervised</h4>
+                        <ul>
+                            <li>Labeled Data</li>
+                            <li>Task-Driven</li>
+                            <li>Classification</li>
+                            <li>Regression</li>
+                        </ul>
+                    </div>
+                    <div class="tax-card">
+                        <h4>Unsupervised</h4>
+                        <ul>
+                            <li>Unlabeled Data</li>
+                            <li>Data-Driven</li>
+                            <li>Clustering</li>
+                            <li>Dim. Reduction</li>
+                        </ul>
+                    </div>
+                    <div class="tax-card" style="border-top: 3px solid var(--accent2);">
+                        <h4>Reinforcement</h4>
+                        <ul>
+                            <li>Agent-Environment</li>
+                            <li>Reward-Driven</li>
+                            <li>Q-Learning</li>
+                            <li>Decision Making</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <p>Machine Learning is an interconnected web of knowledge. This topic is a crucial part of the ecosystem, contributing to how models learn, adapt, and make predictions.</p>
+            
+            <div class="placeholder-text">
+                <h3>Core Concepts</h3>
+                <ul>
+                    <li>Fundamental principles of BASICS</li>
+                    <li>Key applications in real-world scenarios</li>
+                    <li>Relationship with other ML clusters</li>
+                </ul>
+            </div>
+        </article>
+        <div id="related-topics" class="related-topics"></div>
+    </div>
+    <div id="footer-placeholder"></div>
+    
+    <script src="/shared/js/navbar.js"></script>
+    <script src="/shared/js/breadcrumb.js"></script>
+    <script src="/shared/js/related.js"></script>
+    <script src="/shared/js/background-animation.js"></script>
+</body>
+</html>

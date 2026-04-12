@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GETTING STARTED | ML Ecosystem</title>
+    <link rel="stylesheet" href="/shared/css/global.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --bg: #0d0f14;
+            --surface: #13161d;
+            --surface2: #1a1e27;
+            --border: #252b38;
+            --accent: #4f8ef7;
+            --accent2: #7c5af7;
+            --accent3: #38c9b8;
+            --text: #e2e8f0;
+            --text-muted: #8892a4;
+            --text-dim: #5a6478;
+            --heading: #f0f4ff;
+            --tag-bg: #1e2535;
+            --radius: 12px;
+            --radius-sm: 8px;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Georgia', 'Times New Roman', serif;
+            font-size: 16px;
+            line-height: 1.75;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 48px 24px 96px;
+        }
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            color: var(--text-dim);
+            margin-bottom: 40px;
+            letter-spacing: 0.05em;
+        }
+        .breadcrumb::before {
+            content: '›';
+            color: var(--accent2);
+            font-size: 16px;
+        }
+
+        /* ── Typography ── */
+        .topic-content h1 {
+            font-family: 'Georgia', serif;
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #f0f4ff 0%, #a8c4ff 50%, #7c9ef7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .topic-content > p:first-of-type {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            border-left: 3px solid var(--accent);
+            padding-left: 20px;
+            margin-bottom: 48px;
+            line-height: 1.8;
+        }
+
+        .topic-content h2 {
+            font-family: 'Georgia', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--heading);
+            margin-top: 52px;
+            margin-bottom: 16px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border);
+            letter-spacing: -0.01em;
+        }
+
+        .topic-content h3 {
+            font-family: 'Georgia', serif;
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--accent3);
+            margin-top: 28px;
+            margin-bottom: 10px;
+        }
+
+        .topic-content p {
+            color: var(--text);
+            margin-bottom: 16px;
+            line-height: 1.8;
+        }
+
+        /* ── Standard lists ── */
+        .topic-content ul,
+        .topic-content ol {
+            margin: 14px 0 22px 0;
+            padding-left: 0;
+            list-style: none;
+        }
+
+        .topic-content ul li,
+        .topic-content ol li {
+            position: relative;
+            padding: 9px 16px 9px 42px;
+            margin-bottom: 7px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            color: var(--text);
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        .topic-content ul li::before {
+            content: '▸';
+            position: absolute;
+            left: 15px;
+            top: 10px;
+            color: var(--accent);
+            font-size: 12px;
+        }
+
+        /* ── Algo pill lists ── */
+        .algo-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 14px 0 24px;
+            padding: 0;
+            list-style: none;
+        }
+        .algo-list li {
+            background: var(--tag-bg);
+            border: 1px solid var(--border);
+            border-radius: 40px;
+            padding: 6px 16px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.8rem;
+            color: var(--accent);
+            margin: 0;
+        }
+        .algo-list li::before { display: none; }
+
+        /* ── Type cards ── */
+        .type-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px 28px;
+            margin: 20px 0;
+        }
+        .type-card h3 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+        .type-card p { color: var(--text-muted); margin-bottom: 14px; }
+        .type-card .example {
+            font-size: 0.82rem;
+            font-family: 'Courier New', monospace;
+            color: var(--accent3);
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 6px 12px;
+            display: inline-block;
+            margin-bottom: 14px;
+        }
+        .type-card .example::before { content: 'e.g. '; color: var(--text-dim); }
+
+        /* Sub-type label */
+        .sub-label {
+            font-family: 'Courier New', monospace;
+            font-size: 11px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            margin-bottom: 8px;
+        }
+
+        /* ── Use-case grid ── */
+        .use-case-section { margin: 20px 0 32px; }
+        .uc-group { margin-bottom: 28px; }
+        .uc-group h3 { margin-bottom: 10px; }
+        .uc-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            list-style: none;
+            padding: 0; margin: 0;
+        }
+        .uc-tags li {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 8px 16px;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin: 0;
+        }
+        .uc-tags li::before { display: none; }
+
+        /* ── Prereq blocks ── */
+        .prereq-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 16px;
+            margin: 20px 0 28px;
+        }
+        .prereq-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-top: 3px solid var(--accent2);
+            border-radius: var(--radius);
+            padding: 20px;
+        }
+        .prereq-card h4 {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--accent2);
+            margin-bottom: 10px;
+            font-family: 'Courier New', monospace;
+            letter-spacing: 0.04em;
+        }
+        .prereq-card ul { margin: 0; padding: 0; list-style: none; }
+        .prereq-card li {
+            font-size: 0.84rem;
+            padding: 5px 0 5px 16px;
+            background: none;
+            border: none;
+            border-radius: 0;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-muted);
+            margin: 0;
+        }
+        .prereq-card li:last-child { border-bottom: none; }
+        .prereq-card li::before { content: '–'; color: var(--accent); left: 0; top: 6px; }
+
+        /* ── Math sections ── */
+        .math-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 14px;
+            margin: 16px 0 28px;
+        }
+        .math-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 16px 18px;
+        }
+        .math-card h4 {
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--accent3);
+            margin-bottom: 8px;
+            font-family: 'Courier New', monospace;
+        }
+        .math-card ul { margin: 0; padding: 0; list-style: none; }
+        .math-card li {
+            font-size: 0.82rem;
+            padding: 3px 0 3px 14px;
+            background: none;
+            border: none;
+            border-radius: 0;
+            color: var(--text-muted);
+            margin: 0;
+            line-height: 1.5;
+        }
+        .math-card li::before { content: '·'; color: var(--accent); left: 0; top: 4px; font-size: 16px; }
+
+        /* ── Step cards ── */
+        .step-list {
+            list-style: none;
+            margin: 16px 0 32px;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            counter-reset: step;
+        }
+        .step-list li {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 20px 24px 20px 68px;
+            position: relative;
+            counter-increment: step;
+            margin: 0;
+        }
+        .step-list li::before {
+            content: counter(step);
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            color: #fff;
+            font-size: 13px;
+            font-weight: 700;
+            font-family: 'Courier New', monospace;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 32px;
+            text-align: center;
+        }
+        .step-title {
+            font-weight: 700;
+            color: var(--heading);
+            margin-bottom: 6px;
+            font-size: 0.95rem;
+            font-family: 'Georgia', serif;
+        }
+        .step-desc {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        /* ─── Roadmap Diagram ─── */
+        .roadmap-container {
+            margin: 50px 0;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            position: relative;
+        }
+
+        .roadmap-title {
+            text-align: center;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--accent);
+            margin-bottom: 40px;
+        }
+
+        .roadmap-line {
+            position: absolute;
+            left: 50%;
+            top: 100px;
+            bottom: 40px;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--accent), var(--accent2), var(--accent3));
+            transform: translateX(-50%);
+        }
+
+        .roadmap-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .roadmap-content {
+            width: 45%;
+            background: var(--surface);
+            padding: 15px 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            font-size: 0.85rem;
+            transition: 0.3s;
+        }
+
+        .roadmap-item:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .roadmap-dot {
+            width: 12px;
+            height: 12px;
+            background: #fff;
+            border-radius: 50%;
+            border: 3px solid var(--accent);
+            box-shadow: 0 0 10px var(--accent);
+        }
+
+        .roadmap-content:hover {
+            border-color: var(--accent);
+            transform: scale(1.05);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .related-topics { margin-top: 64px; }
+    </style>
+</head>
+<body>
+
+<div id="navbar-placeholder"></div>
+
+<div class="container">
+    <div id="breadcrumb" class="breadcrumb">ML Ecosystem &nbsp;/&nbsp; Getting Started</div>
+
+    <article class="topic-content">
+
+        <h1>GETTING STARTED</h1>
+
+        <div class="roadmap-container">
+            <div class="roadmap-title">Roadmap to ML Mastery</div>
+            <div class="roadmap-line"></div>
+            
+            <div class="roadmap-item">
+                <div class="roadmap-content">
+                    <strong style="color: var(--accent);">PHASE 1: FOUNDATIONS</strong>
+                    <p>Python, Math & Statistics</p>
+                </div>
+                <div class="roadmap-dot"></div>
+                <div style="width: 45%;"></div>
+            </div>
+
+            <div class="roadmap-item">
+                <div style="width: 45%;"></div>
+                <div class="roadmap-dot" style="border-color: var(--accent2); box-shadow: 0 0 10px var(--accent2);"></div>
+                <div class="roadmap-content">
+                    <strong style="color: var(--accent2);">PHASE 2: LIBRARIES</strong>
+                    <p>NumPy, Pandas, Scikit-Learn</p>
+                </div>
+            </div>
+
+            <div class="roadmap-item">
+                <div class="roadmap-content">
+                    <strong style="color: var(--accent3);">PHASE 3: ALGORITHMS</strong>
+                    <p>Supervised & Unsupervised</p>
+                </div>
+                <div class="roadmap-dot" style="border-color: var(--accent3); box-shadow: 0 0 10px var(--accent3);"></div>
+                <div style="width: 45%;"></div>
+            </div>
+
+            <div class="roadmap-item">
+                <div style="width: 45%;"></div>
+                <div class="roadmap-dot" style="border-color: #fff; box-shadow: 0 0 10px #fff;"></div>
+                <div class="roadmap-content">
+                    <strong style="color: #fff;">PHASE 4: PROJECTS</strong>
+                    <p>Real-world Datasets & Kaggle</p>
+                </div>
+            </div>
+        </div>
+
+        <p>
+            Machine learning has become an increasingly important topic in recent years as the amount of data generated by
+            businesses and individuals continues to grow at an exponential rate. From self-driving cars to personalized
+            recommendations on streaming platforms, machine learning algorithms are now used in a wide range of applications.
+        </p>
+
+        <!-- ── What is ML ── -->
+        <h2>What is Machine Learning?</h2>
+        <p>
+            Machine learning is a subfield of artificial intelligence that enables machines to learn from data without
+            being explicitly programmed.
+        </p>
+        <p>
+            As the name suggests, it refers to the capability of a machine to learn and exhibit "intelligent behavior"
+            similar to that of humans. Machine learning uses data and algorithms to learn hidden patterns in the data and
+            make predictions on new unseen data.
+        </p>
+        <p>
+            Ever wondered how Amazon accurately recommends something you might like or are looking to purchase? Or how
+            emails are filtered into primary, social and promotions? Well, thanks to Machine learning.
+        </p>
+
+        <!-- ── Types ── -->
+        <h2>Types of Machine Learning</h2>
+        <p>
+            We can categorize machine learning algorithms into three different types — supervised, unsupervised, and
+            reinforcement learning.
+        </p>
+
+        <!-- Supervised -->
+        <div class="type-card">
+            <h3>Supervised Learning</h3>
+            <p>
+                Supervised learning uses a labeled dataset to train algorithms to understand data patterns and predict
+                outcomes.
+            </p>
+            <div class="example">filtering a mail into inbox or spam folder</div>
+            <p>Supervised learning can further be classified into two types — <strong>classification</strong> and <strong>regression</strong>.</p>
+            <div class="sub-label">Widely used algorithms</div>
+            <ul class="algo-list">
+                <li>Linear Regression</li>
+                <li>Logistic Regression</li>
+                <li>Decision Trees</li>
+                <li>Random Forest</li>
+                <li>K-Nearest Neighbor</li>
+                <li>Support Vector Machine</li>
+                <li>Naive Bayes</li>
+                <li>Linear Discriminant Analysis</li>
+                <li>Neural Networks</li>
+            </ul>
+        </div>
+
+        <!-- Unsupervised -->
+        <div class="type-card">
+            <h3>Unsupervised Learning</h3>
+            <p>
+                Unsupervised learning uses an unlabeled dataset to discover patterns without any explicit guidance or
+                instruction.
+            </p>
+            <div class="example">customer segmentation — dividing customers into groups that reflect similarity</div>
+            <p>Unsupervised learning algorithms can be further classified into three types — <strong>clustering</strong>, <strong>association</strong>, and <strong>dimensionality reduction</strong>.</p>
+            <div class="sub-label">Commonly used algorithms</div>
+            <ul class="algo-list">
+                <li>K-Means Clustering</li>
+                <li>Principal Component Analysis (PCA)</li>
+                <li>Hierarchical Clustering</li>
+                <li>DBSCAN Clustering</li>
+                <li>Agglomerative Clustering</li>
+                <li>Apriori Algorithm</li>
+                <li>Autoencoder</li>
+                <li>Restricted Boltzmann Machine (RBM)</li>
+            </ul>
+        </div>
+
+        <!-- Reinforcement -->
+        <div class="type-card">
+            <h3>Reinforcement Learning</h3>
+            <p>
+                Reinforcement learning algorithms are trained on datasets to make decisions and achieve optimized results
+                by minimizing the trial and error method.
+            </p>
+            <div class="example">Robotics</div>
+            <div class="sub-label">Common algorithms</div>
+            <ul class="algo-list">
+                <li>Q-learning</li>
+                <li>Markov Decision Process (MDP)</li>
+                <li>SARSA</li>
+                <li>DQN</li>
+                <li>DDPG</li>
+            </ul>
+        </div>
+
+        <!-- ── Use Cases ── -->
+        <h2>Use Cases of Machine Learning</h2>
+        <p>Let's discuss some important real-life use cases of different types of machine learning algorithms:</p>
+
+        <div class="use-case-section">
+            <div class="uc-group">
+                <h3>Supervised Learning</h3>
+                <ul class="uc-tags">
+                    <li>Image Classification</li>
+                    <li>Spam Filtering</li>
+                    <li>House Price Prediction</li>
+                    <li>Signature Recognition</li>
+                    <li>Weather Forecasting</li>
+                    <li>Stock Price Prediction</li>
+                </ul>
+            </div>
+            <div class="uc-group">
+                <h3>Unsupervised Learning</h3>
+                <ul class="uc-tags">
+                    <li>Anomaly Detection</li>
+                    <li>Recommendation Systems</li>
+                    <li>Customer Segmentation</li>
+                    <li>Fraud Detection</li>
+                    <li>Natural Language Processing</li>
+                    <li>Genetic Search</li>
+                </ul>
+            </div>
+            <div class="uc-group">
+                <h3>Reinforcement Learning</h3>
+                <ul class="uc-tags">
+                    <li>Autonomous Vehicles</li>
+                    <li>Robotics</li>
+                    <li>Game Playing</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ── Prerequisites ── -->
+        <h2>Prerequisites to Learn Machine Learning</h2>
+        <p>
+            To get started with machine learning, you should have some basic understanding of computer science fundamentals.
+            Along with basic computer science, you should be familiar with the following:
+        </p>
+
+        <div class="prereq-grid">
+            <div class="prereq-card">
+                <h4>Programming Languages</h4>
+                <ul>
+                    <li>Python (widely used for ML)</li>
+                    <li>R programming</li>
+                    <li>Variables &amp; basic data types</li>
+                    <li>Data structures: list, set, dict</li>
+                    <li>Loops &amp; conditionals</li>
+                    <li>Functions</li>
+                    <li>Classes &amp; Objects</li>
+                </ul>
+            </div>
+            <div class="prereq-card">
+                <h4>Libraries &amp; Packages</h4>
+                <ul>
+                    <li>NumPy — numeric computations</li>
+                    <li>Pandas — data manipulation</li>
+                    <li>Scikit-learn — ML algorithms</li>
+                    <li>Matplotlib — data visualization</li>
+                    <li>SciPy</li>
+                </ul>
+            </div>
+            <div class="prereq-card">
+                <h4>Mathematics &amp; Statistics</h4>
+                <ul>
+                    <li>Algebra &amp; Linear Algebra</li>
+                    <li>Statistics &amp; Probability</li>
+                    <li>Calculus &amp; derivatives</li>
+                    <li>Trigonometry (tanh)</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Math detail -->
+        <h3>Mathematics &amp; Statistics — Detail</h3>
+        <p>
+            Mathematics and statistics play an important role in developing machine learning and data science applications.
+            Advanced mathematics is not required to get started, but it helps to understand ML concepts in greater depth.
+        </p>
+
+        <div class="math-grid">
+            <div class="math-card">
+                <h4>Algebra</h4>
+                <ul>
+                    <li>Variables, coefficients, functions</li>
+                    <li>Linear equations</li>
+                    <li>Logarithm &amp; logarithmic equations</li>
+                    <li>Sigmoid function</li>
+                </ul>
+            </div>
+            <div class="math-card">
+                <h4>Linear Algebra</h4>
+                <ul>
+                    <li>Vector and matrix</li>
+                    <li>Matrix multiplication</li>
+                    <li>Dot product</li>
+                    <li>Tensor and tensor ranks</li>
+                </ul>
+            </div>
+            <div class="math-card">
+                <h4>Statistics &amp; Probability</h4>
+                <ul>
+                    <li>Mean, median, mode</li>
+                    <li>Outliers &amp; standard deviation</li>
+                    <li>Reading a histogram</li>
+                    <li>Probability &amp; Bayes rules</li>
+                </ul>
+            </div>
+            <div class="math-card">
+                <h4>Calculus</h4>
+                <ul>
+                    <li>Derivative, gradient, slope</li>
+                    <li>Partial derivatives</li>
+                    <li>Chain rule</li>
+                </ul>
+            </div>
+            <div class="math-card">
+                <h4>Trigonometry</h4>
+                <ul>
+                    <li>Trigonometric functions</li>
+                    <li>tanh (used in activation functions)</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ── Getting Started Steps ── -->
+        <h2>Getting Started with Machine Learning</h2>
+        <p>
+            You might wonder if machine learning is hard to learn? The answer is absolutely not — you will require a
+            strong understanding of mathematics, computer science and coding, and should keep up with the AI trends.
+            Here are the steps that will help you get started:
+        </p>
+
+        <ol class="step-list">
+            <li>
+                <div class="step-title">Learn Prerequisites</div>
+                <p class="step-desc">Start by learning the basics of any programming language like Python or R, relevant libraries and packages, and mathematics &amp; statistics including Calculus and Linear Algebra. These lay the foundation to understand how algorithms and machine learning models work.</p>
+            </li>
+            <li>
+                <div class="step-title">Learn Machine Learning Fundamentals</div>
+                <p class="step-desc">Before diving in, build a solid understanding of the fundamentals — different types of Machine Learning methods such as regression, classification, clustering, and dimensionality reduction. Cover concepts from basics to advanced, practicing programming examples chapter-wise.</p>
+            </li>
+            <li>
+                <div class="step-title">Explore Machine Learning Algorithms</div>
+                <p class="step-desc">Algorithms form the foundation of machine learning, allowing computers to observe data patterns and predict output. Explore essential algorithms like Naive Bayes, Random Forest, Decision Tree, and others to understand the working flow of an algorithm.</p>
+            </li>
+            <li>
+                <div class="step-title">Choose a Machine Learning Framework / Library</div>
+                <p class="step-desc">Select the best tool as per your model from frameworks such as Scikit-learn, TensorFlow, and PyTorch. Mastering machine learning tools enables you to work with data, train your model, discover new methods, and create algorithms. A good grip on libraries like NumPy, SciPy, and Matplotlib also serves you well.</p>
+            </li>
+            <li>
+                <div class="step-title">Practice with Real Data</div>
+                <p class="step-desc">Dataset is the backbone of any machine learning algorithm. Practice with publicly available datasets from websites like Kaggle and Google Dataset Search. Working on real-time data helps you understand data cleaning, preprocessing, and analysis — and how to choose the right algorithm for a given problem.</p>
+            </li>
+            <li>
+                <div class="step-title">Build Your Own Projects</div>
+                <p class="step-desc">After mastering the basics, create your own projects with a problem statement you choose. Start with simple algorithms like classification or recommendation systems using pre-processed datasets, then move to developing complex algorithms as you grow more comfortable.</p>
+            </li>
+            <li>
+                <div class="step-title">Participate in Machine Learning Communities</div>
+                <p class="step-desc">Join communities like GitHub to connect with people who share your interests. Through these communities you will get a chance to learn from others, share experiences, and get feedback on your projects — helping you stay motivated and continue to grow.</p>
+            </li>
+        </ol>
+
+    </article>
+
+    <div id="related-topics" class="related-topics"></div>
+</div>
+
+<div id="footer-placeholder"></div>
+
+<script src="/shared/js/navbar.js"></script>
+<script src="/shared/js/breadcrumb.js"></script>
+<script src="/shared/js/related.js"></script>
+<script src="/shared/js/background-animation.js"></script>
+
+</body>
+</html>

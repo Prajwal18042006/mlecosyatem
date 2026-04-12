@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ML Ecosystem | Knowledge Flow Map</title>
+    <link rel="stylesheet" href="/shared/css/global.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        :root {
+            --node-bg: rgba(20, 20, 20, 0.6);
+            --node-border: rgba(255, 255, 255, 0.08);
+            --node-hover: #ffffff;
+            --line-color: rgba(255, 255, 255, 0.15);
+        }
+
+        body {
+            background: #000000;
+            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+        }
+
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Landing Screen */
+        #landing-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            background: radial-gradient(circle at center, rgba(255,255,255,0.03) 0%, transparent 70%);
+            transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        #landing-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(3rem, 10vw, 7rem);
+            font-weight: 900;
+            color: #ffffff;
+            text-transform: uppercase;
+            letter-spacing: clamp(10px, 3vw, 30px);
+            cursor: pointer;
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        #landing-title:hover {
+            letter-spacing: clamp(15px, 4vw, 40px);
+            text-shadow: 0 0 60px rgba(255, 255, 255, 0.6);
+            transform: scale(1.05);
+        }
+
+        #landing-subtitle {
+            font-family: 'Orbitron', sans-serif;
+            color: #fff;
+            letter-spacing: 10px;
+            font-size: 0.9rem;
+            opacity: 0.4;
+            font-weight: 400;
+            text-transform: uppercase;
+        }
+
+        /* Hide flow content initially */
+        #flow-container, #navbar-placeholder, #footer-placeholder {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .show-content #flow-container, 
+        .show-content #navbar-placeholder, 
+        .show-content #footer-placeholder {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .hide-landing #landing-screen {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transform: scale(1.1);
+        }
+
+        #flow-container {
+            position: relative;
+            z-index: 1;
+            padding: 120px 20px 80px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 60px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .flow-header {
+            text-align: center;
+            max-width: 800px;
+        }
+
+        .flow-header h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            font-weight: 900;
+            color: #fff;
+            margin-bottom: 1rem;
+            letter-spacing: 4px;
+        }
+
+        .flow-header p {
+            font-size: 1.1rem;
+            color: #666;
+            font-weight: 300;
+        }
+
+        /* Tree Structure */
+        .tree {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+        .tree-node {
+            background: var(--node-bg);
+            border: 1px solid var(--node-border);
+            padding: 14px 24px;
+            border-radius: 40px;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            z-index: 2;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 160px;
+            justify-content: center;
+            text-align: center;
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            text-transform: uppercase;
+        }
+
+        .tree-node:hover {
+            border-color: var(--node-hover);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .tree-node.root {
+            font-size: 1.2rem;
+            padding: 20px 45px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05));
+            border-color: rgba(255, 255, 255, 0.3);
+            margin-bottom: 60px;
+        }
+
+        .tree-node.cluster {
+            font-size: 0.9rem;
+            background: rgba(255, 255, 255, 0.05);
+            margin-bottom: 25px;
+            width: 100%;
+            max-width: 320px;
+            color: #00bcd4;
+            border-color: rgba(0, 188, 212, 0.3);
+        }
+
+        .tree-branch-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 50px;
+            width: 100%;
+            padding: 20px;
+        }
+
+        .tree-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.02);
+            padding: 35px;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            transition: all 0.4s ease;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .tree-group:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(255, 255, 255, 0.08);
+        }
+
+        .leaf-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 12px;
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        .leaf-node {
+            font-size: 0.7rem;
+            padding: 10px 15px;
+            min-width: auto;
+            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.3);
+            font-weight: 400;
+            color: #888;
+        }
+
+        .leaf-node:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Category Colors */
+        .color-basics { border-color: #008080 !important; }
+        .color-learning { border-color: #98ff98 !important; }
+        .color-data { border-color: #ffa500 !important; }
+        .color-stats { border-color: #ffc0cb !important; }
+        .color-regression { border-color: #ffff00 !important; }
+        .color-classification { border-color: #0000ff !important; }
+        .color-clustering { border-color: #00ff00 !important; }
+        .color-dim { border-color: #00bcd4 !important; }
+        .color-rl { border-color: #ff00ff !important; }
+        .color-deep { border-color: #00ffff !important; }
+        .color-quantum { border-color: #ffa500 !important; }
+        .color-misc { border-color: #800080 !important; }
+        .color-resources { border-color: #008080 !important; }
+
+    </style>
+</head>
+<body>
+    <div id="navbar-placeholder"></div>
+    <div id="bg-canvas"></div>
+
+    <div id="landing-screen">
+        <h1 id="landing-title">ML ECOSYSTEM</h1>
+        <div class="typewriter-container">
+            <p id="landing-subtitle">CLICK TO EXPLORE THE KNOWLEDGE FLOW</p>
+        </div>
+    </div>
+
+    <main id="flow-container">
+        <div class="flow-header">
+            <h1>Machine Learning Flow</h1>
+            <p>A structured journey through the ML ecosystem. Click any topic to explore.</p>
+        </div>
+
+        <div id="tree-root" class="tree">
+            <!-- Root Node -->
+            <a href="/index.html" class="tree-node root">ML ECOSYSTEM HOME</a>
+            
+            <div class="tree-branch-grid" id="main-branches">
+                <!-- Main categories will be injected here -->
+            </div>
+        </div>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="/shared/js/navbar.js"></script>
+    <script src="/shared/js/background-animation.js"></script>
+    <script>
+        // Landing Screen Interaction
+        document.getElementById('landing-title').addEventListener('click', () => {
+            document.body.classList.add('show-content', 'hide-landing');
+        });
+
+        // Foreground Tree Content Injection
+        const treeData = [
+            {
+                title: 'Basics & Intro',
+                class: 'color-basics',
+                topics: [
+                    { title: 'Home', link: '/index.html' },
+                    { title: 'Introduction', link: '/topics/introduction.html' },
+                    { title: 'Getting Started', link: '/topics/getting-started.html' },
+                    { title: 'Basic Concepts', link: '/topics/basic-concepts.html' },
+                    { title: 'Ecosystem', link: '/topics/ecosystem.html' },
+                    { title: 'Python Libraries', link: '/topics/python-libraries.html' },
+                    { title: 'Applications', link: '/topics/applications.html' },
+                    { title: 'Life Cycle', link: '/topics/life-cycle.html' },
+                    { title: 'Required Skills', link: '/topics/required-skills.html' },
+                    { title: 'Implementation', link: '/topics/implementation.html' },
+                    { title: 'Challenges & Issues', link: '/topics/challenges-and-issues.html' },
+                    { title: 'Limitations', link: '/topics/limitations.html' },
+                    { title: 'Real-life Examples', link: '/topics/real-life-examples.html' },
+                    { title: 'Mathematics', link: '/topics/mathematics.html' },
+                    { title: 'Artificial Intelligence', link: '/topics/artificial-intelligence.html' }
+                ]
+            },
+            {
+                title: 'Learning Types',
+                class: 'color-learning',
+                topics: [
+                    { title: 'Supervised Learning', link: '/topics/supervised-learning.html' },
+                    { title: 'Unsupervised Learning', link: '/topics/unsupervised-learning.html' },
+                    { title: 'Semi-supervised', link: '/topics/semi-supervised-learning.html' },
+                    { title: 'Reinforcement Learning', link: '/topics/reinforcement-learning.html' },
+                    { title: 'Supervised vs. Unsupervised', link: '/topics/supervised-vs-unsupervised.html' }
+                ]
+            },
+            {
+                title: 'Data Mastery',
+                class: 'color-data',
+                topics: [
+                    { title: 'Data Structure', link: '/topics/data-structure.html' },
+                    { title: 'Getting Datasets', link: '/topics/getting-datasets.html' },
+                    { title: 'Categorical Data', link: '/topics/categorical-data.html' },
+                    { title: 'Data Loading', link: '/topics/data-loading.html' },
+                    { title: 'Data Understanding', link: '/topics/data-understanding.html' },
+                    { title: 'Data Preparation', link: '/topics/data-preparation.html' },
+                    { title: 'Models', link: '/topics/models.html' },
+                    { title: 'Types of Data', link: '/topics/types-of-data.html' },
+                    { title: 'Data Scaling', link: '/topics/data-scaling.html' }
+                ]
+            },
+            {
+                title: 'Visualization & Stats',
+                class: 'color-stats',
+                topics: [
+                    { title: 'Data Visualization', link: '/topics/data-visualization.html' },
+                    { title: 'Histograms', link: '/topics/histograms.html' },
+                    { title: 'Density Plots', link: '/topics/density-plots.html' },
+                    { title: 'Box Plots', link: '/topics/box-plots.html' },
+                    { title: 'Correlation Matrix', link: '/topics/correlation-matrix.html' },
+                    { title: 'Scatter Matrix', link: '/topics/scatter-matrix.html' },
+                    { title: 'Statistics', link: '/topics/statistics.html' },
+                    { title: 'Mean, Median, Mode', link: '/topics/mean-median-mode.html' },
+                    { title: 'Standard Deviation', link: '/topics/standard-deviation.html' },
+                    { title: 'Percentiles', link: '/topics/percentiles.html' },
+                    { title: 'Data Distribution', link: '/topics/data-distribution.html' },
+                    { title: 'Skewness & Kurtosis', link: '/topics/skewness-and-kurtosis.html' },
+                    { title: 'Bias & Variance', link: '/topics/bias-and-variance.html' },
+                    { title: 'Hypothesis', link: '/topics/hypothesis.html' }
+                ]
+            },
+            {
+                title: 'Regression & Classification',
+                class: 'color-classification',
+                topics: [
+                    { title: 'Regression Analysis', link: '/topics/regression.html' },
+                    { title: 'Linear Regression', link: '/topics/linear-regression.html' },
+                    { title: 'Simple Linear', link: '/topics/simple-linear-regression.html' },
+                    { title: 'Multiple Linear', link: '/topics/multiple-linear-regression.html' },
+                    { title: 'Polynomial Regression', link: '/topics/polynomial-regression.html' },
+                    { title: 'Classification', link: '/topics/classification.html' },
+                    { title: 'Logistic Regression', link: '/topics/logistic-regression.html' },
+                    { title: 'KNN', link: '/topics/knn.html' },
+                    { title: 'Naïve Bayes', link: '/topics/naive-bayes.html' },
+                    { title: 'Decision Tree', link: '/topics/decision-tree.html' },
+                    { title: 'SVM', link: '/topics/svm.html' },
+                    { title: 'Random Forest', link: '/topics/random-forest.html' },
+                    { title: 'Confusion Matrix', link: '/topics/confusion-matrix.html' },
+                    { title: 'SGD', link: '/topics/sgd.html' }
+                ]
+            },
+            {
+                title: 'Clustering',
+                class: 'color-clustering',
+                topics: [
+                    { title: 'Clustering Algorithms', link: '/topics/clustering.html' },
+                    { title: 'Centroid-Based', link: '/topics/centroid-clustering.html' },
+                    { title: 'K-Means', link: '/topics/k-means.html' },
+                    { title: 'K-Medoids', link: '/topics/k-medoids.html' },
+                    { title: 'Mean-Shift', link: '/topics/mean-shift.html' },
+                    { title: 'Hierarchical', link: '/topics/hierarchical.html' },
+                    { title: 'Density-Based', link: '/topics/density-clustering.html' },
+                    { title: 'DBSCAN', link: '/topics/dbscan.html' },
+                    { title: 'OPTICS', link: '/topics/optics.html' },
+                    { title: 'HDBSCAN', link: '/topics/hdbscan.html' },
+                    { title: 'BIRCH', link: '/topics/birch.html' },
+                    { title: 'Affinity Propagation', link: '/topics/affinity-propagation.html' },
+                    { title: 'Agglomerative', link: '/topics/agglomerative.html' }
+                ]
+            },
+            {
+                title: 'Advanced & Deep Learning',
+                class: 'color-deep',
+                topics: [
+                    { title: 'Neural Networks', link: '/topics/neural-networks.html' },
+                    { title: 'Deep Learning', link: '/topics/deep-learning.html' },
+                    { title: 'Deep RL', link: '/topics/deep-reinforcement-learning.html' },
+                    { title: 'DQN', link: '/topics/dqn.html' },
+                    { title: 'DDPG', link: '/topics/ddpg.html' },
+                    { title: 'Trust Region', link: '/topics/trust-region-methods.html' },
+                    { title: 'Q-Learning', link: '/topics/q-learning.html' },
+                    { title: 'SARSA', link: '/topics/sarsa.html' },
+                    { title: 'REINFORCE', link: '/topics/reinforce.html' },
+                    { title: 'Actor-Critic', link: '/topics/actor-critic.html' },
+                    { title: 'Monte Carlo', link: '/topics/monte-carlo.html' },
+                    { title: 'Temporal Difference', link: '/topics/temporal-difference.html' }
+                ]
+            },
+            {
+                title: 'Dimensionality & Misc',
+                class: 'color-misc',
+                topics: [
+                    { title: 'Dim. Reduction', link: '/topics/dimensionality-reduction.html' },
+                    { title: 'Feature Selection', link: '/topics/feature-selection.html' },
+                    { title: 'Feature Extraction', link: '/topics/feature-extraction.html' },
+                    { title: 'PCA', link: '/topics/pca.html' },
+                    { title: 'MLOps', link: '/topics/mlops.html' },
+                    { title: 'Data Leakage', link: '/topics/data-leakage.html' },
+                    { title: 'Monetization', link: '/topics/monetization.html' },
+                    { title: 'Regularization', link: '/topics/regularization.html' },
+                    { title: 'Overfitting', link: '/topics/overfitting.html' },
+                    { title: 'Entropy', link: '/topics/entropy.html' }
+                ]
+            },
+            {
+                title: 'Resources',
+                class: 'color-resources',
+                topics: [
+                    { title: 'Quick Guide', link: '/topics/quick-guide.html' },
+                    { title: 'Cheatsheet', link: '/topics/cheatsheet.html' },
+                    { title: 'Interview Qs', link: '/topics/interview-questions.html' },
+                    { title: 'Useful Resources', link: '/topics/useful-resources.html' },
+                    { title: 'Discussion', link: '/topics/discussion.html' }
+                ]
+            }
+        ];
+
+        const branchesContainer = document.getElementById('main-branches');
+
+        treeData.forEach((branch, bIndex) => {
+            const group = document.createElement('div');
+            group.className = 'tree-group';
+            group.style.animation = `fadeInUp 0.8s ease-out ${bIndex * 0.1}s forwards`;
+            group.style.opacity = '0';
+            
+            const clusterNode = document.createElement('div');
+            clusterNode.className = `tree-node cluster ${branch.class}`;
+            clusterNode.textContent = branch.title;
+            
+            const leafContainer = document.createElement('div');
+            leafContainer.className = 'leaf-container';
+            
+            branch.topics.forEach((topic, tIndex) => {
+                const leaf = document.createElement('a');
+                leaf.href = topic.link;
+                leaf.className = `tree-node leaf-node ${branch.class}`;
+                leaf.textContent = topic.title;
+                leaf.style.animation = `fadeInUp 0.5s ease-out ${(bIndex * 0.1) + (tIndex * 0.05)}s forwards`;
+                leaf.style.opacity = '0';
+                leafContainer.appendChild(leaf);
+            });
+            
+            group.appendChild(clusterNode);
+            group.appendChild(leafContainer);
+            branchesContainer.appendChild(group);
+        });
+    </script>
+</body>
+</html>

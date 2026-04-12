@@ -1,7 +1,8 @@
 #graph-container {
     width: 100%;
     height: 100vh;
-    background-color: #000;
+    background-color: #f0f4f8;
+    background-image: radial-gradient(ellipse at 50% 0%, rgba(8, 145, 178, 0.12), transparent 55%);
     position: relative;
     overflow: hidden;
 }
@@ -12,7 +13,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
-    color: white;
+    color: #1e293b;
     pointer-events: none;
     z-index: 10;
 }
@@ -22,20 +23,20 @@
     margin-bottom: 1rem;
     text-transform: uppercase;
     letter-spacing: 0.5rem;
-    color: #00ffff;
-    text-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+    color: #0891b2;
+    text-shadow: 0 2px 24px rgba(8, 145, 178, 0.25);
 }
 
 #graph-overlay p {
     font-size: 1.2rem;
-    color: #ccc;
+    color: #64748b;
     max-width: 600px;
     margin: 0 auto;
 }
 
 .node-label {
     position: absolute;
-    color: white;
+    color: #0f172a;
     font-size: 14px;
     pointer-events: none;
     white-space: nowrap;
@@ -43,4 +44,26 @@
     display: none;
     font-family: 'Inter', sans-serif;
     transition: transform 0.1s ease;
+}
+
+html[data-theme="dark"] #graph-container {
+    background-color: #030306;
+    background-image: radial-gradient(ellipse at 50% 0%, rgba(34, 211, 238, 0.08), transparent 55%);
+}
+
+html[data-theme="dark"] #graph-overlay {
+    color: #e2e8f0;
+}
+
+html[data-theme="dark"] #graph-overlay h1 {
+    color: #67e8f9;
+    text-shadow: 0 0 24px rgba(34, 211, 238, 0.35);
+}
+
+html[data-theme="dark"] #graph-overlay p {
+    color: #94a3b8;
+}
+
+html[data-theme="dark"] .node-label {
+    color: #f1f5f9;
 }

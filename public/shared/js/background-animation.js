@@ -1,12 +1,37 @@
-// Background Animation - Strong White Neural Network
+// Background neural network — black/slate on light theme, white glow on dark theme
 let scene, camera, renderer, particles, lines;
-const particleCount = 200; // Adjusted for topic pages
-const maxDistance = 150; 
+let particleMaterial;
+let lineMaterial;
+const particleCount = 200;
+const maxDistance = 150;
+
+function applyNetworkTheme() {
+    if (!particleMaterial || !lineMaterial) return;
+    const dark = document.documentElement.getAttribute('data-theme') === 'dark';
+    if (dark) {
+        particleMaterial.color.setHex(0xffffff);
+        particleMaterial.opacity = 0.75;
+        particleMaterial.blending = THREE.AdditiveBlending;
+        lineMaterial.color.setHex(0xffffff);
+        lineMaterial.opacity = 0.22;
+        lineMaterial.blending = THREE.AdditiveBlending;
+    } else {
+        particleMaterial.color.setHex(0x1e293b);
+        particleMaterial.opacity = 0.65;
+        particleMaterial.blending = THREE.NormalBlending;
+        lineMaterial.color.setHex(0x334155);
+        lineMaterial.opacity = 0.2;
+        lineMaterial.blending = THREE.NormalBlending;
+    }
+}
 
 function initBackground() {
-    const container = document.createElement('div');
+    const existing = document.getElementById('bg-canvas');
+    const container = existing || document.createElement('div');
     container.id = 'bg-canvas';
-    document.body.prepend(container);
+    if (!existing) {
+        document.body.prepend(container);
+    }
 
     scene = new THREE.Scene();
     camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 2000);
@@ -17,7 +42,6 @@ function initBackground() {
     renderer.setPixelRatio(window.devicePixelRatio);
     container.appendChild(renderer.domElement);
 
-    // Particles (White Neurons)
     const particleGeometry = new THREE.BufferGeometry();
     const particlePositions = new Float32Array(particleCount * 3);
     const particleVelocities = [];
@@ -26,7 +50,7 @@ function initBackground() {
         particlePositions[i * 3] = (Math.random() - 0.5) * 1000;
         particlePositions[i * 3 + 1] = (Math.random() - 0.5) * 1000;
         particlePositions[i * 3 + 2] = (Math.random() - 0.5) * 1000;
-        
+
         particleVelocities.push({
             x: (Math.random() - 0.5) * 0.8,
             y: (Math.random() - 0.5) * 0.8,
@@ -35,33 +59,35 @@ function initBackground() {
     }
 
     particleGeometry.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3));
-    const particleMaterial = new THREE.PointsMaterial({
-        color: 0xffffff,
+    particleMaterial = new THREE.PointsMaterial({
+        color: 0x1e293b,
         size: 3,
         transparent: true,
-        opacity: 0.8,
-        blending: THREE.AdditiveBlending
+        opacity: 0.65,
+        blending: THREE.NormalBlending
     });
 
     particles = new THREE.Points(particleGeometry, particleMaterial);
     particles.userData.velocities = particleVelocities;
     scene.add(particles);
 
-    // Lines (Synapses)
     const lineGeometry = new THREE.BufferGeometry();
-    const maxLines = 1500; 
+    const maxLines = 1500;
     const linePositions = new Float32Array(maxLines * 6);
     lineGeometry.setAttribute('position', new THREE.BufferAttribute(linePositions, 3));
-    
-    const lineMaterial = new THREE.LineBasicMaterial({
-        color: 0xffffff,
+
+    lineMaterial = new THREE.LineBasicMaterial({
+        color: 0x334155,
         transparent: true,
         opacity: 0.2,
-        blending: THREE.AdditiveBlending
+        blending: THREE.NormalBlending
     });
 
     lines = new THREE.LineSegments(lineGeometry, lineMaterial);
     scene.add(lines);
+
+    applyNetworkTheme();
+    window.addEventListener('ml-theme-change', applyNetworkTheme);
 
     window.addEventListener('resize', () => {
         camera.aspect = window.innerWidth / window.innerHeight;
@@ -119,7 +145,6 @@ function animateBackground() {
     renderer.render(scene, camera);
 }
 
-// Start animation when script is loaded
 if (typeof THREE !== 'undefined') {
     initBackground();
 } else {

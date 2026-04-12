@@ -46,9 +46,9 @@
 
 <style>
 .footer {
-    background: #050505;
+    background: linear-gradient(180deg, #f8fafc 0%, #ffffff 40%);
     padding: 6rem 2rem 2rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    border-top: 1px solid rgba(15, 23, 42, 0.08);
 }
 
 .footer-container {
@@ -68,11 +68,11 @@
 .footer-brand h3 {
     font-size: 1.5rem;
     margin-bottom: 1.5rem;
-    color: #fff;
+    color: #0f172a;
 }
 
 .footer-brand p {
-    color: #666;
+    color: #64748b;
     font-size: 0.9rem;
     line-height: 1.6;
     margin-bottom: 2rem;
@@ -84,7 +84,7 @@
 }
 
 .social-icon {
-    color: #00bcd4;
+    color: #0891b2;
     text-decoration: none;
     font-family: 'Orbitron', sans-serif;
     font-size: 0.7rem;
@@ -101,7 +101,7 @@
 
 .footer-column h4 {
     font-family: 'Orbitron', sans-serif;
-    color: #fff;
+    color: #0f172a;
     font-size: 0.8rem;
     letter-spacing: 2px;
     text-transform: uppercase;
@@ -117,28 +117,56 @@
 }
 
 .footer-column a {
-    color: #666;
+    color: #64748b;
     text-decoration: none;
     font-size: 0.9rem;
     transition: 0.3s;
 }
 
 .footer-column a:hover {
-    color: #00bcd4;
+    color: #0891b2;
 }
 
 .footer-bottom {
     margin-top: 6rem;
     padding-top: 2rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    border-top: 1px solid rgba(15, 23, 42, 0.08);
     text-align: center;
 }
 
 .footer-bottom p {
     font-family: 'Orbitron', sans-serif;
     font-size: 0.7rem;
-    color: #444;
+    color: #94a3b8;
     letter-spacing: 3px;
+}
+
+html[data-theme="dark"] .footer {
+    background: linear-gradient(180deg, #0a0a0c 0%, #050508 50%);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+html[data-theme="dark"] .footer-brand h3,
+html[data-theme="dark"] .footer-column h4 {
+    color: #f1f5f9;
+}
+
+html[data-theme="dark"] .footer-brand p,
+html[data-theme="dark"] .footer-column a {
+    color: #94a3b8;
+}
+
+html[data-theme="dark"] .footer-column a:hover,
+html[data-theme="dark"] .social-icon {
+    color: #22d3ee;
+}
+
+html[data-theme="dark"] .footer-bottom {
+    border-top-color: rgba(255, 255, 255, 0.08);
+}
+
+html[data-theme="dark"] .footer-bottom p {
+    color: #64748b;
 }
 
 @media (max-width: 768px) {

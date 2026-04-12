@@ -1,35 +1,65 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Orbitron:wght@400;700;900&display=swap');
 
 :root {
-    /* Color Palette */
-    --primary: #ffffff;
-    --accent: #00bcd4;
-    --accent-glow: rgba(0, 188, 212, 0.5);
-    --bg-black: #000000;
-    --bg-dark: #0a0a0a;
-    --surface: rgba(26, 26, 26, 0.7);
-    --border: rgba(255, 255, 255, 0.1);
-    
-    /* Text Colors */
-    --text-main: #f0f0f0;
-    --text-muted: #a0a0a0;
-    --text-dim: #666666;
-    
-    /* Category Colors (Refined) */
-    --teal: #008080;
-    --mint: #98ff98;
-    --orange: #ffa500;
-    --purple: #800080;
-    --blue: #0000ff;
-    --pink: #ffc0cb;
-    --cyan: #00ffff;
-    --yellow: #ffff00;
-    
-    /* Spacing & Radius */
+    /* Light theme — cool white / slate */
+    --primary: #0f172a;
+    --accent: #0891b2;
+    --accent-soft: #06b6d4;
+    --accent-glow: rgba(8, 145, 178, 0.22);
+    --bg-page: #eef2f7;
+    --bg-elevated: #ffffff;
+    --surface: rgba(255, 255, 255, 0.92);
+    --border: rgba(15, 23, 42, 0.08);
+    --border-strong: rgba(15, 23, 42, 0.12);
+
+    --text-main: #1e293b;
+    --text-muted: #64748b;
+    --text-dim: #94a3b8;
+
+    /* Category accents (unchanged hues, tuned for light UI) */
+    --teal: #0d9488;
+    --mint: #059669;
+    --orange: #ea580c;
+    --purple: #7c3aed;
+    --blue: #2563eb;
+    --pink: #db2777;
+    --cyan: #0891b2;
+    --yellow: #ca8a04;
+
     --radius-lg: 24px;
     --radius-md: 12px;
     --radius-sm: 8px;
     --container-max: 1100px;
+    --shadow-soft: 0 4px 24px rgba(15, 23, 42, 0.06);
+    --shadow-card: 0 12px 40px rgba(15, 23, 42, 0.08);
+}
+
+html[data-theme="dark"] {
+    --primary: #f1f5f9;
+    --accent: #22d3ee;
+    --accent-soft: #67e8f9;
+    --accent-glow: rgba(34, 211, 238, 0.35);
+    --bg-page: #050508;
+    --bg-elevated: #0f1419;
+    --surface: rgba(22, 27, 34, 0.92);
+    --border: rgba(255, 255, 255, 0.08);
+    --border-strong: rgba(255, 255, 255, 0.12);
+
+    --text-main: #e2e8f0;
+    --text-muted: #94a3b8;
+    --text-dim: #64748b;
+
+    --teal: #2dd4bf;
+    --mint: #4ade80;
+    --orange: #fb923c;
+    --purple: #a78bfa;
+    --blue: #60a5fa;
+    --pink: #f472b6;
+    --cyan: #22d3ee;
+    --yellow: #facc15;
+
+    --shadow-soft: 0 4px 24px rgba(0, 0, 0, 0.45);
+    --shadow-card: 0 20px 50px rgba(0, 0, 0, 0.55);
 }
 
 * {
@@ -44,14 +74,24 @@ html {
 
 body {
     font-family: 'Inter', sans-serif;
-    background-color: var(--bg-black);
+    background: var(--bg-page);
+    background-image:
+        radial-gradient(ellipse 120% 80% at 50% -20%, rgba(8, 145, 178, 0.08), transparent 55%),
+        radial-gradient(ellipse 80% 50% at 100% 50%, rgba(99, 102, 241, 0.05), transparent 45%);
+    background-attachment: fixed;
     color: var(--text-main);
     line-height: 1.7;
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
 }
 
-/* ─── Background Canvas ─── */
+html[data-theme="dark"] body {
+    background-image:
+        radial-gradient(ellipse 100% 70% at 50% -15%, rgba(34, 211, 238, 0.12), transparent 55%),
+        radial-gradient(ellipse 70% 50% at 100% 40%, rgba(99, 102, 241, 0.08), transparent 50%);
+}
+
+/* ─── Background Canvas (Three.js — script unchanged) ─── */
 #bg-canvas {
     position: fixed;
     top: 0;
@@ -119,11 +159,18 @@ h1 {
     font-weight: 900;
     margin-bottom: 2rem;
     text-transform: uppercase;
-    background: linear-gradient(135deg, #fff 0%, var(--accent) 100%);
+    background: linear-gradient(135deg, #0f172a 0%, var(--accent-soft) 55%, #6366f1 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    background-clip: text;
     line-height: 1.2;
     animation: blurIn 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+html[data-theme="dark"] h1 {
+    background: linear-gradient(135deg, #ffffff 0%, var(--accent-soft) 50%, #a5b4fc 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
 }
 
 h2 {
@@ -132,13 +179,13 @@ h2 {
     margin-bottom: 1.5rem;
     border-left: 4px solid var(--accent);
     padding-left: 1.5rem;
-    color: #fff;
+    color: var(--primary);
     animation: revealText 1s ease-out forwards;
 }
 
 p {
     margin-bottom: 1.8rem;
-    font-weight: 300;
+    font-weight: 400;
     color: var(--text-muted);
     font-size: 1.05rem;
     animation: fadeInUp 1s ease-out 0.3s forwards;
@@ -165,8 +212,8 @@ strong {
     background-color: var(--surface);
     padding: 4rem;
     border-radius: var(--radius-lg);
-    border: 1px solid var(--border);
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--border-strong);
+    box-shadow: var(--shadow-card);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     margin-bottom: 4rem;
@@ -190,8 +237,8 @@ strong {
 
 .btn:hover {
     background: var(--accent);
-    color: #000;
-    box-shadow: 0 0 20px var(--accent-glow);
+    color: #ffffff;
+    box-shadow: 0 8px 28px var(--accent-glow);
     transform: translateY(-2px);
 }
 
@@ -230,3 +277,159 @@ strong {
 .topic-content {
     animation: fadeInUp 0.8s ease-out forwards;
 }
+
+/* ─── Navbar (injected HTML; styles live here so innerHTML <style> quirks never apply) ─── */
+.navbar {
+    background: rgba(255, 255, 255, 0.82);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 2500;
+    border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.8) inset;
+}
+
+.navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    padding: 0 2rem;
+}
+
+.navbar-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: #0f172a;
+}
+
+.logo-icon {
+    font-size: 1.5rem;
+    color: #0891b2;
+    animation: navbar-logo-spin 4s linear infinite;
+}
+
+.logo-text {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 900;
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+}
+
+.navbar-menu {
+    display: flex;
+    list-style: none;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar-menu li {
+    margin-left: 2rem;
+}
+
+.navbar-menu a {
+    color: #64748b;
+    text-decoration: none;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 400;
+    letter-spacing: 1px;
+    transition: 0.3s;
+    text-transform: uppercase;
+}
+
+.navbar-menu a:hover,
+.navbar-menu a.active {
+    color: #0f172a;
+}
+
+.nav-btn {
+    border: 1px solid #0891b2;
+    padding: 8px 16px;
+    border-radius: 8px;
+}
+
+.nav-btn:hover {
+    background: #0891b2;
+    color: #ffffff !important;
+}
+
+.nav-theme-toggle {
+    margin-left: 0.5rem;
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid rgba(15, 23, 42, 0.15);
+    background: rgba(255, 255, 255, 0.6);
+    color: #0f172a;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: background 0.25s, border-color 0.25s, color 0.25s, transform 0.2s;
+}
+
+.nav-theme-toggle:hover {
+    background: rgba(8, 145, 178, 0.12);
+    border-color: #0891b2;
+    transform: scale(1.05);
+}
+
+@keyframes navbar-logo-spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+html[data-theme="dark"] .navbar {
+    background: rgba(10, 10, 12, 0.82);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: none;
+}
+
+html[data-theme="dark"] .navbar-logo {
+    color: #f1f5f9;
+}
+
+html[data-theme="dark"] .logo-icon {
+    color: #22d3ee;
+}
+
+html[data-theme="dark"] .navbar-menu a {
+    color: #94a3b8;
+}
+
+html[data-theme="dark"] .navbar-menu a:hover,
+html[data-theme="dark"] .navbar-menu a.active {
+    color: #f8fafc;
+}
+
+html[data-theme="dark"] .nav-btn {
+    border-color: #22d3ee;
+}
+
+html[data-theme="dark"] .nav-btn:hover {
+    background: #22d3ee;
+    color: #050508 !important;
+}
+
+html[data-theme="dark"] .nav-theme-toggle {
+    border-color: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.06);
+    color: #e2e8f0;
+}
+
+html[data-theme="dark"] .nav-theme-toggle:hover {
+    background: rgba(34, 211, 238, 0.15);
+    border-color: #22d3ee;
+}
+

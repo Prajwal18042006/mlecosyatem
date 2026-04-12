@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <script src="/shared/js/theme-init.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Introduction to Machine Learning | ML Ecosystem</title>
     <link rel="stylesheet" href="/shared/css/global.css">
@@ -44,6 +45,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <script src="/shared/js/theme-init.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Introduction to Machine Learning | ML Ecosystem</title>
     <link rel="stylesheet" href="/shared/css/global.css">
@@ -52,18 +54,18 @@
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         :root {
-            --bg: #0d0f14;
-            --surface: #13161d;
-            --surface2: #1a1e27;
-            --border: #252b38;
-            --accent: #4f8ef7;
-            --accent2: #7c5af7;
-            --accent3: #38c9b8;
-            --text: #e2e8f0;
-            --text-muted: #8892a4;
-            --text-dim: #5a6478;
-            --heading: #f0f4ff;
-            --tag-bg: #1e2535;
+            --bg: #eef2f7;
+            --surface: #ffffff;
+            --surface2: #f1f5f9;
+            --border: #e2e8f0;
+            --accent: #2563eb;
+            --accent2: #6366f1;
+            --accent3: #0d9488;
+            --text: #1e293b;
+            --text-muted: #64748b;
+            --text-dim: #94a3b8;
+            --heading: #0f172a;
+            --tag-bg: #f1f5f9;
             --radius: 12px;
             --radius-sm: 8px;
         }
@@ -114,7 +116,7 @@
             line-height: 1.2;
             margin-bottom: 20px;
             letter-spacing: -0.02em;
-            background: linear-gradient(135deg, #f0f4ff 0%, #a8c4ff 50%, #7c9ef7 100%);
+            background: linear-gradient(135deg, #0f172a 0%, #2563eb 50%, #6366f1 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -386,9 +388,10 @@
         .diagram-container {
             margin: 40px 0;
             padding: 30px;
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(255, 255, 255, 0.85);
             border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--border);
+            box-shadow: 0 8px 32px rgba(15, 23, 42, 0.06);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -422,7 +425,7 @@
             justify-content: flex-start;
             align-items: center;
             padding-top: 20px;
-            border: 2px solid rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(15, 23, 42, 0.12);
             transition: all 0.3s ease;
             backdrop-filter: blur(5px);
         }
@@ -430,7 +433,7 @@
         .circle:hover {
             border-color: var(--accent);
             transform: scale(1.02);
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(37, 99, 235, 0.06);
         }
 
         .circle-ai {
@@ -557,6 +560,27 @@
 
         /* ─── Footer spacer ─── */
         .related-topics { margin-top: 64px; }
+
+        html[data-theme="dark"] {
+            --bg: #0d0f14;
+            --surface: #13161d;
+            --surface2: #1a1e27;
+            --border: #252b38;
+            --accent: #5b9cf9;
+            --accent2: #8b7af0;
+            --accent3: #3dd4c4;
+            --text: #e2e8f0;
+            --text-muted: #8892a4;
+            --text-dim: #5a6478;
+            --heading: #f0f4ff;
+            --tag-bg: #1e2535;
+        }
+        html[data-theme="dark"] .topic-content h1 {
+            background: linear-gradient(135deg, #f0f4ff 0%, #a8c4ff 50%, #7c9ef7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
     </style>
 </head>
 <body>

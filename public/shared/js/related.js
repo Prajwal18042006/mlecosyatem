@@ -32,7 +32,7 @@ style.textContent = `
     .related-topics {
         margin-top: 4rem;
         padding-top: 2rem;
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        border-top: 1px solid var(--border-strong);
     }
     .related-grid {
         display: grid;
@@ -41,27 +41,31 @@ style.textContent = `
         margin-top: 1.5rem;
     }
     .related-card {
-        background: #1a1a1a;
+        background: var(--bg-elevated);
         padding: 1.5rem;
-        border-radius: 8px;
-        border-left: 4px solid #00bcd4;
+        border-radius: 12px;
+        border: 1px solid var(--border-strong);
+        border-left: 4px solid var(--accent);
+        box-shadow: var(--shadow-soft);
         transition: 0.3s;
     }
     .related-card:hover {
         transform: translateY(-5px);
-        background: #252525;
+        box-shadow: var(--shadow-card);
+        border-color: var(--accent);
     }
     .related-card h4 {
         margin: 0.5rem 0 1rem;
         font-size: 1.2rem;
+        color: var(--primary);
     }
     .related-card .category {
         font-size: 0.8rem;
-        color: #ff9800;
+        color: var(--orange);
         text-transform: uppercase;
     }
     .btn-sm {
-        color: #00bcd4;
+        color: var(--accent);
         text-decoration: none;
         font-size: 0.9rem;
         font-weight: bold;

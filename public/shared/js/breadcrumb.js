@@ -29,11 +29,11 @@ const style = document.createElement('style');
 style.textContent = `
     .breadcrumb {
         padding: 1rem 0;
-        color: #a0a0a0;
+        color: var(--text-dim);
         font-size: 0.9rem;
     }
     .breadcrumb a {
-        color: #00bcd4;
+        color: var(--accent);
         text-decoration: none;
     }
     .breadcrumb a:hover {

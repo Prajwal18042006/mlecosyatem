@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <script src="/shared/js/theme-init.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Data in Machine Learning | ML Ecosystem</title>
     <link rel="stylesheet" href="/shared/css/global.css">
@@ -61,21 +62,43 @@
                     margin-top: 2rem;
                 }
                 .topic-card {
-                    background: #252525;
+                    background: #ffffff;
                     padding: 1.5rem;
-                    border-radius: 8px;
+                    border-radius: 12px;
                     text-decoration: none;
                     transition: 0.3s;
-                    border: 1px solid rgba(255, 255, 255, 0.1);
+                    border: 1px solid rgba(15, 23, 42, 0.08);
+                    box-shadow: 0 4px 20px rgba(15, 23, 42, 0.06);
                 }
                 .topic-card:hover {
                     transform: translateY(-3px);
-                    background: #303030;
-                    border-color: #ffa500;
+                    background: #ffffff;
+                    border-color: #ea580c;
+                    box-shadow: 0 12px 32px rgba(234, 88, 12, 0.12);
                 }
                 .topic-card h3 {
-                    color: #ffa500;
+                    color: #c2410c;
                     font-size: 1.1rem;
+                }
+                .topic-card p {
+                    color: #64748b;
+                    font-size: 0.95rem;
+                    margin: 0;
+                }
+                html[data-theme="dark"] .topic-card {
+                    background: rgba(22, 27, 34, 0.95);
+                    border-color: rgba(255, 255, 255, 0.1);
+                    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+                }
+                html[data-theme="dark"] .topic-card:hover {
+                    border-color: #22d3ee;
+                    box-shadow: 0 12px 32px rgba(34, 211, 238, 0.15);
+                }
+                html[data-theme="dark"] .topic-card h3 {
+                    color: #67e8f9;
+                }
+                html[data-theme="dark"] .topic-card p {
+                    color: #94a3b8;
                 }
             </style>
         </article>

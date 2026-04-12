@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <script src="/shared/js/theme-init.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BASICS | ML Ecosystem</title>
     <link rel="stylesheet" href="/shared/css/global.css">
@@ -10,15 +11,15 @@
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         :root {
-            --bg: #0d0f14;
-            --surface: #13161d;
-            --border: #252b38;
-            --accent: #4f8ef7;
-            --accent2: #7c5af7;
-            --accent3: #38c9b8;
-            --text: #e2e8f0;
-            --text-muted: #8892a4;
-            --heading: #f0f4ff;
+            --bg: #eef2f7;
+            --surface: #ffffff;
+            --border: #e2e8f0;
+            --accent: #2563eb;
+            --accent2: #6366f1;
+            --accent3: #0d9488;
+            --text: #1e293b;
+            --text-muted: #64748b;
+            --heading: #0f172a;
             --radius: 12px;
         }
 
@@ -44,7 +45,7 @@
             font-size: 3rem;
             color: var(--heading);
             margin-bottom: 20px;
-            background: linear-gradient(135deg, #fff 0%, #4f8ef7 100%);
+            background: linear-gradient(135deg, #0f172a 0%, #2563eb 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -59,10 +60,11 @@
         .diagram-container {
             margin: 40px 0;
             padding: 40px;
-            background: rgba(255, 255, 255, 0.02);
+            background: rgba(255, 255, 255, 0.75);
             border-radius: 20px;
             border: 1px solid var(--border);
             text-align: center;
+            box-shadow: 0 8px 32px rgba(15, 23, 42, 0.06);
         }
 
         .diagram-title {
@@ -91,7 +93,8 @@
         .tax-card:hover {
             border-color: var(--accent);
             transform: translateY(-5px);
-            background: rgba(79, 142, 247, 0.05);
+            background: rgba(37, 99, 235, 0.06);
+            box-shadow: 0 12px 28px rgba(37, 99, 235, 0.1);
         }
 
         .tax-card h4 {
@@ -137,6 +140,24 @@
             border: 1px solid var(--border);
             margin-bottom: 10px;
             border-radius: 8px;
+        }
+
+        html[data-theme="dark"] {
+            --bg: #0d0f14;
+            --surface: #13161d;
+            --border: #252b38;
+            --accent: #5b9cf9;
+            --accent2: #8b7af0;
+            --accent3: #3dd4c4;
+            --text: #e2e8f0;
+            --text-muted: #8892a4;
+            --heading: #f0f4ff;
+        }
+        html[data-theme="dark"] .topic-content h1 {
+            background: linear-gradient(135deg, #f8fafc 0%, #5b9cf9 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
     </style>
 </head>

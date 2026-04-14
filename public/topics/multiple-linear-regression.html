@@ -1,38 +1,648 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <script src="/shared/js/theme-init.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MULTIPLE LINEAR REGRESSION | ML Ecosystem</title>
-    <link rel="stylesheet" href="/shared/css/global.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <meta charset="UTF-8">
+  <script src="/shared/js/theme-init.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MULTIPLE LINEAR REGRESSION | ML Ecosystem</title>
+  <link rel="stylesheet" href="/shared/css/global.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+  <style>
+    .topic-content h2 {
+      color: var(--accent);
+      border-left: 3px solid var(--accent);
+      padding-left: 10px;
+    }
+
+    .chart-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 15px;
+      margin: 20px 0;
+      border-radius: 10px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .callout {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      padding: 14px 16px;
+      border-radius: 12px;
+      margin: 14px 0;
+      color: var(--text-main);
+    }
+
+    .callout strong { color: var(--accent); }
+
+    .data-table-wrap {
+      overflow-x: auto;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      margin: 16px 0 24px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 760px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Courier New", monospace;
+      font-size: 12px;
+    }
+
+    .data-table th, .data-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-main);
+      text-align: left;
+      white-space: nowrap;
+    }
+
+    .data-table th {
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 11px;
+      background: rgba(127, 127, 127, 0.06);
+    }
+
+    .data-table tr:last-child td { border-bottom: none; }
+
+    .pill-row { display:flex; flex-wrap:wrap; gap:8px; margin: 12px 0 6px; }
+    .pill {
+      display:inline-block;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(8, 145, 178, 0.10);
+      border: 1px solid rgba(8, 145, 178, 0.22);
+      color: var(--text-main);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Courier New", monospace;
+      font-size: 12px;
+    }
+
+    .mini-title {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Courier New", monospace;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-size: 12px;
+      color: var(--text-dim);
+      margin-top: 10px;
+    }
+
+    .terminal {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      padding: 15px;
+      border-radius: 10px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Courier New", monospace;
+      box-shadow: var(--shadow-soft);
+      overflow-x: auto;
+      line-height: 1.65;
+    }
+
+    canvas {
+      width: 100%;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+  </style>
 </head>
+
 <body>
-    <div id="navbar-placeholder"></div>
-    <div class="container">
-        <div id="breadcrumb" class="breadcrumb"></div>
-        <article class="topic-content">
-            <h1>MULTIPLE LINEAR REGRESSION</h1>
-            <p>Welcome to the detailed exploration of MULTIPLE LINEAR REGRESSION.</p>
-            <p>Machine Learning is an interconnected web of knowledge. This topic is a crucial part of the ecosystem, contributing to how models learn, adapt, and make predictions.</p>
-            
-            <div class="placeholder-text">
-                <h3>Core Concepts</h3>
-                <ul>
-                    <li>Fundamental principles of MULTIPLE LINEAR REGRESSION</li>
-                    <li>Key applications in real-world scenarios</li>
-                    <li>Relationship with other ML clusters</li>
-                </ul>
-            </div>
-        </article>
-        <div id="related-topics" class="related-topics"></div>
-    </div>
-    <div id="footer-placeholder"></div>
-    
-    <script src="/shared/js/navbar.js"></script>
-    <script src="/shared/js/breadcrumb.js"></script>
-    <script src="/shared/js/related.js"></script>
-    <script src="/shared/js/background-animation.js"></script>
+  <div id="navbar-placeholder"></div>
+
+  <div class="container">
+    <div id="breadcrumb" class="breadcrumb"></div>
+
+    <article class="topic-content">
+      <h1>MULTIPLE LINEAR REGRESSION (Deep Dive)</h1>
+
+      <h2>What is Multiple Linear Regression?</h2>
+      <p>
+        Multiple linear regression in machine learning is a supervised algorithm that models the relationship between a dependent
+        variable and multiple independent variables. This relationship is used to predict the outcome of the dependent variable.
+      </p>
+
+      <div class="callout">
+        <strong>Two types of linear regression:</strong>
+        <ul style="margin:10px 0 0 18px;">
+          <li><strong>Simple linear regression</strong> — one independent variable → one dependent variable.</li>
+          <li><strong>Multiple linear regression</strong> — two or more independent variables → one dependent variable.</li>
+        </ul>
+      </div>
+
+      <p>
+        In multiple linear regression (MLR), the algorithm is trained on data to learn a relationship (a regression hyperplane)
+        that best fits the data. This relation describes how various factors affect the result.
+      </p>
+
+      <h2>Mathematical Form</h2>
+      <p class="mini-title">Prediction</p>
+      <div class="terminal">
+h(xᵢ) = w₀ + w₁xᵢ₁ + w₂xᵢ₂ + ... + wₚxᵢₚ
+      </div>
+      <p class="mini-title">With residual error</p>
+      <div class="terminal">
+yᵢ = w₀ + w₁xᵢ₁ + w₂xᵢ₂ + ... + wₚxᵢₚ + eᵢ
+eᵢ = yᵢ − h(xᵢ)
+      </div>
+
+      <h2>Assumptions of Multiple Linear Regression</h2>
+      <ol>
+        <li><strong>Linearity</strong> — target and predictors have a linear relationship.</li>
+        <li><strong>Independence</strong> — each observation is independent.</li>
+        <li><strong>Homoscedasticity</strong> — constant variance of residuals.</li>
+        <li><strong>Normality of Errors</strong> — residuals are approximately normal.</li>
+        <li><strong>No Multicollinearity</strong> — predictors are not highly correlated.</li>
+        <li><strong>No Autocorrelation</strong> — residuals are not correlated with each other.</li>
+        <li><strong>Fixed Independent Variables</strong> — predictor values are fixed across repeated samples.</li>
+      </ol>
+
+      <div class="callout">
+        <strong>Important:</strong> When assumptions are violated, coefficients can become unstable and predictions can degrade.
+        Always check multicollinearity and residual patterns.
+      </div>
+
+      <h2>Dataset for Implementation (data.csv)</h2>
+      <p>
+        We use a dataset with 50 examples containing predictors (R&amp;D Spend, Administration, Marketing Spend, State) and a target (Profit).
+        For simplicity, we will ignore <strong>State</strong> in the code (or you can one-hot encode it).
+      </p>
+
+      <div class="data-table-wrap">
+        <table class="data-table" aria-label="data.csv sample table">
+          <thead>
+            <tr>
+              <th>R&amp;D Spend</th>
+              <th>Administration</th>
+              <th>Marketing Spend</th>
+              <th>State</th>
+              <th>Profit</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>165349.2</td><td>136897.8</td><td>471784.1</td><td>New York</td><td>192261.8</td></tr>
+            <tr><td>162597.7</td><td>151377.6</td><td>443898.5</td><td>California</td><td>191792.1</td></tr>
+            <tr><td>153441.5</td><td>101145.6</td><td>407934.5</td><td>Florida</td><td>191050.4</td></tr>
+            <tr><td>144372.4</td><td>118671.9</td><td>383199.6</td><td>New York</td><td>182902.0</td></tr>
+            <tr><td>142107.3</td><td>91391.8</td><td>366168.4</td><td>Florida</td><td>166187.9</td></tr>
+            <tr><td>131876.9</td><td>99814.7</td><td>362861.4</td><td>New York</td><td>156991.1</td></tr>
+            <tr><td>134615.5</td><td>147198.9</td><td>127716.8</td><td>California</td><td>156122.5</td></tr>
+            <tr><td>130298.1</td><td>145530.1</td><td>323876.7</td><td>Florida</td><td>155752.6</td></tr>
+            <tr><td>120542.5</td><td>148719.0</td><td>311613.3</td><td>New York</td><td>152211.8</td></tr>
+            <tr><td>123334.9</td><td>108679.2</td><td>304981.6</td><td>California</td><td>149760.0</td></tr>
+            <tr><td>101913.1</td><td>110594.1</td><td>229161.0</td><td>Florida</td><td>146122.0</td></tr>
+            <tr><td>100672.0</td><td>91790.6</td><td>249744.6</td><td>California</td><td>144259.4</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Implementation in Python (Scikit-Learn)</h2>
+
+      <h3>Step 1: Data Preparation</h3>
+      <div class="terminal">
+# import libraries
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+
+# load dataset
+dataset = pd.read_csv('data.csv')
+X = dataset[['R&D Spend', 'Administration', 'Marketing Spend']]
+y = dataset['Profit']
+
+print(X.head())
+print(y.head())
+      </div>
+
+      <h3>Split train and test set</h3>
+      <div class="terminal">
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+      </div>
+
+      <h3>Step 2: Model Training</h3>
+      <div class="terminal">
+from sklearn.linear_model import LinearRegression
+regressor = LinearRegression()
+regressor.fit(X_train, y_train)
+      </div>
+
+      <h3>Step 3: Model Testing</h3>
+      <div class="terminal">
+y_pred = regressor.predict(X_test)
+df = pd.DataFrame({'Real Values': y_test, 'Predicted Values': y_pred})
+print(df)
+      </div>
+
+      <h3>Step 4: Model Evaluation</h3>
+      <div class="terminal">
+from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
+import numpy as np
+
+mse = mean_squared_error(y_test, y_pred)
+rmse = np.sqrt(mse)
+mae = mean_absolute_error(y_test, y_pred)
+r2 = r2_score(y_test, y_pred)
+
+print("Mean Squared Error (MSE):", mse)
+print("Root Mean Squared Error (RMSE):", rmse)
+print("Mean Absolute Error (MAE):", mae)
+print("R-squared (R2):", r2)
+      </div>
+
+      <h3>Step 5: Predict profit for new data</h3>
+      <div class="terminal">
+# predict profit when R&D Spend is 166343.2, Administration is 136787.8 and Marketing Spend is 461724.1
+new_data = [[166343.2, 136787.8, 461724.1]]
+profit = regressor.predict(new_data)
+print(profit)
+      </div>
+
+      <h3>Model Parameters (Coefficients &amp; Intercept)</h3>
+      <div class="terminal">
+print("coefficients:", regressor.coef_)
+print("intercept:", regressor.intercept_)
+      </div>
+
+      <div class="callout">
+        <strong>Example coefficients (from your text):</strong><br>
+        coefficients: [ 0.81129358, -0.06184074, 0.02515044 ]<br>
+        intercept: 54946.94052163202
+      </div>
+
+      <h2>Graphs (Explain the Concepts Visually)</h2>
+      <div class="chart-box">
+        <div class="mini-title">Graph 1: Predictor Correlation (Heatmap)</div>
+        <canvas id="corrCanvas" height="240"></canvas>
+      </div>
+      <div class="chart-box">
+        <div class="mini-title">Graph 2: Coefficients (Bar Chart)</div>
+        <canvas id="coefCanvas" height="240"></canvas>
+      </div>
+      <div class="chart-box">
+        <div class="mini-title">Graph 3: Predicted vs Actual Profit (Scatter)</div>
+        <canvas id="predCanvas" height="260"></canvas>
+      </div>
+
+      <h2>Applications of Multiple Linear Regression</h2>
+      <div class="pill-row">
+        <span class="pill">Finance</span>
+        <span class="pill">Marketing</span>
+        <span class="pill">Real Estate</span>
+        <span class="pill">Healthcare</span>
+        <span class="pill">Economics</span>
+        <span class="pill">Social Sciences</span>
+      </div>
+      <ul>
+        <li><strong>Finance:</strong> predicting stock prices, exchange rates, assessing credit risk.</li>
+        <li><strong>Marketing:</strong> predicting sales, churn, campaign effectiveness.</li>
+        <li><strong>Real Estate:</strong> house price prediction from size, location, bedrooms.</li>
+        <li><strong>Healthcare:</strong> patient outcomes, treatment impact, risk factor analysis.</li>
+        <li><strong>Economics:</strong> growth forecasting, inflation prediction, policy impact.</li>
+        <li><strong>Social Sciences:</strong> election outcomes, behavior modeling, survey analytics.</li>
+      </ul>
+
+      <h2>Challenges of Multiple Linear Regression</h2>
+      <ul>
+        <li><strong>Multicollinearity:</strong> correlated features → unstable coefficients.</li>
+        <li><strong>Overfitting:</strong> too complex for available data.</li>
+        <li><strong>Underfitting:</strong> can’t capture patterns when relationship is non-linear.</li>
+        <li><strong>Outliers:</strong> can dominate the fit.</li>
+        <li><strong>Missing data:</strong> creates bias if not handled properly.</li>
+      </ul>
+
+      <h2>Difference: Simple vs Multiple Linear Regression</h2>
+      <div class="data-table-wrap">
+        <table class="data-table" aria-label="Simple vs multiple regression comparison">
+          <thead>
+            <tr>
+              <th>Feature</th>
+              <th>Simple Linear Regression</th>
+              <th>Multiple Linear Regression</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Independent Variables</td>
+              <td>One</td>
+              <td>Two or more</td>
+            </tr>
+            <tr>
+              <td>Model Equation</td>
+              <td>y = w₁x + w₀</td>
+              <td>y = w₀ + w₁x₁ + w₂x₂ + ... + wₚxₚ</td>
+            </tr>
+            <tr>
+              <td>Complexity</td>
+              <td>Less complex</td>
+              <td>More complex (feature interactions, multicollinearity)</td>
+            </tr>
+            <tr>
+              <td>Interpretation</td>
+              <td>Easier</td>
+              <td>Harder (each coefficient depends on other features)</td>
+            </tr>
+            <tr>
+              <td>Real-world use</td>
+              <td>Price from square footage</td>
+              <td>Price from size + location + rooms + facilities</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Applications in Deep Learning, NLP &amp; Generative AI</h2>
+      <p>
+        Multiple Linear Regression is not “separate” from modern AI — the same idea (a weighted sum of multiple inputs)
+        appears everywhere as a baseline model, as a scoring head, or as a final prediction layer.
+      </p>
+
+      <h3>Deep Learning (Neural Networks)</h3>
+      <div class="callout">
+        <strong>Neurons are regression-like:</strong> a neuron computes a weighted sum of multiple inputs \(w_1x_1 + w_2x_2 + \dots + b\).
+        Multiple Linear Regression is the same structure without non-linear activations.
+      </div>
+      <ul>
+        <li><strong>Regression head:</strong> final layer for predicting a continuous value (price, score, time, demand).</li>
+        <li><strong>Multi-input models:</strong> combine many features (tabular + embeddings + signals) into one prediction.</li>
+        <li><strong>Baseline for comparison:</strong> MLR is often the first model to beat before using deep networks.</li>
+      </ul>
+
+      <h3>NLP (Natural Language Processing)</h3>
+      <p>When you convert text to numeric features (TF‑IDF, bag‑of‑words, or embeddings), MLR can predict continuous targets.</p>
+      <div class="pill-row">
+        <span class="pill">Readability score</span>
+        <span class="pill">Sentiment intensity</span>
+        <span class="pill">Toxicity score</span>
+        <span class="pill">Helpfulness score</span>
+      </div>
+      <ul>
+        <li><strong>Sentiment intensity regression:</strong> predict a score (e.g., \(-1\) to \(+1\)) instead of a class.</li>
+        <li><strong>Text complexity / readability:</strong> predict reading level from features.</li>
+        <li><strong>Ranking signals:</strong> predict a “quality” score used for ordering search results or answers.</li>
+      </ul>
+
+      <h3>Generative AI (GenAI)</h3>
+      <p>GenAI systems frequently use linear/multi-linear “heads” to turn representations into scores used in decisions.</p>
+      <ul>
+        <li><strong>Reward modeling (RLHF/RLAIF):</strong> predict a “goodness” score of an output (score = weighted combination of features).</li>
+        <li><strong>Calibration:</strong> adjust scores/probabilities for safer, more accurate outputs.</li>
+        <li><strong>Embedding projection:</strong> map high-dimensional embeddings into target spaces (often with linear layers).</li>
+      </ul>
+
+      <h3>Agentic AI (Tool-using systems)</h3>
+      <ul>
+        <li><strong>Tool selection:</strong> score which tool is best given many signals (intent, cost, confidence, latency).</li>
+        <li><strong>Risk / cost scoring:</strong> predict the risk or cost before executing an action.</li>
+        <li><strong>Planning heuristics:</strong> estimate time and success likelihood from multiple features.</li>
+      </ul>
+
+      <h2>Project Ideas (with Names)</h2>
+      <p>Here are portfolio-ready projects you can build using Multiple Linear Regression.</p>
+      <ol>
+        <li><strong>StartupProfit Predictor</strong> — predict profit from R&amp;D, Administration, Marketing spend.</li>
+        <li><strong>HousePrice++</strong> — price prediction using size, rooms, location, age of building.</li>
+        <li><strong>AdImpact Analyzer</strong> — forecast sales from multi-channel ad spend.</li>
+        <li><strong>HealthRisk Scorecard</strong> — predict risk using age, BMI, BP, sugar level.</li>
+        <li><strong>AgriYield Pro</strong> — crop yield from rainfall + fertilizer + soil nutrients.</li>
+        <li><strong>EnergyDemand Forecaster</strong> — energy usage from temperature + occupancy + time.</li>
+        <li><strong>DeliveryTime Pro</strong> — delivery time from distance + traffic + weather.</li>
+        <li><strong>CreditLimit Estimator</strong> — limit from income + credit history + utilization.</li>
+      </ol>
+    </article>
+
+    <div id="related-topics" class="related-topics"></div>
+  </div>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="/shared/js/navbar.js"></script>
+  <script src="/shared/js/breadcrumb.js"></script>
+  <script src="/shared/js/related.js"></script>
+  <script src="/shared/js/background-animation.js"></script>
+
+  <script>
+    function cssVar(name, fallback) {
+      const v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+      return v || fallback;
+    }
+
+    function themePalette() {
+      const dark = document.documentElement.getAttribute('data-theme') === 'dark';
+      return {
+        dark,
+        text: cssVar('--text-main', dark ? '#e2e8f0' : '#1e293b'),
+        muted: cssVar('--text-muted', dark ? '#94a3b8' : '#64748b'),
+        border: cssVar('--border', dark ? 'rgba(255,255,255,0.08)' : 'rgba(15,23,42,0.08)'),
+        accent: cssVar('--accent', dark ? '#22d3ee' : '#0891b2'),
+        accent2: cssVar('--blue', dark ? '#60a5fa' : '#2563eb'),
+        good: dark ? '#4ade80' : '#059669',
+        warn: dark ? '#facc15' : '#ca8a04',
+        bad: dark ? '#fb7185' : '#e11d48'
+      };
+    }
+
+    function paintCanvasBg(ctx, canvas) {
+      const pal = themePalette();
+      ctx.save();
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = pal.dark ? 'rgba(0,0,0,0.28)' : 'rgba(255,255,255,0.85)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.restore();
+    }
+
+    function drawAxes(ctx, W, H, pad, pal) {
+      ctx.strokeStyle = pal.dark ? 'rgba(255,255,255,0.22)' : 'rgba(15,23,42,0.22)';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(pad, pad);
+      ctx.lineTo(pad, H - pad);
+      ctx.lineTo(W - pad, H - pad);
+      ctx.stroke();
+    }
+
+    function drawHeatmap(canvasId, labels, matrix) {
+      const c = document.getElementById(canvasId);
+      if (!c) return;
+      const ctx = c.getContext('2d');
+      c.width = 920;
+      const W = c.width, H = c.height;
+      const pal = themePalette();
+      paintCanvasBg(ctx, c);
+
+      const pad = 60;
+      const n = labels.length;
+      const cellW = (W - pad - 20) / n;
+      const cellH = (H - pad - 20) / n;
+
+      ctx.font = '12px ui-monospace, monospace';
+      ctx.fillStyle = pal.muted;
+
+      // Axis labels
+      labels.forEach((lab, i) => {
+        ctx.save();
+        ctx.translate(pad + i * cellW + cellW / 2, pad - 10);
+        ctx.rotate(-Math.PI / 5);
+        ctx.textAlign = 'center';
+        ctx.fillText(lab, 0, 0);
+        ctx.restore();
+
+        ctx.textAlign = 'right';
+        ctx.fillText(lab, pad - 10, pad + i * cellH + cellH / 2 + 4);
+      });
+
+      // Cells
+      for (let r = 0; r < n; r++) {
+        for (let col = 0; col < n; col++) {
+          const v = matrix[r][col]; // -1..1
+          const alpha = Math.min(1, Math.max(0.08, Math.abs(v)));
+          const base = v >= 0 ? pal.accent2 : pal.bad;
+          ctx.fillStyle = base + (pal.dark ? '' : '');
+          // manual alpha fill
+          ctx.globalAlpha = 0.15 + 0.55 * alpha;
+          ctx.fillRect(pad + col * cellW, pad + r * cellH, cellW - 2, cellH - 2);
+          ctx.globalAlpha = 1;
+
+          ctx.strokeStyle = pal.border;
+          ctx.strokeRect(pad + col * cellW, pad + r * cellH, cellW - 2, cellH - 2);
+
+          ctx.fillStyle = pal.text;
+          ctx.textAlign = 'center';
+          ctx.fillText(v.toFixed(2), pad + col * cellW + cellW / 2, pad + r * cellH + cellH / 2 + 4);
+        }
+      }
+    }
+
+    function drawBar(canvasId, labels, values) {
+      const c = document.getElementById(canvasId);
+      if (!c) return;
+      const ctx = c.getContext('2d');
+      c.width = 920;
+      const W = c.width, H = c.height;
+      const pal = themePalette();
+      paintCanvasBg(ctx, c);
+
+      const pad = 60;
+      drawAxes(ctx, W, H, pad, pal);
+
+      const maxAbs = Math.max(...values.map(v => Math.abs(v))) || 1;
+      const bw = (W - pad - 20) / values.length - 18;
+      const baseline = (H - pad) - (H - pad * 2) * (maxAbs / (maxAbs * 2)); // center
+      const centerY = pad + (H - pad * 2) / 2;
+
+      // baseline
+      ctx.strokeStyle = pal.dark ? 'rgba(255,255,255,0.18)' : 'rgba(15,23,42,0.18)';
+      ctx.beginPath();
+      ctx.moveTo(pad, centerY);
+      ctx.lineTo(W - 20, centerY);
+      ctx.stroke();
+
+      values.forEach((v, i) => {
+        const x = pad + i * ((W - pad - 20) / values.length) + 12;
+        const barH = (Math.abs(v) / maxAbs) * ((H - pad * 2) / 2);
+        const y = v >= 0 ? centerY - barH : centerY;
+
+        ctx.fillStyle = (v >= 0 ? pal.good : pal.bad);
+        ctx.globalAlpha = 0.75;
+        ctx.fillRect(x, y, bw, barH);
+        ctx.globalAlpha = 1;
+        ctx.strokeStyle = pal.border;
+        ctx.strokeRect(x, y, bw, barH);
+
+        ctx.fillStyle = pal.text;
+        ctx.font = '12px ui-monospace, monospace';
+        ctx.textAlign = 'center';
+        ctx.fillText(v.toFixed(3), x + bw / 2, v >= 0 ? y - 8 : y + barH + 16);
+
+        ctx.fillStyle = pal.muted;
+        ctx.font = '12px ui-monospace, monospace';
+        ctx.fillText(labels[i], x + bw / 2, H - 22);
+      });
+    }
+
+    function drawPredScatter(canvasId, points) {
+      const c = document.getElementById(canvasId);
+      if (!c) return;
+      const ctx = c.getContext('2d');
+      c.width = 920;
+      const W = c.width, H = c.height;
+      const pal = themePalette();
+      paintCanvasBg(ctx, c);
+
+      const pad = 60;
+      drawAxes(ctx, W, H, pad, pal);
+
+      const xs = points.map(p => p.x);
+      const ys = points.map(p => p.y);
+      const min = Math.min(...xs, ...ys);
+      const max = Math.max(...xs, ...ys);
+
+      const toX = v => pad + ((v - min) / (max - min)) * (W - pad - 20);
+      const toY = v => (H - pad) - ((v - min) / (max - min)) * (H - pad * 2);
+
+      // y=x line
+      ctx.strokeStyle = pal.warn;
+      ctx.lineWidth = 2;
+      ctx.globalAlpha = 0.55;
+      ctx.beginPath();
+      ctx.moveTo(toX(min), toY(min));
+      ctx.lineTo(toX(max), toY(max));
+      ctx.stroke();
+      ctx.globalAlpha = 1;
+
+      points.forEach(p => {
+        ctx.fillStyle = pal.accent;
+        ctx.beginPath();
+        ctx.arc(toX(p.x), toY(p.y), 4, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      ctx.fillStyle = pal.muted;
+      ctx.font = '12px ui-monospace, monospace';
+      ctx.fillText('Actual Profit', pad, pad - 10);
+      ctx.fillText('Predicted Profit', pad, H - 10);
+    }
+
+    function renderAllCharts() {
+      // Simple, illustrative correlation values (typical for startup dataset, not exact)
+      const labels = ['R&D', 'Admin', 'Mkt'];
+      const corr = [
+        [ 1.00,  0.20,  0.70],
+        [ 0.20,  1.00,  0.10],
+        [ 0.70,  0.10,  1.00]
+      ];
+      drawHeatmap('corrCanvas', labels, corr);
+
+      // Example coefficients from your text
+      drawBar('coefCanvas', ['R&D', 'Admin', 'Mkt'], [0.81129358, -0.06184074, 0.02515044]);
+
+      // Illustrative predicted vs actual points (rough trend)
+      const pts = [
+        { x: 192261.8, y: 193053.6 },
+        { x: 191792.1, y: 190980.5 },
+        { x: 191050.4, y: 189820.1 },
+        { x: 182902.0, y: 181910.2 },
+        { x: 166187.9, y: 168020.4 },
+        { x: 156991.1, y: 155420.6 },
+        { x: 156122.5, y: 158430.7 },
+        { x: 155752.6, y: 154240.3 },
+        { x: 152211.8, y: 151500.1 },
+        { x: 149760.0, y: 150920.2 },
+        { x: 146122.0, y: 145800.4 },
+        { x: 144259.4, y: 143990.0 }
+      ];
+      drawPredScatter('predCanvas', pts);
+    }
+
+    document.addEventListener('DOMContentLoaded', renderAllCharts);
+    window.addEventListener('ml-theme-change', renderAllCharts);
+  </script>
 </body>
 </html>
+

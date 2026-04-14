@@ -407,6 +407,127 @@
             font-family: 'Courier New', monospace;
         }
 
+        /* ─── Study Roadmap (Tree / Step-wise) ─── */
+        .roadmap {
+            width: 100%;
+            max-width: 680px;
+            margin: 8px auto 0;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            padding: 8px 0 0;
+        }
+
+        .roadmap-step {
+            position: relative;
+            padding-left: 42px;
+        }
+
+        .roadmap-step::before {
+            content: "";
+            position: absolute;
+            left: 15px;
+            top: 0;
+            bottom: -18px;
+            width: 2px;
+            background: linear-gradient(180deg, rgba(37, 99, 235, 0.35), rgba(99, 102, 241, 0.22));
+        }
+
+        .roadmap-step:last-child::before {
+            bottom: 40%;
+        }
+
+        .roadmap-dot {
+            position: absolute;
+            left: 6px;
+            top: 18px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            box-shadow: 0 10px 28px rgba(37, 99, 235, 0.18);
+        }
+
+        .roadmap-dot::after {
+            content: "→";
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -52%);
+            color: rgba(255, 255, 255, 0.95);
+            font-size: 12px;
+            font-weight: 800;
+            font-family: 'Courier New', monospace;
+            line-height: 1;
+        }
+
+        .roadmap-label {
+            display: inline-block;
+            font-size: 0.7rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            font-family: 'Courier New', monospace;
+            color: var(--text-dim);
+            margin-bottom: 6px;
+        }
+
+        .roadmap-card {
+            display: block;
+            text-decoration: none;
+            color: var(--text);
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 16px 18px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+        }
+
+        .roadmap-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(37, 99, 235, 0.35);
+            box-shadow: 0 14px 40px rgba(15, 23, 42, 0.08);
+        }
+
+        .roadmap-title {
+            font-weight: 800;
+            color: var(--heading);
+            font-family: 'Georgia', serif;
+            margin-bottom: 4px;
+            font-size: 1rem;
+            line-height: 1.25;
+        }
+
+        .roadmap-desc {
+            margin: 0;
+            color: var(--text-muted);
+            font-size: 0.88rem;
+            line-height: 1.55;
+        }
+
+        .roadmap-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .roadmap-badge {
+            font-family: 'Courier New', monospace;
+            font-size: 11px;
+            letter-spacing: 0.06em;
+            color: var(--accent);
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            padding: 6px 10px;
+        }
+
+        @media (max-width: 600px) {
+            .roadmap { max-width: 100%; }
+            .roadmap-step { padding-left: 38px; }
+            .roadmap-card { padding: 14px 14px; }
+        }
+
         /* Hierarchy Diagram (Nested Circles) */
         .hierarchy-box {
             position: relative;
@@ -945,6 +1066,151 @@
             Getting started with machine learning can seem intimidating, but with the right resources and guidance, it
             can be a rewarding experience. Here is a 5-step process to get started:
         </p>
+
+        <div class="diagram-container">
+            <div class="diagram-title">Study Roadmap (Start from Topic 1)</div>
+
+            <div class="roadmap" aria-label="Step by step study roadmap">
+                <div class="roadmap-step">
+                    <span class="roadmap-dot" aria-hidden="true"></span>
+                    <div class="roadmap-label">Topic 1</div>
+                    <a class="roadmap-card" href="/topics/introduction.html">
+                        <div class="roadmap-title">Introduction</div>
+                        <p class="roadmap-desc">Understand what ML is, why it matters, and the basic workflow.</p>
+                        <div class="roadmap-badges">
+                            <span class="roadmap-badge">Start here</span>
+                            <span class="roadmap-badge">Big picture</span>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="roadmap-step">
+                    <span class="roadmap-dot" aria-hidden="true"></span>
+                    <div class="roadmap-label">Topic 2</div>
+                    <a class="roadmap-card" href="/topics/basic-concepts.html">
+                        <div class="roadmap-title">Basic Concepts</div>
+                        <p class="roadmap-desc">Learn dataset, features, labels, training, testing, and model basics.</p>
+                        <div class="roadmap-badges">
+                            <span class="roadmap-badge">Core terms</span>
+                            <span class="roadmap-badge">Foundation</span>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="roadmap-step">
+                    <span class="roadmap-dot" aria-hidden="true"></span>
+                    <div class="roadmap-label">Topic 3</div>
+                    <a class="roadmap-card" href="/topics/types-of-data.html">
+                        <div class="roadmap-title">Types of Data</div>
+                        <p class="roadmap-desc">Know structured vs unstructured data and what models need as input.</p>
+                        <div class="roadmap-badges">
+                            <span class="roadmap-badge">Data first</span>
+                            <span class="roadmap-badge">Inputs</span>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="roadmap-step">
+                    <span class="roadmap-dot" aria-hidden="true"></span>
+                    <div class="roadmap-label">Topic 4</div>
+                    <a class="roadmap-card" href="/topics/statistics.html">
+                        <div class="roadmap-title">Statistics</div>
+                        <p class="roadmap-desc">Build intuition for distributions, variation, and measurement.</p>
+                        <div class="roadmap-badges">
+                            <span class="roadmap-badge">Math basics</span>
+                            <span class="roadmap-badge">Intuition</span>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="roadmap-step">
+                    <span class="roadmap-dot" aria-hidden="true"></span>
+                    <div class="roadmap-label">Topic 5</div>
+                    <a class="roadmap-card" href="/topics/data-preparation.html">
+                        <div class="roadmap-title">Data Preparation</div>
+                        <p class="roadmap-desc">Cleaning, handling missing values, scaling, and train/test splitting.</p>
+                        <div class="roadmap-badges">
+                            <span class="roadmap-badge">Preprocessing</span>
+                            <span class="roadmap-badge">Real-world</span>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="roadmap-step">
+                    <span class="roadmap-dot" aria-hidden="true"></span>
+                    <div class="roadmap-label">Next</div>
+                    <a class="roadmap-card" href="/topics/supervised-learning.html">
+                        <div class="roadmap-title">Supervised Learning</div>
+                        <p class="roadmap-desc">The most common learning type: predict outputs from labeled data.</p>
+                        <div class="roadmap-badges">
+                            <span class="roadmap-badge">Predictive</span>
+                            <span class="roadmap-badge">Most used</span>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="roadmap-step">
+                    <span class="roadmap-dot" aria-hidden="true"></span>
+                    <div class="roadmap-label">Choose a branch</div>
+                    <a class="roadmap-card" href="/topics/regression.html">
+                        <div class="roadmap-title">Regression</div>
+                        <p class="roadmap-desc">If your output is a number (price, score, time), study regression.</p>
+                        <div class="roadmap-badges">
+                            <span class="roadmap-badge">Numeric output</span>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="roadmap-step">
+                    <span class="roadmap-dot" aria-hidden="true"></span>
+                    <div class="roadmap-label">Choose a branch</div>
+                    <a class="roadmap-card" href="/topics/classification.html">
+                        <div class="roadmap-title">Classification</div>
+                        <p class="roadmap-desc">If your output is a class/label (spam/ham), study classification.</p>
+                        <div class="roadmap-badges">
+                            <span class="roadmap-badge">Label output</span>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="roadmap-step">
+                    <span class="roadmap-dot" aria-hidden="true"></span>
+                    <div class="roadmap-label">Optional paths</div>
+                    <a class="roadmap-card" href="/topics/clustering.html">
+                        <div class="roadmap-title">Clustering</div>
+                        <p class="roadmap-desc">When you don’t have labels: group similar examples automatically.</p>
+                        <div class="roadmap-badges">
+                            <span class="roadmap-badge">Unsupervised</span>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="roadmap-step">
+                    <span class="roadmap-dot" aria-hidden="true"></span>
+                    <div class="roadmap-label">Advanced</div>
+                    <a class="roadmap-card" href="/topics/deep-learning.html">
+                        <div class="roadmap-title">Deep Learning</div>
+                        <p class="roadmap-desc">After foundations: neural networks for vision, text, and complex data.</p>
+                        <div class="roadmap-badges">
+                            <span class="roadmap-badge">Neural nets</span>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="roadmap-step">
+                    <span class="roadmap-dot" aria-hidden="true"></span>
+                    <div class="roadmap-label">Advanced</div>
+                    <a class="roadmap-card" href="/topics/reinforcement-learning.html">
+                        <div class="roadmap-title">Reinforcement Learning</div>
+                        <p class="roadmap-desc">Learn by rewards and actions (games, control, robotics).</p>
+                        <div class="roadmap-badges">
+                            <span class="roadmap-badge">Rewards</span>
+                            <span class="roadmap-badge">Agents</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
 
         <ol class="step-list">
             <li>

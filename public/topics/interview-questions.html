@@ -9,7 +9,1438 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 <body>
-    <div id="navbar-placeholder"></div>
+    <div id="navbar-place<!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <script src="/shared/js/theme-init.js"></script>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>INTERVIEW QUESTIONS | ML Ecosystem</title>
+            <link rel="stylesheet" href="/shared/css/global.css">
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+            <style>
+                *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+                :root {
+                    --bg: #0d0f14;
+                    --surface: #13161d;
+                    --surface2: #1a1e27;
+                    --border: #252b38;
+                    --accent: #4f8ef7;
+                    --accent2: #7c5af7;
+                    --accent3: #38c9b8;
+                    --warn: #f7c67a;
+                    --danger: #f7667a;
+                    --green: #4af79a;
+                    --text: #e2e8f0;
+                    --text-muted: #8892a4;
+                    --text-dim: #5a6478;
+                    --heading: #f0f4ff;
+                    --radius: 12px;
+                    --radius-sm: 8px;
+                }
+                body { background: var(--bg); color: var(--text); font-family: 'Georgia', serif; font-size: 16px; line-height: 1.75; }
+                .container { max-width: 960px; margin: 0 auto; padding: 48px 24px 96px; }
+        
+                /* breadcrumb */
+                .breadcrumb { font-family: 'Courier New', monospace; font-size: 12px; color: var(--text-dim); margin-bottom: 40px; letter-spacing: .05em; }
+                .breadcrumb::before { content: '› '; color: var(--accent2); font-size: 16px; }
+        
+                /* H1 */
+                h1 { font-family: 'Georgia', serif; font-size: clamp(2rem,5vw,3rem); font-weight: 700; line-height: 1.2; margin-bottom: 20px;
+                    background: linear-gradient(135deg,#f0f4ff 0%,#a8c4ff 50%,#7c9ef7 100%);
+                    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+                .lead { font-size: 1.05rem; color: var(--text-muted); border-left: 3px solid var(--accent); padding-left: 20px; margin-bottom: 44px; line-height: 1.8; }
+        
+                /* TOC */
+                .toc { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px 32px; margin-bottom: 56px; }
+                .toc-title { font-family: 'Courier New', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: .1em; color: var(--text-dim); margin-bottom: 18px; }
+                .toc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px,1fr)); gap: 8px; }
+                .toc-link { display: flex; align-items: center; gap: 10px; padding: 8px 12px; border-radius: var(--radius-sm); text-decoration: none; color: var(--text-muted); font-size: .875rem; border: 1px solid transparent; transition: all .2s; }
+                .toc-link:hover { border-color: var(--border); background: var(--surface2); color: var(--text); }
+                .toc-num { font-family: 'Courier New', monospace; font-size: 10px; color: var(--accent); background: #1e2535; border-radius: 4px; padding: 2px 6px; flex-shrink: 0; }
+        
+                /* Section headers */
+                .section-block { margin-bottom: 72px; }
+                .section-header { display: flex; align-items: center; gap: 16px; margin-bottom: 32px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+                .section-badge { font-family: 'Courier New', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: .1em; padding: 5px 12px; border-radius: 20px; white-space: nowrap; }
+                .section-badge.blue   { background: #1a2540; color: var(--accent);  border: 1px solid #2a3a5a; }
+                .section-badge.purple { background: #1e1a35; color: var(--accent2); border: 1px solid #3a2a5a; }
+                .section-badge.teal   { background: #13261f; color: var(--accent3); border: 1px solid #1e4030; }
+                .section-badge.warn   { background: #261e10; color: var(--warn);    border: 1px solid #4a3a1a; }
+                .section-badge.danger { background: #261216; color: var(--danger);  border: 1px solid #4a2226; }
+                .section-badge.green  { background: #13261a; color: var(--green);   border: 1px solid #1e4a2a; }
+                .section-title { font-family: 'Georgia', serif; font-size: 1.55rem; font-weight: 700; color: var(--heading); }
+        
+                /* Q&A accordion */
+                .qa-block { margin-bottom: 16px; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+                .qa-q { display: flex; align-items: flex-start; gap: 14px; padding: 18px 22px; cursor: pointer; background: var(--surface); transition: background .2s; user-select: none; }
+                .qa-q:hover { background: var(--surface2); }
+                .qa-num { font-family: 'Courier New', monospace; font-size: 11px; color: var(--accent); background: #1e2535; border-radius: 5px; padding: 3px 8px; flex-shrink: 0; margin-top: 2px; }
+                .qa-text { font-weight: 600; color: var(--heading); font-size: .95rem; flex: 1; }
+                .qa-arrow { color: var(--text-dim); font-size: 12px; margin-top: 4px; transition: transform .3s; flex-shrink: 0; }
+                .qa-block.open .qa-arrow { transform: rotate(180deg); }
+                .qa-a { display: none; padding: 20px 22px 22px; background: var(--bg); border-top: 1px solid var(--border); }
+                .qa-block.open .qa-a { display: block; }
+                .qa-a p { color: var(--text); margin-bottom: 12px; font-size: .925rem; line-height: 1.75; }
+                .qa-a p:last-child { margin-bottom: 0; }
+                .qa-a strong { color: var(--heading); }
+        
+                /* Diagrams */
+                .diag { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px 16px 20px; margin: 20px 0 10px; overflow-x: auto; }
+                .diag-title { font-family: 'Courier New', monospace; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 18px; text-align: center; }
+                .diag svg { display: block; margin: 0 auto; }
+        
+                /* Comparison table */
+                .cmp-table { width: 100%; border-collapse: collapse; font-size: .875rem; margin: 16px 0; }
+                .cmp-table th { padding: 11px 14px; text-align: left; font-family: 'Courier New', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: .07em; color: var(--accent); background: var(--surface2); border-bottom: 1px solid var(--border); }
+                .cmp-table td { padding: 11px 14px; color: var(--text-muted); border-bottom: 1px solid var(--border); line-height: 1.5; }
+                .cmp-table tr:last-child td { border-bottom: none; }
+                .cmp-table td:first-child { font-weight: 600; color: var(--text); }
+                .cmp-table tr:hover td { background: var(--surface); }
+        
+                /* Formula box */
+                .formula { background: #0a0c10; border: 1px solid #1e2530; border-left: 3px solid var(--accent2); border-radius: var(--radius-sm); padding: 14px 18px; font-family: 'Courier New', monospace; font-size: .875rem; color: var(--accent3); margin: 12px 0; line-height: 1.8; }
+                .formula .label { font-size: .75rem; color: var(--text-dim); margin-bottom: 6px; }
+        
+                /* Bullet list */
+                .qa-a ul { list-style: none; padding: 0; margin: 10px 0 14px; }
+                .qa-a ul li { position: relative; padding: 6px 0 6px 22px; color: var(--text-muted); font-size: .9rem; border-bottom: 1px solid #1a1e27; }
+                .qa-a ul li:last-child { border-bottom: none; }
+                .qa-a ul li::before { content: '▸'; position: absolute; left: 0; color: var(--accent); font-size: 11px; top: 8px; }
+                .qa-a ul li strong { color: var(--heading); }
+        
+                /* Pill tags */
+                .pill-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0 14px; }
+                .pill { background: #1e2535; border: 1px solid var(--border); border-radius: 20px; padding: 4px 13px; font-family: 'Courier New', monospace; font-size: .775rem; color: var(--accent); }
+        
+                /* Image from Google fallback placeholder styled box */
+                .img-diagram { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; margin: 20px 0 10px; }
+                .img-diagram img { width: 100%; display: block; object-fit: contain; max-height: 340px; background: #fff; }
+                .img-diagram-cap { font-family: 'Courier New', monospace; font-size: 11px; color: var(--text-dim); padding: 8px 16px; text-align: center; letter-spacing: .05em; border-top: 1px solid var(--border); }
+        
+                .related-topics { margin-top: 64px; }
+            </style>
+        </head>
+        <body>
+        <div id="navbar-placeholder"></div>
+        <div class="container">
+            <div id="breadcrumb" class="breadcrumb">ML Ecosystem &nbsp;/&nbsp; Interview Questions</div>
+            <article class="topic-content">
+        
+                <h1>INTERVIEW QUESTIONS</h1>
+                <p class="lead">
+                    90 must-know ML interview questions, organized by topic — from core concepts and regularization to clustering,
+                    reinforcement learning and time series. Each answer includes diagrams, formulas and practical intuition to
+                    help you study deeply, not just memorize.
+                </p>
+        
+                <!-- ══ TABLE OF CONTENTS ══ -->
+                <div class="toc">
+                    <div class="toc-title">Topics Covered</div>
+                    <div class="toc-grid">
+                        <a class="toc-link" href="#s1"><span class="toc-num">Q1–4</span> ML Fundamentals &amp; Regularization</a>
+                        <a class="toc-link" href="#s2"><span class="toc-num">Q5–12</span> Model Evaluation</a>
+                        <a class="toc-link" href="#s3"><span class="toc-num">Q13–16</span> Feature Engineering &amp; Selection</a>
+                        <a class="toc-link" href="#s4"><span class="toc-num">Q17–23</span> Data Preprocessing</a>
+                        <a class="toc-link" href="#s5"><span class="toc-num">Q24–26</span> Bias, Variance &amp; Tuning</a>
+                        <a class="toc-link" href="#s6"><span class="toc-num">Q27–30</span> Linear &amp; Logistic Regression</a>
+                        <a class="toc-link" href="#s7"><span class="toc-num">Q31–35</span> Decision Trees</a>
+                        <a class="toc-link" href="#s8"><span class="toc-num">Q36–38</span> Naive Bayes</a>
+                        <a class="toc-link" href="#s9"><span class="toc-num">Q39–45</span> KNN &amp; Distance Metrics</a>
+                        <a class="toc-link" href="#s10"><span class="toc-num">Q46–48</span> Support Vector Machines</a>
+                        <a class="toc-link" href="#s11"><span class="toc-num">Q49–56</span> Ensemble Learning</a>
+                        <a class="toc-link" href="#s12"><span class="toc-num">Q57–67</span> Clustering &amp; Association</a>
+                        <a class="toc-link" href="#s13"><span class="toc-num">Q68–74</span> Dimensionality Reduction</a>
+                        <a class="toc-link" href="#s14"><span class="toc-num">Q75–78</span> Time Series</a>
+                        <a class="toc-link" href="#s15"><span class="toc-num">Q79–90</span> Reinforcement Learning</a>
+                    </div>
+                </div>
+        
+                <!-- ══════════════════════════════════════════
+                     SECTION 1 — ML FUNDAMENTALS & REGULARIZATION
+                ══════════════════════════════════════════ -->
+                <div class="section-block" id="s1">
+                    <div class="section-header">
+                        <span class="section-badge blue">Section 01</span>
+                        <span class="section-title">ML Fundamentals &amp; Regularization</span>
+                    </div>
+        
+                    <!-- Diagram: AI vs ML vs DS -->
+                    <div class="diag">
+                        <div class="diag-title">AI · ML · Data Science — Venn Relationship</div>
+                        <svg viewBox="0 0 700 260" xmlns="http://www.w3.org/2000/svg" width="100%" style="max-width:700px;min-width:420px;">
+                            <ellipse cx="350" cy="130" rx="310" ry="115" fill="none" stroke="#4f8ef7" stroke-width="1.5" stroke-dasharray="6,3"/>
+                            <text x="100" y="50" font-family="'Courier New',monospace" font-size="12" fill="#4f8ef7">Artificial Intelligence</text>
+                            <ellipse cx="310" cy="145" rx="190" ry="82" fill="#13202e" stroke="#7c5af7" stroke-width="1.5" stroke-dasharray="5,3"/>
+                            <text x="175" y="95" font-family="'Courier New',monospace" font-size="11" fill="#7c5af7">Machine Learning</text>
+                            <ellipse cx="295" cy="158" rx="105" ry="52" fill="#131e2a" stroke="#38c9b8" stroke-width="1.5"/>
+                            <text x="248" y="148" font-family="'Courier New',monospace" font-size="10" fill="#38c9b8">Deep</text>
+                            <text x="240" y="163" font-family="'Courier New',monospace" font-size="10" fill="#38c9b8">Learning</text>
+                            <ellipse cx="530" cy="148" rx="120" ry="68" fill="#201e13" stroke="#f7c67a" stroke-width="1.5" stroke-dasharray="5,3" opacity=".85"/>
+                            <text x="480" y="135" font-family="'Courier New',monospace" font-size="11" fill="#f7c67a">Data</text>
+                            <text x="472" y="150" font-family="'Courier New',monospace" font-size="11" fill="#f7c67a">Science</text>
+                            <text x="418" y="155" font-family="'Courier New',monospace" font-size="9" fill="#5a6478">overlap:</text>
+                            <text x="410" y="168" font-family="'Courier New',monospace" font-size="9" fill="#5a6478">ML models</text>
+                        </svg>
+                    </div>
+        
+                    <div class="qa-block" id="q1">
+                        <div class="qa-q" onclick="toggle(this)">
+                            <span class="qa-num">Q1</span>
+                            <span class="qa-text">What do you understand by Machine Learning (ML) and how does it differ from AI and Data Science?</span>
+                            <span class="qa-arrow">▼</span>
+                        </div>
+                        <div class="qa-a">
+                            <p>Machine Learning (ML) is a branch of Artificial Intelligence that builds algorithms capable of learning from data — instead of being explicitly programmed with fixed rules, algorithms identify patterns and improve with experience.</p>
+                            <table class="cmp-table">
+                                <thead><tr><th>Aspect</th><th>AI</th><th>Machine Learning</th><th>Data Science</th></tr></thead>
+                                <tbody>
+                                    <tr><td>Definition</td><td>Build systems mimicking human intelligence</td><td>Subset of AI learning patterns from data</td><td>Extracting insights and knowledge from data</td></tr>
+                                    <tr><td>Scope</td><td>Reasoning, planning, NLP, robotics</td><td>Classification, regression, clustering</td><td>Data collection, cleaning, visualization, ML, reporting</td></tr>
+                                    <tr><td>Techniques</td><td>Expert systems, NLP, robotics, ML, DL</td><td>Decision trees, neural networks, clustering</td><td>Statistics, ML, data visualization</td></tr>
+                                    <tr><td>Example</td><td>Chatbots, self-driving cars</td><td>Spam detection, fraud detection</td><td>Sales trend analysis, forecasting</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+        
+                    <!-- Diagram: Overfitting vs Underfitting -->
+                    <div class="diag">
+                        <div class="diag-title">Overfitting vs Underfitting — Bias-Variance Intuition</div>
+                        <svg viewBox="0 0 760 190" xmlns="http://www.w3.org/2000/svg" width="100%" style="max-width:760px;min-width:480px;">
+                            <defs><marker id="a" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#3a4560"/></marker></defs>
+                            <!-- Underfitting -->
+                            <rect x="10" y="10" width="218" height="170" rx="9" fill="#1a1520" stroke="#f7a07a" stroke-width="1.5"/>
+                            <text x="119" y="33" text-anchor="middle" font-family="'Courier New',monospace" font-size="11" fill="#f7a07a">UNDERFITTING</text>
+                            <circle cx="55"  cy="130" r="4" fill="#8892a4"/><circle cx="75"  cy="110" r="4" fill="#8892a4"/>
+                            <circle cx="100" cy="90"  r="4" fill="#8892a4"/><circle cx="120" cy="100" r="4" fill="#8892a4"/>
+                            <circle cx="145" cy="78"  r="4" fill="#8892a4"/><circle cx="168" cy="85"  r="4" fill="#8892a4"/>
+                            <line x1="45" y1="148" x2="195" y2="52" stroke="#f7a07a" stroke-width="2" stroke-dasharray="5,3"/>
+                            <text x="119" y="165" text-anchor="middle" font-family="Georgia,serif" font-size="11" fill="#5a6478">Too simple</text>
+        
+                            <!-- Just right -->
+                            <rect x="272" y="10" width="218" height="170" rx="9" fill="#13201a" stroke="#38c9b8" stroke-width="1.8"/>
+                            <text x="381" y="33" text-anchor="middle" font-family="'Courier New',monospace" font-size="11" fill="#38c9b8">JUST RIGHT ✓</text>
+                            <circle cx="302" cy="135" r="4" fill="#8892a4"/><circle cx="322" cy="115" r="4" fill="#8892a4"/>
+                            <circle cx="350" cy="98"  r="4" fill="#8892a4"/><circle cx="370" cy="105" r="4" fill="#8892a4"/>
+                            <circle cx="395" cy="82"  r="4" fill="#8892a4"/><circle cx="420" cy="88"  r="4" fill="#8892a4"/>
+                            <path d="M293,142 Q335,105 381,88 Q415,72 455,62" stroke="#38c9b8" stroke-width="2" fill="none"/>
+                            <text x="381" y="165" text-anchor="middle" font-family="Georgia,serif" font-size="11" fill="#5a6478">Generalises well</text>
+        
+                            <!-- Overfitting -->
+                            <rect x="534" y="10" width="218" height="170" rx="9" fill="#1a1316" stroke="#f7667a" stroke-width="1.5"/>
+                            <text x="643" y="33" text-anchor="middle" font-family="'Courier New',monospace" font-size="11" fill="#f7667a">OVERFITTING</text>
+                            <circle cx="565" cy="135" r="4" fill="#8892a4"/><circle cx="585" cy="115" r="4" fill="#8892a4"/>
+                            <circle cx="610" cy="92"  r="4" fill="#8892a4"/><circle cx="635" cy="104" r="4" fill="#8892a4"/>
+                            <circle cx="658" cy="80"  r="4" fill="#8892a4"/><circle cx="680" cy="88"  r="4" fill="#8892a4"/>
+                            <path d="M558,140 C572,127 577,120 585,115 C595,109 598,76 610,92 C622,108 628,115 635,104 C642,93 650,68 658,80 C666,92 672,98 680,88" stroke="#f7667a" stroke-width="2" fill="none"/>
+                            <text x="643" y="165" text-anchor="middle" font-family="Georgia,serif" font-size="11" fill="#5a6478">Memorises noise</text>
+                        </svg>
+                    </div>
+        
+                    <div class="qa-block">
+                        <div class="qa-q" onclick="toggle(this)">
+                            <span class="qa-num">Q2</span>
+                            <span class="qa-text">What is overfitting in machine learning and how can it be avoided?</span>
+                            <span class="qa-arrow">▼</span>
+                        </div>
+                        <div class="qa-a">
+                            <p><strong>Overfitting</strong> occurs when a model learns noise and random fluctuations in training data — giving high training accuracy but poor performance on unseen data.</p>
+                            <ul>
+                                <li><strong>Early Stopping</strong> — stop training when validation accuracy stops improving</li>
+                                <li><strong>Regularization</strong> — L1 (Lasso) or L2 (Ridge) penalties reduce model complexity</li>
+                                <li><strong>Cross-Validation</strong> — k-fold CV ensures the model generalizes well</li>
+                                <li><strong>Dropout</strong> — randomly drop neurons during neural network training</li>
+                                <li><strong>Simpler Models</strong> — avoid over-complex models when simpler ones explain the data</li>
+                            </ul>
+                            <p><strong>Underfitting</strong> occurs when a model is too simple to capture patterns — poor accuracy on both train and test data. Fix it by: using more complex models, adding relevant features, reducing regularization, or training longer.</p>
+                        </div>
+                    </div>
+        
+                    <!-- Diagram: Regularization -->
+                    <div class="diag">
+                        <div class="diag-title">L1 vs L2 Regularization — Penalty Shape</div>
+                        <svg viewBox="0 0 700 220" xmlns="http://www.w3.org/2000/svg" width="100%" style="max-width:700px;min-width:440px;">
+                            <!-- L1 diamond -->
+                            <text x="175" y="24" text-anchor="middle" font-family="'Courier New',monospace" font-size="12" fill="#f7c67a">L1 (Lasso) Constraint</text>
+                            <polygon points="175,60 235,130 175,200 115,130" fill="#261e10" stroke="#f7c67a" stroke-width="1.5"/>
+                            <line x1="100" y1="130" x2="250" y2="130" stroke="#252b38" stroke-width="1"/>
+                            <line x1="175" y1="50" x2="175" y2="210" stroke="#252b38" stroke-width="1"/>
+                            <text x="175" y="215" text-anchor="middle" font-family="'Courier New',monospace" font-size="9" fill="#5a6478">w₁</text>
+                            <text x="255" y="133" font-family="'Courier New',monospace" font-size="9" fill="#5a6478">w₂</text>
+                            <text x="175" y="148" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="#f7c67a">◆ Diamond</text>
+                            <text x="175" y="163" text-anchor="middle" font-family="'Courier New',monospace" font-size="9" fill="#8892a4">corners → sparse</text>
+                            <text x="175" y="178" text-anchor="middle" font-family="'Courier New',monospace" font-size="9" fill="#8892a4">weights → zero</text>
+        
+                            <!-- Divider -->
+                            <line x1="350" y1="20" x2="350" y2="210" stroke="#1e2530" stroke-width="1" stroke-dasharray="4,3"/>
+        
+                            <!-- L2 circle -->
+                            <text x="525" y="24" text-anchor="middle" font-family="'Courier New',monospace" font-size="12" fill="#4f8ef7">L2 (Ridge) Constraint</text>
+                            <circle cx="525" cy="130" r="70" fill="#131820" stroke="#4f8ef7" stroke-width="1.5"/>
+                            <line x1="445" y1="130" x2="605" y2="130" stroke="#252b38" stroke-width="1"/>
+                            <line x1="525" y1="50" x2="525" y2="210" stroke="#252b38" stroke-width="1"/>
+                            <text x="525" y="215" text-anchor="middle" font-family="'Courier New',monospace" font-size="9" fill="#5a6478">w₁</text>
+                            <text x="610" y="133" font-family="'Courier New',monospace" font-size="9" fill="#5a6478">w₂</text>
+                            <text x="525" y="148" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="#4f8ef7">● Circle</text>
+                            <text x="525" y="163" text-anchor="middle" font-family="'Courier New',monospace" font-size="9" fill="#8892a4">smooth boundary</text>
+                            <text x="525" y="178" text-anchor="middle" font-family="'Courier New',monospace" font-size="9" fill="#8892a4">weights → small ≠ 0</text>
+                        </svg>
+                    </div>
+        
+                    <div class="qa-block">
+                        <div class="qa-q" onclick="toggle(this)">
+                            <span class="qa-num">Q3</span>
+                            <span class="qa-text">What is Regularization?</span>
+                            <span class="qa-arrow">▼</span>
+                        </div>
+                        <div class="qa-a">
+                            <p>Regularization adds a penalty term to the loss function to discourage the model from assigning too much importance (large weights) to specific features, helping it generalize better on unseen data.</p>
+                            <ul>
+                                <li><strong>L1 (Lasso)</strong> — penalty = |w|, can shrink weights to exactly zero (feature selection)</li>
+                                <li><strong>L2 (Ridge)</strong> — penalty = w², reduces large weights without eliminating them</li>
+                                <li><strong>Elastic Net</strong> — combines L1 + L2 to balance selection and weight reduction</li>
+                                <li><strong>Dropout</strong> — for neural networks, randomly drops neurons during training</li>
+                            </ul>
+                        </div>
+                    </div>
+        
+                    <div class="qa-block">
+                        <div class="qa-q" onclick="toggle(this)">
+                            <span class="qa-num">Q4</span>
+                            <span class="qa-text">Explain Lasso, Ridge, and Elastic Net Regularization with formulas.</span>
+                            <span class="qa-arrow">▼</span>
+                        </div>
+                        <div class="qa-a">
+                            <p><strong>L1 (Lasso)</strong> — adds absolute value of weights as penalty. Shrinks some weights to zero → performs feature selection.</p>
+                            <div class="formula"><div class="label">Lasso Loss</div>Loss = MSE + λ Σ|wᵢ|</div>
+                            <p><strong>L2 (Ridge)</strong> — adds squared weights as penalty. Reduces large weights but keeps all features.</p>
+                            <div class="formula"><div class="label">Ridge Loss</div>Loss = MSE + λ Σwᵢ²</div>
+                            <p><strong>Elastic Net</strong> — combines both. Useful when features are correlated (avoids Lasso picking just one from a group).</p>
+                            <div class="formula"><div class="label">Elastic Net</div>Loss = MSE + λ₁Σ|wᵢ| + λ₂Σwᵢ²</div>
+                            <p><strong>Key rule:</strong> Use L1 when many features are irrelevant. Use L2 when all features matter but you want to prevent overfitting. Use Elastic Net when features are correlated.</p>
+                        </div>
+                    </div>
+                </div>
+        
+                <!-- ══════════════════════════════════════════
+                     SECTION 2 — MODEL EVALUATION
+                ══════════════════════════════════════════ -->
+                <div class="section-block" id="s2">
+                    <div class="section-header">
+                        <span class="section-badge purple">Section 02</span>
+                        <span class="section-title">Model Evaluation</span>
+                    </div>
+        
+                    <!-- Confusion matrix diagram -->
+                    <div class="diag">
+                        <div class="diag-title">Confusion Matrix — Classification Performance Grid</div>
+                        <svg viewBox="0 0 520 280" xmlns="http://www.w3.org/2000/svg" width="100%" style="max-width:520px;min-width:340px;">
+                            <!-- Axes labels -->
+                            <text x="270" y="22" text-anchor="middle" font-family="'Courier New',monospace" font-size="11" fill="#8892a4">PREDICTED</text>
+                            <text x="40" y="150" text-anchor="middle" font-family="'Courier New',monospace" font-size="11" fill="#8892a4" transform="rotate(-90,40,150)">ACTUAL</text>
+                            <!-- Column headers -->
+                            <text x="195" y="50" text-anchor="middle" font-family="'Courier New',monospace" font-size="11" fill="#4f8ef7">Positive</text>
+                            <text x="350" y="50" text-anchor="middle" font-family="'Courier New',monospace" font-size="11" fill="#4f8ef7">Negative</text>
+                            <!-- Row headers -->
+                            <text x="85" y="130" text-anchor="middle" font-family="'Courier New',monospace" font-size="11" fill="#f7c67a">Positive</text>
+                            <text x="85" y="215" text-anchor="middle" font-family="'Courier New',monospace" font-size="11" fill="#f7c67a">Negative</text>
+                            <!-- TP -->
+                            <rect x="118" y="60" width="152" height="100" rx="6" fill="#13261a" stroke="#38c9b8" stroke-width="2"/>
+                            <text x="194" y="100" text-anchor="middle" font-family="'Courier New',monospace" font-size="13" fill="#38c9b8" font-weight="700">TP</text>
+                            <text x="194" y="118" text-anchor="middle" font-family="Georgia,serif" font-size="11" fill="#5a6478">True Positive</text>
+                            <text x="194" y="133" text-anchor="middle" font-family="Georgia,serif" font-size="10" fill="#3a8a5a">Correct ✓</text>
+                            <!-- FN -->
+                            <rect x="276" y="60" width="152" height="100" rx="6" fill="#26131a" stroke="#f7667a" stroke-width="1.5"/>
+                            <text x="352" y="100" text-anchor="middle" font-family="'Courier New',monospace" font-size="13" fill="#f7667a" font-weight="700">FN</text>
+                            <text x="352" y="118" text-anchor="middle" font-family="Georgia,serif" font-size="11" fill="#5a6478">False Negative</text>
+                            <text x="352" y="133" text-anchor="middle" font-family="Georgia,serif" font-size="10" fill="#8a3a3a">Miss ✗</text>
+                            <!-- FP -->
+                            <rect x="118" y="166" width="152" height="100" rx="6" fill="#26131a" stroke="#f7a07a" stroke-width="1.5"/>
+                            <text x="194" y="205" text-anchor="middle" font-family="'Courier New',monospace" font-size="13" fill="#f7a07a" font-weight="700">FP</text>
+                            <text x="194" y="223" text-anchor="middle" font-family="Georgia,serif" font-size="11" fill="#5a6478">False Positive</text>
+                            <text x="194" y="238" text-anchor="middle" font-family="Georgia,serif" font-size="10" fill="#8a6a3a">False Alarm ✗</text>
+                            <!-- TN -->
+                            <rect x="276" y="166" width="152" height="100" rx="6" fill="#13261a" stroke="#38c9b8" stroke-width="2"/>
+                            <text x="352" y="205" text-anchor="middle" font-family="'Courier New',monospace" font-size="13" fill="#38c9b8" font-weight="700">TN</text>
+                            <text x="352" y="223" text-anchor="middle" font-family="Georgia,serif" font-size="11" fill="#5a6478">True Negative</text>
+                            <text x="352" y="238" text-anchor="middle" font-family="Georgia,serif" font-size="10" fill="#3a8a5a">Correct ✓</text>
+                        </svg>
+                    </div>
+        
+                    <!-- Precision / Recall / F1 diagram -->
+                    <div class="diag">
+                        <div class="diag-title">Precision · Recall · F1 — Metric Relationships</div>
+                        <svg viewBox="0 0 700 180" xmlns="http://www.w3.org/2000/svg" width="100%" style="max-width:700px;min-width:420px;">
+                            <defs><marker id="b" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#3a4560"/></marker></defs>
+                            <!-- Precision box -->
+                            <rect x="20" y="50" width="160" height="80" rx="8" fill="#13161d" stroke="#4f8ef7" stroke-width="1.5"/>
+                            <text x="100" y="78" text-anchor="middle" font-family="'Courier New',monospace" font-size="12" fill="#4f8ef7" font-weight="700">PRECISION</text>
+                            <text x="100" y="98" text-anchor="middle" font-family="'Courier New',monospace" font-size="11" fill="#8892a4">TP / (TP + FP)</text>
+                            <text x="100" y="118" text-anchor="middle" font-family="Georgia,serif" font-size="10" fill="#5a6478">avoid false positives</text>
+                            <!-- Recall box -->
+                            <rect x="270" y="50" width="160" height="80" rx="8" fill="#13161d" stroke="#f7c67a" stroke-width="1.5"/>
+                            <text x="350" y="78" text-anchor="middle" font-family="'Courier New',monospace" font-size="12" fill="#f7c67a" font-weight="700">RECALL</text>
+                            <text x="350" y="98" text-anchor="middle" font-family="'Courier New',monospace" font-size="11" fill="#8892a4">TP / (TP + FN)</text>
+                            <text x="350" y="118" text-anchor="middle" font-family="Georgia,serif" font-size="10" fill="#5a6478">avoid false negatives</text>
+                            <!-- Arrows to F1 -->
+                            <line x1="180" y1="90" x2="236" y2="90" stroke="#3a4560" stroke-width="1.5" marker-end="url(#b)"/>
+                            <line x1="430" y1="90" x2="486" y2="90" stroke="#3a4560" stroke-width="1.5" marker-end="url(#b)"/>
+                            <!-- F1 box -->
+                            <rect x="510" y="40" width="170" height="100" rx="8" fill="#13201a" stroke="#38c9b8" stroke-width="2"/>
+                            <text x="595" y="70" text-anchor="middle" font-family="'Courier New',monospace" font-size="12" fill="#38c9b8" font-weight="700">F1 SCORE</text>
+                            <text x="595" y="92" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="#8892a4">2 × (P × R)</text>
+                            <text x="595" y="108" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="#8892a4">÷ (P + R)</text>
+                            <text x="595" y="126" text-anchor="middle" font-family="Georgia,serif" font-size="10" fill="#5a6478">harmonic mean</text>
+                            <!-- Between arrow label -->
+                            <text x="208" y="86" font-family="'Courier New',monospace" font-size="9" fill="#3a4560">+</text>
+                            <text x="458" y="86" font-family="'Courier New',monospace" font-size="9" fill="#3a4560">→</text>
+                        </svg>
+                    </div>
+        
+                    <!-- ROC / AUC diagram -->
+                    <div class="diag">
+                        <div class="diag-title">ROC Curve — True Positive Rate vs False Positive Rate</div>
+                        <svg viewBox="0 0 520 300" xmlns="http://www.w3.org/2000/svg" width="100%" style="max-width:520px;min-width:340px;">
+                            <defs><marker id="c" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#5a6478"/></marker></defs>
+                            <!-- Axes -->
+                            <line x1="60" y1="240" x2="420" y2="240" stroke="#252b38" stroke-width="1.5" marker-end="url(#c)"/>
+                            <line x1="60" y1="240" x2="60"  y2="30"  stroke="#252b38" stroke-width="1.5" marker-end="url(#c)"/>
+                            <text x="240" y="268" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="#8892a4">False Positive Rate (FPR)</text>
+                            <text x="22" y="135" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="#8892a4" transform="rotate(-90,22,135)">True Positive Rate (TPR)</text>
+                            <!-- Diagonal random -->
+                            <line x1="60" y1="240" x2="410" y2="40" stroke="#3a4560" stroke-width="1" stroke-dasharray="5,4"/>
+                            <text x="300" y="165" font-family="'Courier New',monospace" font-size="9" fill="#3a4560">Random (AUC=0.5)</text>
+                            <!-- Perfect -->
+                            <polyline points="60,240 60,40 410,40" stroke="#38c9b8" stroke-width="1.5" fill="none" stroke-dasharray="4,3" opacity=".5"/>
+                            <text x="62" y="35" font-family="'Courier New',monospace" font-size="9" fill="#38c9b8">Perfect (AUC=1.0)</text>
+                            <!-- Good classifier ROC -->
+                            <path d="M60,240 Q80,180 120,130 Q180,80 260,58 Q340,45 410,40" stroke="#4f8ef7" stroke-width="2.5" fill="none"/>
+                            <text x="155" y="106" font-family="'Courier New',monospace" font-size="10" fill="#4f8ef7">Good Classifier</text>
+                            <text x="155" y="120" font-family="'Courier New',monospace" font-size="9" fill="#4f8ef7">(AUC ≈ 0.85)</text>
+                            <!-- AUC shading -->
+                            <path d="M60,240 Q80,180 120,130 Q180,80 260,58 Q340,45 410,40 L410,240 Z" fill="#4f8ef7" opacity=".08"/>
+                            <!-- Axis ticks -->
+                            <text x="55" y="243" text-anchor="end" font-family="'Courier New',monospace" font-size="9" fill="#5a6478">0</text>
+                            <text x="55" y="43"  text-anchor="end" font-family="'Courier New',monospace" font-size="9" fill="#5a6478">1</text>
+                            <text x="412" y="252" font-family="'Courier New',monospace" font-size="9" fill="#5a6478">1</text>
+                        </svg>
+                    </div>
+        
+                    <div class="qa-block">
+                        <div class="qa-q" onclick="toggle(this)">
+                            <span class="qa-num">Q5–9</span>
+                            <span class="qa-text">Model Evaluation Techniques — Train-Test Split, Confusion Matrix, Precision, Recall, AUC-ROC</span>
+                            <span class="qa-arrow">▼</span>
+                        </div>
+                        <div class="qa-a">
+                            <p><strong>Train-Test Split</strong> — divide data into training (70–80%) and testing (20–30%) sets. Model trains on training set and is evaluated on unseen test set.</p>
+                            <p><strong>Confusion Matrix</strong> — a 2×2 table comparing predicted vs actual labels showing TP, TN, FP, FN. Used to derive Accuracy, Precision, Recall and F1.</p>
+                            <p><strong>Precision</strong> — TP / (TP + FP). How many predicted positives are truly positive. High precision avoids false alarms (e.g., spam detection).</p>
+                            <p><strong>Recall (Sensitivity)</strong> — TP / (TP + FN). How many actual positives are found. High recall avoids missing cases (e.g., disease detection).</p>
+                            <p><strong>F1-Score</strong> — harmonic mean of precision and recall. Best metric when classes are imbalanced.</p>
+                            <div class="formula">F1 = 2 × (Precision × Recall) / (Precision + Recall)</div>
+                            <p><strong>ROC Curve</strong> — plots TPR vs FPR across thresholds. <strong>AUC = 1</strong> → perfect; <strong>AUC = 0.5</strong> → random guess. Higher AUC = better model discrimination.</p>
+                            <p><strong>Is accuracy always good?</strong> No — in imbalanced datasets, a model predicting the majority class always gets high accuracy but fails on the minority class. Use F1 and AUC instead.</p>
+                        </div>
+                    </div>
+        
+                    <!-- K-Fold diagram -->
+                    <div class="diag">
+                        <div class="diag-title">k-Fold Cross-Validation (k=5) — Rotating Test Fold</div>
+                        <svg viewBox="0 0 680 190" xmlns="http://www.w3.org/2000/svg" width="100%" style="max-width:680px;min-width:440px;">
+                            <text x="8" y="30" font-family="'Courier New',monospace" font-size="10" fill="#5a6478">Iteration</text>
+                            <text x="8" y="60"  font-family="'Courier New',monospace" font-size="9" fill="#8892a4">1</text>
+                            <text x="8" y="95"  font-family="'Courier New',monospace" font-size="9" fill="#8892a4">2</text>
+                            <text x="8" y="130" font-family="'Courier New',monospace" font-size="9" fill="#8892a4">3</text>
+                            <text x="8" y="165" font-family="'Courier New',monospace" font-size="9" fill="#8892a4">4</text>
+                            <!-- Row 1 -->
+                            <rect x="36" y="44" width="108" height="26" rx="4" fill="#f7667a" stroke="none"/><text x="90" y="62" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="#fff">TEST</text>
+                            <rect x="150" y="44" width="108" height="26" rx="4" fill="#1e2535" stroke="#252b38"/><text x="204" y="62" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="#4f8ef7">TRAIN</text>
+                            <rect x="264" y="44" width="108" height="26" rx="4" fill="#1e2535" stroke="#252b38"/><text x="318" y="62" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="#4f8ef7">TRAIN</text>
+                            <rect x="378" y="44" width="108" height="26" rx="4" fill="#1e2535" stroke="#252b38"/><text x="432" y="62" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="#4f8ef7">TRAIN</text>
+                            <rect x="492" y="44" width="108" height="26" rx="4" fill="#1e2535" stroke="#252b38"/><text x="546" y="62" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="#4f8ef7">TRAIN</text>
+                            <!-- Row 2 -->
+                            <rect x="36"  y="80" width="108" height="26" rx="4" fill="#1e2535" stroke="#252b38"/><text x="90"  y="98" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="#4f8ef7">TRAIN</text>
+                            <rect x="150" y="80" width="108" height="26" rx="4" fill="#f7667a" stroke="none"/><text x="204" y="98" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="#fff">TEST</text>
+                            <rect x="264" y="80" width="108" height="26" rx="4" fill="#1e2535" stroke="#252b38"/><text x="318" y="98" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="#4f8ef7">TRAIN</text>
+                            <rect x="378" y="80" width="108" height="26" rx="4" fill="#1e2535" stroke="#252b38"/><text x="432" y="98" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="#4f8ef7">TRAIN</text>
+                            <rect x="492" y="80" width="108" height="26" rx="4" fill="#1e2535" stroke="#252b38"/><text x="546" y="98" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="#4f8ef7">TRAIN</text>
+                            <!-- Row 3 -->
+                            <rect x="36"  y="116" width="108" height="26" rx="4" fill="#1e2535" stroke="#252b38"/><text x="90"  y="134" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="#4f8ef7">TRAIN</text>
+                            <rect x="150" y="116" width="108" height="26" rx="4" fill="#1e2535" stroke="#252b38"/><text x="204" y="134" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="#4f8ef7">TRAIN</text>
+                            <rect x="264" y="116" width="108" height="26" rx="4" fill="#f7667a" stroke="none"/><text x="318" y="134" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="#fff">TEST</text>
+                            <rect x="378" y="116" width="108" height="26" rx="4" fill="#1e2535" stroke="#252b38"/><text x="432" y="134" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="#4f8ef7">TRAIN</text>
+                            <rect x="492" y="116" width="108" height="26" rx="4" fill="#1e2535" stroke="#252b38"/><text x="546" y="134" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="#4f8ef7">TRAIN</text>
+                            <!-- Row 4 -->
+                            <rect x="36"  y="152" width="108" height="26" rx="4" fill="#1e2535" stroke="#252b38"/><text x="90"  y="170" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="#4f8ef7">TRAIN</text>
+                            <rect x="150" y="152" width="108" height="26" rx="4" fill="#1e2535" stroke="#252b38"/><text x="204" y="170" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="#4f8ef7">TRAIN</text>
+                            <rect x="264" y="152" width="108" height="26" rx="4" fill="#1e2535" stroke="#252b38"/><text x="318" y="170" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="#4f8ef7">TRAIN</text>
+                            <rect x="378" y="152" width="108" height="26" rx="4" fill="#f7667a" stroke="none"/><text x="432" y="170" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="#fff">TEST</text>
+                            <rect x="492" y="152" width="108" height="26" rx="4" fill="#1e2535" stroke="#252b38"/><text x="546" y="170" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="#4f8ef7">TRAIN</text>
+                            <text x="620" y="100" font-family="'Courier New',monospace" font-size="10" fill="#8892a4">Final =</text>
+                            <text x="620" y="116" font-family="'Courier New',monospace" font-size="10" fill="#8892a4">avg of</text>
+                            <text x="620" y="132" font-family="'Courier New',monospace" font-size="10" fill="#38c9b8">all scores</text>
+                        </svg>
+                    </div>
+        
+                    <div class="qa-block">
+                        <div class="qa-q" onclick="toggle(this)">
+                            <span class="qa-num">Q11–12</span>
+                            <span class="qa-text">What is Cross-Validation? Explain k-Fold, LOO, and Hold-Out methods.</span>
+                            <span class="qa-arrow">▼</span>
+                        </div>
+                        <div class="qa-a">
+                            <p><strong>Cross-validation</strong> tests how well a model generalizes to unseen data by splitting the dataset into multiple subsets (folds), training and testing on different folds each time.</p>
+                            <p><strong>k-Fold CV</strong> — split data into k equal folds. Train on k-1 folds, test on the remaining fold, repeat k times. Final score = average of all k results.</p>
+                            <div class="formula">CV_error = (1/k) × Σᵢ errorᵢ</div>
+                            <p><strong>Leave-One-Out (LOO)</strong> — special case of k-Fold where k = number of samples. Every single point acts as the test set once. Very accurate but computationally expensive for large datasets.</p>
+                            <p><strong>Hold-Out Method</strong> — simplest split (e.g., 70% train, 30% test). Fast but may produce biased results depending on the split.</p>
+                        </div>
+                    </div>
+                </div>
+        
+                <!-- ══════════════════════════════════════════
+                     SECTION 3 — FEATURE ENGINEERING
+                ══════════════════════════════════════════ -->
+                <div class="section-block" id="s3">
+                    <div class="section-header">
+                        <span class="section-badge teal">Section 03</span>
+                        <span class="section-title">Feature Engineering &amp; Selection</span>
+                    </div>
+        
+                    <div class="diag">
+                        <div class="diag-title">Feature Selection Methods — Three Families</div>
+                        <svg viewBox="0 0 720 200" xmlns="http://www.w3.org/2000/svg" width="100%" style="max-width:720px;min-width:440px;">
+                            <!-- Filter -->
+                            <rect x="20" y="20" width="210" height="160" rx="9" fill="#13161d" stroke="#4f8ef7" stroke-width="1.5"/>
+                            <text x="125" y="46" text-anchor="middle" font-family="'Courier New',monospace" font-size="11" fill="#4f8ef7">FILTER METHODS</text>
+                            <text x="125" y="66" text-anchor="middle" font-family="Georgia,serif" font-size="10" fill="#8892a4">Statistical measures only</text>
+                            <text x="35" y="90"  font-family="'Courier New',monospace" font-size="10" fill="#5a6478">▸ Correlation Coefficient</text>
+                            <text x="35" y="108" font-family="'Courier New',monospace" font-size="10" fill="#5a6478">▸ Chi-Square Test</text>
+                            <text x="35" y="126" font-family="'Courier New',monospace" font-size="10" fill="#5a6478">▸ ANOVA F-Test</text>
+                            <text x="35" y="158" font-family="Georgia,serif" font-size="9" fill="#3a4560">Fast · Independent · No model</text>
+                            <!-- Wrapper -->
+                            <rect x="255" y="20" width="210" height="160" rx="9" fill="#13161d" stroke="#7c5af7" stroke-width="1.5"/>
+                            <text x="360" y="46" text-anchor="middle" font-family="'Courier New',monospace" font-size="11" fill="#7c5af7">WRAPPER METHODS</text>
+                            <text x="360" y="66" text-anchor="middle" font-family="Georgia,serif" font-size="10" fill="#8892a4">Feature subsets + model eval</text>
+                            <text x="270" y="90"  font-family="'Courier New',monospace" font-size="10" fill="#5a6478">▸ Forward Selection</text>
+                            <text x="270" y="108" font-family="'Courier New',monospace" font-size="10" fill="#5a6478">▸ Backward Elimination</text>
+                            <text x="270" y="126" font-family="'Courier New',monospace" font-size="10" fill="#5a6478">▸ Recursive Feature Elim (RFE)</text>
+                            <text x="270" y="158" font-family="Georgia,serif" font-size="9" fill="#3a4560">Thorough · Slow · Model-specific</text>
+                            <!-- Embedded -->
+                            <rect x="490" y="20" width="210" height="160" rx="9" fill="#13161d" stroke="#38c9b8" stroke-width="1.5"/>
+                            <text x="595" y="46" text-anchor="middle" font-family="'Courier New',monospace" font-size="11" fill="#38c9b8">EMBEDDED METHODS</text>
+                            <text x="595" y="66" text-anchor="middle" font-family="Georgia,serif" font-size="10" fill="#8892a4">Selection during training</text>
+                            <text x="505" y="90"  font-family="'Courier New',monospace" font-size="10" fill="#5a6478">▸ Lasso (L1) Regression</text>
+                            <text x="505" y="108" font-family="'Courier New',monospace" font-size="10" fill="#5a6478">▸ Decision Tree Importance</text>
+                            <text x="505" y="126" font-family="'Courier New',monospace" font-size="10" fill="#5a6478">▸ Random Forest Importance</text>
+                            <text x="505" y="158" font-family="Georgia,serif" font-size="9" fill="#3a4560">Efficient · Built-in · Balanced</text>
+                        </svg>
+                    </div>
+        
+                    <div class="qa-block">
+                        <div class="qa-q" onclick="toggle(this)">
+                            <span class="qa-num">Q13–16</span>
+                            <span class="qa-text">Feature Engineering, Feature Selection, Dimensionality Reduction — explained</span>
+                            <span class="qa-arrow">▼</span>
+                        </div>
+                        <div class="qa-a">
+                            <p><strong>Feature Engineering</strong> — creating, transforming or selecting relevant features from raw data. Better features → better model accuracy and generalization.</p>
+                            <ul>
+                                <li><strong>Feature Creation</strong> — extract "year" from date, "age" from date of birth</li>
+                                <li><strong>Transformation</strong> — log, square root, normalization, scaling</li>
+                                <li><strong>Encoding</strong> — one-hot encoding, label encoding for categorical variables</li>
+                                <li><strong>Selection</strong> — keep only the most relevant features</li>
+                            </ul>
+                            <p><strong>Feature Selection</strong> — removes irrelevant or redundant features using Filter, Wrapper, or Embedded methods.</p>
+                            <p><strong>Dimensionality Reduction</strong> — reduces number of features while retaining most information. Reduces overfitting, speeds up computation, enables 2D/3D visualization. Example: PCA reduces 100 features to 10 principal components capturing 95% variance.</p>
+                        </div>
+                    </div>
+                </div>
+        
+                <!-- ══════════════════════════════════════════
+                     SECTION 4 — DATA PREPROCESSING
+                ══════════════════════════════════════════ -->
+                <div class="section-block" id="s4">
+                    <div class="section-header">
+                        <span class="section-badge warn">Section 04</span>
+                        <span class="section-title">Data Preprocessing</span>
+                    </div>
+        
+                    <!-- One-hot vs label encoding diagram -->
+                    <div class="diag">
+                        <div class="diag-title">Label Encoding vs One-Hot Encoding</div>
+                        <svg viewBox="0 0 680 200" xmlns="http://www.w3.org/2000/svg" width="100%" style="max-width:680px;min-width:420px;">
+                            <!-- Raw -->
+                            <text x="80" y="26" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="#5a6478">RAW</text>
+                            <rect x="20" y="35" width="120" height="26" rx="4" fill="#13161d" stroke="#252b38"/><text x="80" y="54" text-anchor="middle" font-family="'Courier New',monospace" font-size="11" fill="#8892a4">Red</text>
+                            <rect x="20" y="66" width="120" height="26" rx="4" fill="#13161d" stroke="#252b38"/><text x="80" y="85" text-anchor="middle" font-family="'Courier New',monospace" font-size="11" fill="#8892a4">Blue</text>
+                            <rect x="20" y="97" width="120" height="26" rx="4" fill="#13161d" stroke="#252b38"/><text x="80" y="116" text-anchor="middle" font-family="'Courier New',monospace" font-size="11" fill="#8892a4">Green</text>
+        
+                            <!-- Arrow Label -->
+                            <line x1="145" y1="90" x2="185" y2="70" stroke="#3a4560" stroke-width="1.2"/>
+                            <line x1="145" y1="90" x2="185" y2="130" stroke="#3a4560" stroke-width="1.2"/>
+                            <text x="148" y="88" font-family="'Courier New',monospace" font-size="9" fill="#3a4560">encode</text>
+        
+                            <!-- Label Encoding -->
+                            <text x="270" y="26" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="#f7c67a">LABEL ENCODING</text>
+                            <rect x="190" y="35" width="160" height="26" rx="4" fill="#13161d" stroke="#f7c67a" stroke-width="1.5"/>
+                            <text x="260" y="54" text-anchor="middle" font-family="'Courier New',monospace" font-size="11" fill="#f7c67a">Red → 0</text>
+                            <rect x="190" y="66" width="160" height="26" rx="4" fill="#13161d" stroke="#f7c67a" stroke-width="1.5"/>
+                            <text x="260" y="85" text-anchor="middle" font-family="'Courier New',monospace" font-size="11" fill="#f7c67a">Blue → 1</text>
+                            <rect x="190" y="97" width="160" height="26" rx="4" fill="#13161d" stroke="#f7c67a" stroke-width="1.5"/>
+                            <text x="260" y="116" text-anchor="middle" font-family="'Courier New',monospace" font-size="11" fill="#f7c67a">Green → 2</text>
+                            <text x="270" y="142" text-anchor="middle" font-family="Georgia,serif" font-size="9" fill="#5a6478">⚠ implies order — use for ordinal only</text>
+        
+                            <!-- One-Hot Encoding -->
+                            <text x="520" y="26" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="#38c9b8">ONE-HOT ENCODING</text>
+                            <rect x="370" y="35" width="50" height="26" rx="3" fill="#13201a" stroke="#38c9b8"/><text x="395" y="54" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="#38c9b8">R</text>
+                            <rect x="425" y="35" width="50" height="26" rx="3" fill="#13201a" stroke="#38c9b8"/><text x="450" y="54" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="#38c9b8">B</text>
+                            <rect x="480" y="35" width="50" height="26" rx="3" fill="#13201a" stroke="#38c9b8"/><text x="505" y="54" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="#38c9b8">G</text>
+        
+                            <rect x="370" y="66" width="50" height="26" rx="3" fill="#13201a" stroke="#252b38"/><text x="395" y="85" text-anchor="middle" font-family="'Courier New',monospace" font-size="11" fill="#4af79a">1</text>
+                            <rect x="425" y="66" width="50" height="26" rx="3" fill="#13201a" stroke="#252b38"/><text x="450" y="85" text-anchor="middle" font-family="'Courier New',monospace" font-size="11" fill="#5a6478">0</text>
+                            <rect x="480" y="66" width="50" height="26" rx="3" fill="#13201a" stroke="#252b38"/><text x="505" y="85" text-anchor="middle" font-family="'Courier New',monospace" font-size="11" fill="#5a6478">0</text>
+                            <text x="395" y="108" text-anchor="middle" font-family="'Courier New',monospace" font-size="9" fill="#5a6478">Red=[1,0,0]</text>
+        
+                            <rect x="370" y="97" width="50" height="26" rx="3" fill="#13201a" stroke="#252b38"/><text x="395" y="116" text-anchor="middle" font-family="'Courier New',monospace" font-size="11" fill="#5a6478">0</text>
+                            <rect x="425" y="97" width="50" height="26" rx="3" fill="#13201a" stroke="#252b38"/><text x="450" y="116" text-anchor="middle" font-family="'Courier New',monospace" font-size="11" fill="#4af79a">1</text>
+                            <rect x="480" y="97" width="50" height="26" rx="3" fill="#13201a" stroke="#252b38"/><text x="505" y="116" text-anchor="middle" font-family="'Courier New',monospace" font-size="11" fill="#5a6478">0</text>
+                            <text x="395" y="145" text-anchor="middle" font-family="Georgia,serif" font-size="9" fill="#5a6478">✓ no implied order</text>
+                        </svg>
+                    </div>
+        
+                    <!-- SMOTE diagram -->
+                    <div class="diag">
+                        <div class="diag-title">SMOTE — Synthetic Minority Over-Sampling</div>
+                        <svg viewBox="0 0 640 200" xmlns="http://www.w3.org/2000/svg" width="100%" style="max-width:640px;min-width:400px;">
+                            <!-- Before -->
+                            <text x="140" y="22" text-anchor="middle" font-family="'Courier New',monospace" font-size="11" fill="#aaaaaa">BEFORE (Imbalanced)</text>
+                            <circle cx="80"  cy="80"  r="8" fill="#4f8ef7"/><circle cx="110" cy="95"  r="8" fill="#4f8ef7"/>
+                            <circle cx="95"  cy="60"  r="8" fill="#4f8ef7"/><circle cx="130" cy="70"  r="8" fill="#4f8ef7"/>
+                            <circle cx="75"  cy="110" r="8" fill="#4f8ef7"/><circle cx="115" cy="50"  r="8" fill="#4f8ef7"/>
+                            <circle cx="140" cy="90"  r="8" fill="#4f8ef7"/><circle cx="100" cy="130" r="8" fill="#4f8ef7"/>
+                            <circle cx="180" cy="75"  r="8" fill="#4f8ef7"/><circle cx="160" cy="110" r="8" fill="#4f8ef7"/>
+                            <!-- minority -->
+                            <circle cx="80"  cy="160" r="7" fill="#f7667a"/><circle cx="110" cy="155" r="7" fill="#f7667a"/>
+                            <text x="60"  cy="175" font-family="'Courier New',monospace" font-size="9" fill="#8892a4">minority (few)</text>
+                            <text x="140" y="175" font-family="'Courier New',monospace" font-size="9" fill="#4f8ef7">majority (many)</text>
+        
+                            <!-- Arrow -->
+                            <text x="310" y="98" text-anchor="middle" font-family="'Courier New',monospace" font-size="22" fill="#f7c67a">→</text>
+                            <text x="310" y="116" text-anchor="middle" font-family="'Courier New',monospace" font-size="9" fill="#f7c67a">SMOTE</text>
+        
+                            <!-- After -->
+                            <text x="490" y="22" text-anchor="middle" font-family="'Courier New',monospace" font-size="11" fill="#aaaaaa">AFTER (Balanced)</text>
+                            <circle cx="390" cy="80"  r="8" fill="#4f8ef7"/><circle cx="420" cy="95"  r="8" fill="#4f8ef7"/>
+                            <circle cx="405" cy="60"  r="8" fill="#4f8ef7"/><circle cx="440" cy="70"  r="8" fill="#4f8ef7"/>
+                            <circle cx="385" cy="110" r="8" fill="#4f8ef7"/><circle cx="425" cy="50"  r="8" fill="#4f8ef7"/>
+                            <circle cx="450" cy="90"  r="8" fill="#4f8ef7"/><circle cx="410" cy="130" r="8" fill="#4f8ef7"/>
+                            <circle cx="490" cy="75"  r="8" fill="#4f8ef7"/><circle cx="470" cy="110" r="8" fill="#4f8ef7"/>
+                            <!-- minority now balanced -->
+                            <circle cx="390" cy="155" r="7" fill="#f7667a"/><circle cx="415" cy="145" r="7" fill="#f7667a"/>
+                            <circle cx="440" cy="158" r="7" fill="#f7667a"/><circle cx="465" cy="148" r="7" fill="#f7667a"/>
+                            <circle cx="490" cy="160" r="7" fill="#f7667a"/><circle cx="510" cy="145" r="7" fill="#f7667a"/>
+                            <!-- synthetic indicator -->
+                            <circle cx="535" cy="155" r="7" fill="none" stroke="#f7667a" stroke-width="2" stroke-dasharray="3,2"/>
+                            <circle cx="555" cy="145" r="7" fill="none" stroke="#f7667a" stroke-width="2" stroke-dasharray="3,2"/>
+                            <text x="530" y="180" font-family="'Courier New',monospace" font-size="8" fill="#f7667a">synthetic</text>
+                            <!-- interpolation line -->
+                            <line x1="390" y1="155" x2="415" y2="145" stroke="#f7667a" stroke-width="1" stroke-dasharray="3,2" opacity=".6"/>
+                            <line x1="415" y1="145" x2="535" y2="155" stroke="#f7667a" stroke-width="1" stroke-dasharray="3,2" opacity=".6"/>
+                        </svg>
+                    </div>
+        
+                    <div class="qa-block">
+                        <div class="qa-q" onclick="toggle(this)">
+                            <span class="qa-num">Q17–23</span>
+                            <span class="qa-text">Categorical Data, Missing Values, Outliers, Upsampling / Downsampling</span>
+                            <span class="qa-arrow">▼</span>
+                        </div>
+                        <div class="qa-a">
+                            <p><strong>Categorical Data</strong> — features representing discrete categories (gender, color). Types: Nominal (no order: Red/Blue) and Ordinal (ordered: Low/Medium/High). ML models need numerical inputs so encoding is required.</p>
+                            <p><strong>Label Encoding</strong> — assigns an integer to each category. Use for ordinal data. Risk: implies false ordering for nominal data.</p>
+                            <p><strong>One-Hot Encoding</strong> — creates a binary column per category. Use for nominal data. Risk: high dimensionality for many categories.</p>
+                            <p><strong>Missing Values</strong> — handle by: (1) drop rows/columns, (2) impute with mean/median/mode, (3) forward/backward fill for time series, (4) flag with binary column, (5) prediction-based imputation.</p>
+                            <p><strong>Outliers</strong> — data points significantly different from others. Detected via IQR method (outside Q1–1.5×IQR or Q3+1.5×IQR) or Z-score (|z|>3). Handle by: removing, transforming (log), capping (Winsorization), or using robust models.</p>
+                            <p><strong>Upsampling (SMOTE)</strong> — creates synthetic minority samples by interpolating between existing points. Avoids pure duplication. Useful for imbalanced classification.</p>
+                            <p><strong>Downsampling</strong> — reduce majority class samples. Faster training but risks losing information.</p>
+                        </div>
+                    </div>
+                </div>
+        
+                <!-- ══════════════════════════════════════════
+                     SECTION 5 — BIAS, VARIANCE & TUNING
+                ══════════════════════════════════════════ -->
+                <div class="section-block" id="s5">
+                    <div class="section-header">
+                        <span class="section-badge danger">Section 05</span>
+                        <span class="section-title">Bias, Variance &amp; Hyperparameter Tuning</span>
+                    </div>
+        
+                    <div class="diag">
+                        <div class="diag-title">Bias-Variance Tradeoff — Target Analogy</div>
+                        <svg viewBox="0 0 680 210" xmlns="http://www.w3.org/2000/svg" width="100%" style="max-width:680px;min-width:440px;">
+                            <!-- Low Bias, Low Variance -->
+                            <circle cx="90" cy="100" r="68" fill="none" stroke="#252b38" stroke-width="1"/>
+                            <circle cx="90" cy="100" r="45" fill="none" stroke="#252b38" stroke-width="1"/>
+                            <circle cx="90" cy="100" r="22" fill="none" stroke="#252b38" stroke-width="1"/>
+                            <circle cx="90" cy="100" r="6" fill="#252b38"/>
+                            <circle cx="85" cy="97"  r="4" fill="#38c9b8"/><circle cx="93" cy="103" r="4" fill="#38c9b8"/>
+                            <circle cx="88" cy="105" r="4" fill="#38c9b8"/><circle cx="92" cy="96"  r="4" fill="#38c9b8"/>
+                            <text x="90" y="185" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="#38c9b8">Low Bias</text>
+                            <text x="90" y="200" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="#38c9b8">Low Variance ✓</text>
+        
+                            <!-- High Bias, Low Variance -->
+                            <circle cx="255" cy="100" r="68" fill="none" stroke="#252b38" stroke-width="1"/>
+                            <circle cx="255" cy="100" r="45" fill="none" stroke="#252b38" stroke-width="1"/>
+                            <circle cx="255" cy="100" r="22" fill="none" stroke="#252b38" stroke-width="1"/>
+                            <circle cx="255" cy="100" r="6" fill="#252b38"/>
+                            <circle cx="220" cy="68"  r="4" fill="#f7c67a"/><circle cx="216" cy="62" r="4" fill="#f7c67a"/>
+                            <circle cx="224" cy="72"  r="4" fill="#f7c67a"/><circle cx="218" cy="65" r="4" fill="#f7c67a"/>
+                            <text x="255" y="185" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="#f7c67a">High Bias</text>
+                            <text x="255" y="200" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="#f7c67a">Low Variance</text>
+        
+                            <!-- Low Bias, High Variance -->
+                            <circle cx="430" cy="100" r="68" fill="none" stroke="#252b38" stroke-width="1"/>
+                            <circle cx="430" cy="100" r="45" fill="none" stroke="#252b38" stroke-width="1"/>
+                            <circle cx="430" cy="100" r="22" fill="none" stroke="#252b38" stroke-width="1"/>
+                            <circle cx="430" cy="100" r="6" fill="#252b38"/>
+                            <circle cx="410" cy="70"  r="4" fill="#4f8ef7"/><circle cx="460" cy="130" r="4" fill="#4f8ef7"/>
+                            <circle cx="390" cy="110" r="4" fill="#4f8ef7"/><circle cx="455" cy="72"  r="4" fill="#4f8ef7"/>
+                            <text x="430" y="185" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="#4f8ef7">Low Bias</text>
+                            <text x="430" y="200" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="#4f8ef7">High Variance</text>
+        
+                            <!-- High Bias, High Variance -->
+                            <circle cx="600" cy="100" r="68" fill="none" stroke="#252b38" stroke-width="1"/>
+                            <circle cx="600" cy="100" r="45" fill="none" stroke="#252b38" stroke-width="1"/>
+                            <circle cx="600" cy="100" r="22" fill="none" stroke="#252b38" stroke-width="1"/>
+                            <circle cx="600" cy="100" r="6" fill="#252b38"/>
+                            <circle cx="560" cy="68"  r="4" fill="#f7667a"/><circle cx="635" cy="142" r="4" fill="#f7667a"/>
+                            <circle cx="575" cy="142" r="4" fill="#f7667a"/><circle cx="638" cy="72"  r="4" fill="#f7667a"/>
+                            <text x="600" y="185" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="#f7667a">High Bias</text>
+                            <text x="600" y="200" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="#f7667a">High Variance ✗</text>
+                        </svg>
+                    </div>
+        
+                    <div class="qa-block">
+                        <div class="qa-q" onclick="toggle(this)">
+                            <span class="qa-num">Q25–26</span>
+                            <span class="qa-text">Bias-Variance Tradeoff and Hyperparameter Tuning</span>
+                            <span class="qa-arrow">▼</span>
+                        </div>
+                        <div class="qa-a">
+                            <p><strong>Bias</strong> — error from wrong assumptions. High bias = underfitting. Model too simple (e.g., linear model on non-linear data).</p>
+                            <p><strong>Variance</strong> — error from sensitivity to small fluctuations. High variance = overfitting. Model too complex (e.g., deep decision tree).</p>
+                            <div class="formula">Total Error = Bias² + Variance + Irreducible Error</div>
+                            <p>Decreasing bias usually increases variance and vice versa. The goal is to minimize total error.</p>
+                            <p><strong>Hyperparameter Tuning</strong> — finding the best set of hyperparameters (set before training, not learned from data):</p>
+                            <ul>
+                                <li><strong>Grid Search</strong> — tries all combinations. Exhaustive but slow for large spaces</li>
+                                <li><strong>Random Search</strong> — randomly samples combinations. Faster than grid search</li>
+                                <li><strong>Bayesian Optimization</strong> — builds probabilistic model to choose parameters intelligently. Most efficient</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+        
+                <!-- ══════════════════════════════════════════
+                     SECTION 6 — LINEAR & LOGISTIC REGRESSION
+                ══════════════════════════════════════════ -->
+                <div class="section-block" id="s6">
+                    <div class="section-header">
+                        <span class="section-badge blue">Section 06</span>
+                        <span class="section-title">Linear &amp; Logistic Regression</span>
+                    </div>
+        
+                    <div class="diag">
+                        <div class="diag-title">Sigmoid Function — Logistic Regression Output</div>
+                        <svg viewBox="0 0 520 220" xmlns="http://www.w3.org/2000/svg" width="100%" style="max-width:520px;min-width:340px;">
+                            <defs><marker id="d" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#5a6478"/></marker></defs>
+                            <line x1="40" y1="190" x2="500" y2="190" stroke="#252b38" stroke-width="1.5" marker-end="url(#d)"/>
+                            <line x1="260" y1="200" x2="260" y2="18" stroke="#252b38" stroke-width="1.5" marker-end="url(#d)"/>
+                            <!-- 0 and 1 lines -->
+                            <line x1="40" y1="110" x2="498" y2="110" stroke="#1e2530" stroke-width="1" stroke-dasharray="4,3"/>
+                            <line x1="40" y1="35"  x2="498" y2="35"  stroke="#1e2530" stroke-width="1" stroke-dasharray="4,3"/>
+                            <text x="32" y="114" text-anchor="end" font-family="'Courier New',monospace" font-size="9" fill="#5a6478">0.5</text>
+                            <text x="32" y="39"  text-anchor="end" font-family="'Courier New',monospace" font-size="9" fill="#5a6478">1.0</text>
+                            <text x="32" y="194" text-anchor="end" font-family="'Courier New',monospace" font-size="9" fill="#5a6478">0.0</text>
+                            <!-- Sigmoid curve -->
+                            <path d="M50,185 C80,183 120,178 160,165 C195,153 225,135 260,110 C295,85 325,67 360,55 C395,43 430,36 460,34" stroke="#4f8ef7" stroke-width="2.5" fill="none"/>
+                            <!-- Annotations -->
+                            <text x="460" y="48" font-family="'Courier New',monospace" font-size="9" fill="#4f8ef7">σ(z)→1</text>
+                            <text x="44"  y="180" font-family="'Courier New',monospace" font-size="9" fill="#4f8ef7">σ(z)→0</text>
+                            <circle cx="260" cy="110" r="5" fill="#f7667a"/>
+                            <text x="268" y="107" font-family="'Courier New',monospace" font-size="9" fill="#f7667a">threshold = 0.5</text>
+                            <text x="280" y="125" font-family="'Courier New',monospace" font-size="9" fill="#5a6478">→ Class 1</text>
+                            <text x="160" y="125" font-family="'Courier New',monospace" font-size="9" fill="#5a6478">→ Class 0</text>
+                            <!-- Formula -->
+                            <text x="80" y="50" font-family="'Courier New',monospace" font-size="11" fill="#7c5af7">σ(z) = 1 / (1 + e⁻ᶻ)</text>
+                            <text x="490" y="194" text-anchor="end" font-family="'Courier New',monospace" font-size="9" fill="#5a6478">z</text>
+                            <text x="255" y="16" font-family="'Courier New',monospace" font-size="9" fill="#5a6478">σ(z)</text>
+                        </svg>
+                    </div>
+        
+                    <div class="qa-block">
+                        <div class="qa-q" onclick="toggle(this)">
+                            <span class="qa-num">Q27–30</span>
+                            <span class="qa-text">Linear Regression, Logistic Regression, Multicollinearity &amp; VIF</span>
+                            <span class="qa-arrow">▼</span>
+                        </div>
+                        <div class="qa-a">
+                            <p><strong>Linear Regression</strong> — predicts a continuous target variable using a linear relationship: y = mx + c. Assumptions: Linearity, Independence, Homoscedasticity, Normality of errors, No Multicollinearity.</p>
+                            <p><strong>Logistic Regression</strong> — despite the name, it's a classification model. The sigmoid function converts any real number into a probability between 0 and 1. A threshold (usually 0.5) then classifies output as 0 or 1.</p>
+                            <p><strong>Cluster-choice for optimal K:</strong> Elbow Method (plot WCSS vs K), Silhouette Score (how similar points are to own cluster), Gap Statistic.</p>
+                            <p><strong>Multicollinearity</strong> — two or more features are highly correlated with each other. Causes unstable coefficients, interpretation difficulty, inflated variance. Detected via correlation matrix or VIF.</p>
+                            <div class="formula">VIF_i = 1 / (1 - R²ᵢ)</div>
+                            <ul>
+                                <li>VIF = 1 → no correlation</li>
+                                <li>1 &lt; VIF &lt; 5 → moderate, acceptable</li>
+                                <li>VIF &gt; 5 → high multicollinearity, problematic</li>
+                            </ul>
+                            <p>Fix multicollinearity by removing/combining correlated features, using PCA, or applying Ridge regression.</p>
+                        </div>
+                    </div>
+                </div>
+        
+                <!-- ══════════════════════════════════════════
+                     SECTION 7 — DECISION TREES
+                ══════════════════════════════════════════ -->
+                <div class="section-block" id="s7">
+                    <div class="section-header">
+                        <span class="section-badge teal">Section 07</span>
+                        <span class="section-title">Decision Trees</span>
+                    </div>
+        
+                    <div class="diag">
+                        <div class="diag-title">Decision Tree Structure — Nodes &amp; Splits</div>
+                        <svg viewBox="0 0 620 260" xmlns="http://www.w3.org/2000/svg" width="100%" style="max-width:620px;min-width:380px;">
+                            <!-- Root -->
+                            <rect x="220" y="10" width="180" height="44" rx="8" fill="#13161d" stroke="#4f8ef7" stroke-width="2"/>
+                            <text x="310" y="30" text-anchor="middle" font-family="'Courier New',monospace" font-size="11" fill="#4f8ef7">Root Node</text>
+                            <text x="310" y="46" text-anchor="middle" font-family="Georgia,serif" font-size="10" fill="#8892a4">Feature A ≤ threshold?</text>
+                            <!-- Lines -->
+                            <line x1="255" y1="54" x2="145" y2="110" stroke="#252b38" stroke-width="1.5"/>
+                            <line x1="365" y1="54" x2="475" y2="110" stroke="#252b38" stroke-width="1.5"/>
+                            <text x="185" y="90" font-family="'Courier New',monospace" font-size="9" fill="#38c9b8">YES</text>
+                            <text x="420" y="90" font-family="'Courier New',monospace" font-size="9" fill="#f7667a">NO</text>
+                            <!-- Internal nodes -->
+                            <rect x="65"  y="110" width="160" height="44" rx="8" fill="#13161d" stroke="#7c5af7" stroke-width="1.5"/>
+                            <text x="145" y="128" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="#7c5af7">Internal Node</text>
+                            <text x="145" y="146" text-anchor="middle" font-family="Georgia,serif" font-size="10" fill="#8892a4">Feature B ≤ 5?</text>
+                            <rect x="395" y="110" width="160" height="44" rx="8" fill="#13161d" stroke="#7c5af7" stroke-width="1.5"/>
+                            <text x="475" y="128" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="#7c5af7">Internal Node</text>
+                            <text x="475" y="146" text-anchor="middle" font-family="Georgia,serif" font-size="10" fill="#8892a4">Feature C = X?</text>
+                            <!-- Lines to leaves -->
+                            <line x1="100" y1="154" x2="65"  y2="208" stroke="#252b38" stroke-width="1.2"/>
+                            <line x1="190" y1="154" x2="225" y2="208" stroke="#252b38" stroke-width="1.2"/>
+                            <line x1="430" y1="154" x2="390" y2="208" stroke="#252b38" stroke-width="1.2"/>
+                            <line x1="520" y1="154" x2="555" y2="208" stroke="#252b38" stroke-width="1.2"/>
+                            <!-- Leaf nodes -->
+                            <rect x="20"  y="208" width="90" height="40" rx="6" fill="#13201a" stroke="#38c9b8" stroke-width="1.5"/>
+                            <text x="65"  y="228" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="#38c9b8">Class A</text>
+                            <text x="65"  y="242" text-anchor="middle" font-family="Georgia,serif" font-size="9" fill="#5a6478">Leaf Node</text>
+                            <rect x="180" y="208" width="90" height="40" rx="6" fill="#261316" stroke="#f7667a" stroke-width="1.5"/>
+                            <text x="225" y="228" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="#f7667a">Class B</text>
+                            <text x="225" y="242" text-anchor="middle" font-family="Georgia,serif" font-size="9" fill="#5a6478">Leaf Node</text>
+                            <rect x="345" y="208" width="90" height="40" rx="6" fill="#13201a" stroke="#38c9b8" stroke-width="1.5"/>
+                            <text x="390" y="228" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="#38c9b8">Class A</text>
+                            <text x="390" y="242" text-anchor="middle" font-family="Georgia,serif" font-size="9" fill="#5a6478">Leaf Node</text>
+                            <rect x="510" y="208" width="90" height="40" rx="6" fill="#261316" stroke="#f7667a" stroke-width="1.5"/>
+                            <text x="555" y="228" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="#f7667a">Class B</text>
+                            <text x="555" y="242" text-anchor="middle" font-family="Georgia,serif" font-size="9" fill="#5a6478">Leaf Node</text>
+                        </svg>
+                    </div>
+        
+                    <div class="qa-block">
+                        <div class="qa-q" onclick="toggle(this)">
+                            <span class="qa-num">Q31–35</span>
+                            <span class="qa-text">Entropy, Information Gain, Pruning, ID3 vs CART</span>
+                            <span class="qa-arrow">▼</span>
+                        </div>
+                        <div class="qa-a">
+                            <p><strong>Entropy</strong> — measure of impurity or randomness. If all samples belong to one class → entropy = 0 (pure). Mixed classes → high entropy.</p>
+                            <div class="formula">Entropy(S) = −Σ pᵢ log₂(pᵢ)</div>
+                            <p><strong>Information Gain</strong> — reduction in entropy when splitting on a feature. Higher IG = better feature for splitting.</p>
+                            <div class="formula">IG(S,A) = Entropy(S) − Σᵥ (|Sᵥ|/|S|) × Entropy(Sᵥ)</div>
+                            <p>Decision Trees pick the feature with highest Information Gain at each node.</p>
+                            <p><strong>Pruning</strong> — removes branches that add little value. Pre-pruning stops early (max_depth, min_samples). Post-pruning grows full tree then removes low-impact branches. Prevents overfitting, improves generalization.</p>
+                            <table class="cmp-table">
+                                <thead><tr><th>Feature</th><th>ID3</th><th>CART</th></tr></thead>
+                                <tbody>
+                                    <tr><td>Used for</td><td>Classification only</td><td>Classification &amp; Regression</td></tr>
+                                    <tr><td>Split Criterion</td><td>Information Gain (Entropy)</td><td>Gini Index (classify), MSE (regression)</td></tr>
+                                    <tr><td>Output</td><td>Multi-way split</td><td>Always binary split (2 branches)</td></tr>
+                                    <tr><td>Data</td><td>Mainly categorical</td><td>Both numerical and categorical</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+        
+                <!-- ══════════════════════════════════════════
+                     SECTION 8 — NAIVE BAYES
+                ══════════════════════════════════════════ -->
+                <div class="section-block" id="s8">
+                    <div class="section-header">
+                        <span class="section-badge purple">Section 08</span>
+                        <span class="section-title">Naive Bayes</span>
+                    </div>
+        
+                    <div class="diag">
+                        <div class="diag-title">Bayes' Theorem — Components</div>
+                        <svg viewBox="0 0 640 140" xmlns="http://www.w3.org/2000/svg" width="100%" style="max-width:640px;min-width:400px;">
+                            <text x="320" y="28" text-anchor="middle" font-family="'Courier New',monospace" font-size="13" fill="#7c5af7">P(A|B) = [ P(B|A) × P(A) ] / P(B)</text>
+                            <!-- Labels -->
+                            <rect x="10"  y="45" width="140" height="50" rx="6" fill="#1e1a35" stroke="#7c5af7" stroke-width="1.2"/>
+                            <text x="80"  y="68" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="#7c5af7">P(A|B)</text>
+                            <text x="80"  y="84" text-anchor="middle" font-family="Georgia,serif" font-size="10" fill="#8892a4">Posterior</text>
+                            <text x="80"  y="97" text-anchor="middle" font-family="Georgia,serif" font-size="9" fill="#5a6478">probability of A given B</text>
+        
+                            <rect x="170" y="45" width="140" height="50" rx="6" fill="#1e1a35" stroke="#f7c67a" stroke-width="1.2"/>
+                            <text x="240" y="68" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="#f7c67a">P(B|A)</text>
+                            <text x="240" y="84" text-anchor="middle" font-family="Georgia,serif" font-size="10" fill="#8892a4">Likelihood</text>
+                            <text x="240" y="97" text-anchor="middle" font-family="Georgia,serif" font-size="9" fill="#5a6478">probability of B given A</text>
+        
+                            <rect x="330" y="45" width="140" height="50" rx="6" fill="#1e1a35" stroke="#38c9b8" stroke-width="1.2"/>
+                            <text x="400" y="68" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="#38c9b8">P(A)</text>
+                            <text x="400" y="84" text-anchor="middle" font-family="Georgia,serif" font-size="10" fill="#8892a4">Prior</text>
+                            <text x="400" y="97" text-anchor="middle" font-family="Georgia,serif" font-size="9" fill="#5a6478">prior probability of A</text>
+        
+                            <rect x="490" y="45" width="140" height="50" rx="6" fill="#1e1a35" stroke="#4f8ef7" stroke-width="1.2"/>
+                            <text x="560" y="68" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="#4f8ef7">P(B)</text>
+                            <text x="560" y="84" text-anchor="middle" font-family="Georgia,serif" font-size="10" fill="#8892a4">Evidence</text>
+                            <text x="560" y="97" text-anchor="middle" font-family="Georgia,serif" font-size="9" fill="#5a6478">probability of B</text>
+                        </svg>
+                    </div>
+        
+                    <div class="qa-block">
+                        <div class="qa-q" onclick="toggle(this)">
+                            <span class="qa-num">Q36–38</span>
+                            <span class="qa-text">Naive Bayes — Theorem, Assumptions &amp; Types</span>
+                            <span class="qa-arrow">▼</span>
+                        </div>
+                        <div class="qa-a">
+                            <p><strong>Naive Bayes</strong> is a classification algorithm based on Bayes' theorem. "Naive" because it assumes all features are independent — a simplification that works surprisingly well in practice (spam detection, sentiment analysis).</p>
+                            <p><strong>Working:</strong> Calculate prior probability of each class → compute likelihood of features for each class → apply Bayes' theorem → assign class with highest posterior.</p>
+                            <p><strong>Assumptions:</strong> Feature independence given class label · all features contribute equally · correctly labeled training data.</p>
+                            <p><strong>Types:</strong></p>
+                            <ul>
+                                <li><strong>Gaussian NB</strong> — continuous features, assumes normal distribution (height, weight)</li>
+                                <li><strong>Multinomial NB</strong> — discrete count data (word counts in text classification)</li>
+                                <li><strong>Bernoulli NB</strong> — binary features (word present/absent in document)</li>
+                                <li><strong>Categorical NB</strong> — categorical features (color: red/green/blue)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+        
+                <!-- ══════════════════════════════════════════
+                     SECTION 9 — KNN
+                ══════════════════════════════════════════ -->
+                <div class="section-block" id="s9">
+                    <div class="section-header">
+                        <span class="section-badge teal">Section 09</span>
+                        <span class="section-title">K-Nearest Neighbors &amp; Distance Metrics</span>
+                    </div>
+        
+                    <div class="diag">
+                        <div class="diag-title">KNN — Finding K Nearest Neighbors</div>
+                        <svg viewBox="0 0 520 240" xmlns="http://www.w3.org/2000/svg" width="100%" style="max-width:520px;min-width:340px;">
+                            <!-- Class A points -->
+                            <circle cx="120" cy="80"  r="10" fill="#4f8ef7" opacity=".8"/>
+                            <circle cx="155" cy="110" r="10" fill="#4f8ef7" opacity=".8"/>
+                            <circle cx="100" cy="130" r="10" fill="#4f8ef7" opacity=".8"/>
+                            <circle cx="180" cy="75"  r="10" fill="#4f8ef7" opacity=".8"/>
+                            <circle cx="145" cy="150" r="10" fill="#4f8ef7" opacity=".8"/>
+                            <text x="60" y="185" font-family="'Courier New',monospace" font-size="10" fill="#4f8ef7">● Class A</text>
+                            <!-- Class B points -->
+                            <circle cx="330" cy="100" r="10" fill="#f7667a" opacity=".8"/>
+                            <circle cx="370" cy="140" r="10" fill="#f7667a" opacity=".8"/>
+                            <circle cx="355" cy="80"  r="10" fill="#f7667a" opacity=".8"/>
+                            <circle cx="400" cy="110" r="10" fill="#f7667a" opacity=".8"/>
+                            <circle cx="320" cy="155" r="10" fill="#f7667a" opacity=".8"/>
+                            <text x="310" y="185" font-family="'Courier New',monospace" font-size="10" fill="#f7667a">■ Class B</text>
+                            <!-- Query point -->
+                            <circle cx="250" cy="120" r="12" fill="none" stroke="#f7c67a" stroke-width="2.5"/>
+                            <circle cx="250" cy="120" r="4"  fill="#f7c67a"/>
+                            <text x="250" y="210" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="#f7c67a">? Query Point</text>
+                            <!-- K=3 circle -->
+                            <circle cx="250" cy="120" r="100" fill="none" stroke="#f7c67a" stroke-width="1" stroke-dasharray="5,4" opacity=".5"/>
+                            <text x="250" y="26" text-anchor="middle" font-family="'Courier New',monospace" font-size="9" fill="#f7c67a">K=3 neighborhood</text>
+                            <!-- Distance lines to 3 nearest -->
+                            <line x1="250" y1="120" x2="180" y2="75"  stroke="#4f8ef7" stroke-width="1.5" stroke-dasharray="3,2"/>
+                            <line x1="250" y1="120" x2="155" y2="110" stroke="#4f8ef7" stroke-width="1.5" stroke-dasharray="3,2"/>
+                            <line x1="250" y1="120" x2="330" y2="100" stroke="#f7667a" stroke-width="1.5" stroke-dasharray="3,2"/>
+                            <text x="250" y="226" text-anchor="middle" font-family="Georgia,serif" font-size="10" fill="#38c9b8">2 blue, 1 red → predicts Class A</text>
+                        </svg>
+                    </div>
+        
+                    <div class="qa-block">
+                        <div class="qa-q" onclick="toggle(this)">
+                            <span class="qa-num">Q39–45</span>
+                            <span class="qa-text">KNN Working, Lazy Learning, K Value, Distance Metrics &amp; KNN Imputer</span>
+                            <span class="qa-arrow">▼</span>
+                        </div>
+                        <div class="qa-a">
+                            <p><strong>KNN Working:</strong> Choose K → calculate distance to all training points → select K nearest neighbors → majority vote (classification) or average (regression).</p>
+                            <p><strong>Lazy learning</strong> — KNN doesn't learn an explicit model during training. It stores all data and computes at prediction time. Memory-intensive but simple to implement.</p>
+                            <p><strong>Effect of K:</strong> Small K → sensitive to noise, overfitting. Large K → smooth boundaries, underfitting. Optimal K found via cross-validation.</p>
+                            <p><strong>Distance Metrics:</strong></p>
+                            <ul>
+                                <li><strong>Euclidean</strong> — straight-line distance. Most common for continuous data</li>
+                                <li><strong>Manhattan</strong> — sum of absolute differences. Good for equal penalization across dimensions</li>
+                                <li><strong>Minkowski</strong> — generalization: p=1→Manhattan, p=2→Euclidean</li>
+                                <li><strong>Cosine Similarity</strong> — angle between vectors. Great for text/high-dimensional sparse data</li>
+                                <li><strong>Hamming</strong> — positions where elements differ. For binary/categorical data</li>
+                                <li><strong>Mahalanobis</strong> — accounts for correlations. Useful for multivariate data</li>
+                            </ul>
+                            <p><strong>KNN Imputer</strong> — fills missing values using mean/median of k nearest neighbors (based on Euclidean distance).</p>
+                        </div>
+                    </div>
+                </div>
+        
+                <!-- ══════════════════════════════════════════
+                     SECTION 10 — SVM
+                ══════════════════════════════════════════ -->
+                <div class="section-block" id="s10">
+                    <div class="section-header">
+                        <span class="section-badge danger">Section 10</span>
+                        <span class="section-title">Support Vector Machines (SVM)</span>
+                    </div>
+        
+                    <div class="diag">
+                        <div class="diag-title">SVM — Maximum Margin Hyperplane &amp; Support Vectors</div>
+                        <svg viewBox="0 0 580 240" xmlns="http://www.w3.org/2000/svg" width="100%" style="max-width:580px;min-width:360px;">
+                            <!-- Class A -->
+                            <circle cx="100" cy="80"  r="9" fill="#4f8ef7"/><circle cx="130" cy="120" r="9" fill="#4f8ef7"/>
+                            <circle cx="90"  cy="140" r="9" fill="#4f8ef7"/><circle cx="115" cy="60"  r="9" fill="#4f8ef7"/>
+                            <circle cx="75"  cy="100" r="9" fill="#4f8ef7"/>
+                            <!-- Class B -->
+                            <circle cx="400" cy="90"  r="9" fill="#f7667a"/><circle cx="440" cy="130" r="9" fill="#f7667a"/>
+                            <circle cx="420" cy="60"  r="9" fill="#f7667a"/><circle cx="460" cy="100" r="9" fill="#f7667a"/>
+                            <circle cx="390" cy="150" r="9" fill="#f7667a"/>
+                            <!-- Support vectors (highlighted) -->
+                            <circle cx="130" cy="120" r="14" fill="none" stroke="#4f8ef7" stroke-width="2.5"/>
+                            <circle cx="400" cy="90"  r="14" fill="none" stroke="#f7667a" stroke-width="2.5"/>
+                            <text x="144" y="116" font-family="'Courier New',monospace" font-size="8" fill="#4f8ef7">SV</text>
+                            <text x="414" y="86"  font-family="'Courier New',monospace" font-size="8" fill="#f7667a">SV</text>
+                            <!-- Decision boundary -->
+                            <line x1="265" y1="20" x2="265" y2="220" stroke="#38c9b8" stroke-width="2.5"/>
+                            <text x="265" y="14" text-anchor="middle" font-family="'Courier New',monospace" font-size="9" fill="#38c9b8">Decision Boundary</text>
+                            <!-- Margin lines -->
+                            <line x1="215" y1="20" x2="215" y2="220" stroke="#38c9b8" stroke-width="1" stroke-dasharray="5,4" opacity=".5"/>
+                            <line x1="315" y1="20" x2="315" y2="220" stroke="#38c9b8" stroke-width="1" stroke-dasharray="5,4" opacity=".5"/>
+                            <!-- Margin arrows -->
+                            <line x1="215" y1="170" x2="315" y2="170" stroke="#f7c67a" stroke-width="1.5"/>
+                            <text x="265" y="185" text-anchor="middle" font-family="'Courier New',monospace" font-size="9" fill="#f7c67a">← margin →</text>
+                            <text x="265" y="228" text-anchor="middle" font-family="Georgia,serif" font-size="10" fill="#8892a4">Maximize margin for best generalization</text>
+                        </svg>
+                    </div>
+        
+                    <div class="qa-block">
+                        <div class="qa-q" onclick="toggle(this)">
+                            <span class="qa-num">Q46–48</span>
+                            <span class="qa-text">SVM Decision Boundary, Kernel Trick &amp; Kernel Types</span>
+                            <span class="qa-arrow">▼</span>
+                        </div>
+                        <div class="qa-a">
+                            <p><strong>Decision Boundary</strong> — the hyperplane that separates data points of different classes while maximizing the margin (distance between the hyperplane and the nearest support vectors).</p>
+                            <p><strong>Does SVM work only with linear data?</strong> No — for non-linear data, SVM uses the <strong>kernel trick</strong> to transform data into a higher-dimensional space where linear separation becomes possible.</p>
+                            <p><strong>Kernel Types:</strong></p>
+                            <ul>
+                                <li><strong>Linear Kernel</strong> — linearly separable data or very high-dimensional feature spaces (e.g., text classification). Fast and simple</li>
+                                <li><strong>Polynomial Kernel</strong> — non-linear but polynomial boundaries (circular or curved)</li>
+                                <li><strong>RBF / Gaussian Kernel</strong> — most commonly used. Handles complex, highly non-linear data</li>
+                                <li><strong>Sigmoid Kernel</strong> — behaves like neural networks. Less common than RBF</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+        
+                <!-- ══════════════════════════════════════════
+                     SECTION 11 — ENSEMBLE LEARNING
+                ══════════════════════════════════════════ -->
+                <div class="section-block" id="s11">
+                    <div class="section-header">
+                        <span class="section-badge blue">Section 11</span>
+                        <span class="section-title">Ensemble Learning</span>
+                    </div>
+        
+                    <div class="diag">
+                        <div class="diag-title">Bagging vs Boosting — Parallel vs Sequential Training</div>
+                        <svg viewBox="0 0 720 230" xmlns="http://www.w3.org/2000/svg" width="100%" style="max-width:720px;min-width:480px;">
+                            <defs><marker id="e" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#3a4560"/></marker></defs>
+                            <!-- BAGGING -->
+                            <text x="175" y="22" text-anchor="middle" font-family="'Courier New',monospace" font-size="12" fill="#4f8ef7">BAGGING (Parallel)</text>
+                            <rect x="120" y="32" width="110" height="32" rx="6" fill="#13161d" stroke="#4f8ef7" stroke-width="1.5"/>
+                            <text x="175" y="53" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="#8892a4">Training Data</text>
+                            <line x1="120" y1="48" x2="50" y2="90" stroke="#252b38" stroke-width="1.2" marker-end="url(#e)"/>
+                            <line x1="175" y1="64" x2="175" y2="90" stroke="#252b38" stroke-width="1.2" marker-end="url(#e)"/>
+                            <line x1="230" y1="48" x2="300" y2="90" stroke="#252b38" stroke-width="1.2" marker-end="url(#e)"/>
+                            <!-- Three trees -->
+                            <rect x="18"  y="90" width="66" height="32" rx="5" fill="#13161d" stroke="#7c5af7"/><text x="51"  y="111" text-anchor="middle" font-family="'Courier New',monospace" font-size="9" fill="#7c5af7">Tree 1</text>
+                            <rect x="142" y="90" width="66" height="32" rx="5" fill="#13161d" stroke="#7c5af7"/><text x="175" y="111" text-anchor="middle" font-family="'Courier New',monospace" font-size="9" fill="#7c5af7">Tree 2</text>
+                            <rect x="268" y="90" width="66" height="32" rx="5" fill="#13161d" stroke="#7c5af7"/><text x="301" y="111" text-anchor="middle" font-family="'Courier New',monospace" font-size="9" fill="#7c5af7">Tree 3</text>
+                            <line x1="51"  y1="122" x2="175" y2="158" stroke="#252b38" stroke-width="1.2" marker-end="url(#e)"/>
+                            <line x1="175" y1="122" x2="175" y2="158" stroke="#252b38" stroke-width="1.2" marker-end="url(#e)"/>
+                            <line x1="301" y1="122" x2="175" y2="158" stroke="#252b38" stroke-width="1.2" marker-end="url(#e)"/>
+                            <rect x="118" y="158" width="114" height="32" rx="6" fill="#13201a" stroke="#38c9b8" stroke-width="1.5"/>
+                            <text x="175" y="179" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="#38c9b8">Vote / Average</text>
+                            <text x="175" y="208" text-anchor="middle" font-family="Georgia,serif" font-size="10" fill="#8892a4">Reduces Variance</text>
+                            <text x="175" y="222" text-anchor="middle" font-family="Georgia,serif" font-size="10" fill="#5a6478">e.g. Random Forest</text>
+        
+                            <!-- Divider -->
+                            <line x1="370" y1="10" x2="370" y2="225" stroke="#1e2530" stroke-width="1" stroke-dasharray="5,4"/>
+        
+                            <!-- BOOSTING -->
+                            <text x="550" y="22" text-anchor="middle" font-family="'Courier New',monospace" font-size="12" fill="#f7c67a">BOOSTING (Sequential)</text>
+                            <rect x="400" y="32" width="100" height="30" rx="6" fill="#13161d" stroke="#f7c67a" stroke-width="1.5"/>
+                            <text x="450" y="52" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="#8892a4">Weak Model 1</text>
+                            <line x1="500" y1="47" x2="530" y2="47" stroke="#252b38" stroke-width="1.5" marker-end="url(#e)"/>
+                            <text x="515" y="43" font-family="'Courier New',monospace" font-size="8" fill="#f7667a">errors</text>
+                            <rect x="530" y="32" width="100" height="30" rx="6" fill="#13161d" stroke="#f7c67a" stroke-width="1.5"/>
+                            <text x="580" y="52" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="#8892a4">Weak Model 2</text>
+                            <line x1="630" y1="47" x2="660" y2="47" stroke="#252b38" stroke-width="1.5" marker-end="url(#e)"/>
+                            <rect x="660" y="32" width="50" height="30" rx="6" fill="#13161d" stroke="#f7c67a" stroke-width="1.5"/>
+                            <text x="685" y="52" text-anchor="middle" font-family="'Courier New',monospace" font-size="9" fill="#5a6478">...</text>
+                            <!-- Combined arrow down -->
+                            <line x1="580" y1="62" x2="550" y2="155" stroke="#252b38" stroke-width="1.2" marker-end="url(#e)"/>
+                            <rect x="490" y="155" width="120" height="32" rx="6" fill="#13201a" stroke="#38c9b8" stroke-width="1.5"/>
+                            <text x="550" y="176" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="#38c9b8">Strong Model</text>
+                            <text x="550" y="208" text-anchor="middle" font-family="Georgia,serif" font-size="10" fill="#8892a4">Reduces Bias</text>
+                            <text x="550" y="222" text-anchor="middle" font-family="Georgia,serif" font-size="10" fill="#5a6478">e.g. AdaBoost, XGBoost</text>
+                        </svg>
+                    </div>
+        
+                    <div class="qa-block">
+                        <div class="qa-q" onclick="toggle(this)">
+                            <span class="qa-num">Q49–56</span>
+                            <span class="qa-text">Random Forest, Bootstrapping, AdaBoost, XGBoost, CatBoost</span>
+                            <span class="qa-arrow">▼</span>
+                        </div>
+                        <div class="qa-a">
+                            <p><strong>Random Forest</strong> — builds multiple decision trees and combines by majority vote (classification) or average (regression). Reduces overfitting, handles large datasets, provides feature importance.</p>
+                            <p>Diversity through: <strong>Bagging</strong> (random data subsets) + <strong>Feature Randomness</strong> (random subset of features at each split).</p>
+                            <p><strong>Bootstrapping</strong> — sampling with replacement to create multiple training sets. Same point can appear multiple times. Helps estimate variability and reduce variance.</p>
+                            <p><strong>AdaBoost</strong> — combines shallow trees sequentially. Each new tree focuses on samples misclassified by the previous. Final prediction = weighted majority vote. Best for simple models needing improvement.</p>
+                            <p><strong>XGBoost</strong> — optimized gradient boosting with L1+L2 regularization. Builds trees sequentially correcting previous errors. Highly efficient, parallelizable, widely used in competitions.</p>
+                            <p><strong>CatBoost</strong> — gradient boosting that handles categorical features natively (no encoding needed). Uses ordered boosting to reduce overfitting. Less tuning required.</p>
+                            <table class="cmp-table">
+                                <thead><tr><th>Feature</th><th>Gradient Boosting</th><th>CatBoost</th></tr></thead>
+                                <tbody>
+                                    <tr><td>Categorical Data</td><td>Manual preprocessing required</td><td>Native handling, no encoding needed</td></tr>
+                                    <tr><td>Boosting Type</td><td>Standard sequential on residuals</td><td>Ordered boosting (prevents shift)</td></tr>
+                                    <tr><td>Overfitting</td><td>Can overfit if not tuned</td><td>More robust via ordered boosting</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+        
+                <!-- ══════════════════════════════════════════
+                     SECTION 12 — CLUSTERING & ASSOCIATION
+                ══════════════════════════════════════════ -->
+                <div class="section-block" id="s12">
+                    <div class="section-header">
+                        <span class="section-badge green">Section 12</span>
+                        <span class="section-title">Clustering &amp; Association Rules</span>
+                    </div>
+        
+                    <div class="diag">
+                        <div class="diag-title">K-Means — Iteration to Convergence</div>
+                        <svg viewBox="0 0 720 200" xmlns="http://www.w3.org/2000/svg" width="100%" style="max-width:720px;min-width:460px;">
+                            <defs><marker id="f" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#3a4560"/></marker></defs>
+                            <!-- Step 1 -->
+                            <text x="90" y="18" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="#5a6478">1. Initialize</text>
+                            <circle cx="60"  cy="70" r="5" fill="#8892a4"/><circle cx="80" cy="100" r="5" fill="#8892a4"/>
+                            <circle cx="75"  cy="55" r="5" fill="#8892a4"/><circle cx="100" cy="85" r="5" fill="#8892a4"/>
+                            <circle cx="110" cy="135" r="5" fill="#8892a4"/><circle cx="130" cy="115" r="5" fill="#8892a4"/>
+                            <circle cx="55"  cy="130" r="5" fill="#8892a4"/><circle cx="85"  cy="145" r="5" fill="#8892a4"/>
+                            <!-- random centroids -->
+                            <circle cx="72"  cy="68"  r="9" fill="none" stroke="#f7667a" stroke-width="2"/><text x="72" y="72" text-anchor="middle" font-family="'Courier New',monospace" font-size="8" fill="#f7667a">C1</text>
+                            <circle cx="115" cy="130" r="9" fill="none" stroke="#4f8ef7" stroke-width="2"/><text x="115" y="134" text-anchor="middle" font-family="'Courier New',monospace" font-size="8" fill="#4f8ef7">C2</text>
+                            <!-- Arrow -->
+                            <line x1="158" y1="100" x2="188" y2="100" stroke="#3a4560" stroke-width="1.5" marker-end="url(#f)"/>
+                            <text x="173" y="93" text-anchor="middle" font-family="'Courier New',monospace" font-size="8" fill="#3a4560">assign</text>
+                            <!-- Step 2 -->
+                            <text x="280" y="18" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="#5a6478">2. Assign</text>
+                            <circle cx="248" cy="70" r="5" fill="#f7667a"/><circle cx="268" cy="55" r="5" fill="#f7667a"/>
+                            <circle cx="260" cy="85" r="5" fill="#f7667a"/>
+                            <circle cx="300" cy="135" r="5" fill="#4f8ef7"/><circle cx="318" cy="115" r="5" fill="#4f8ef7"/>
+                            <circle cx="245" cy="130" r="5" fill="#4f8ef7"/><circle cx="275" cy="145" r="5" fill="#4f8ef7"/>
+                            <circle cx="290" cy="100" r="5" fill="#f7667a"/>
+                            <!-- Arrow -->
+                            <line x1="348" y1="100" x2="378" y2="100" stroke="#3a4560" stroke-width="1.5" marker-end="url(#f)"/>
+                            <text x="363" y="93" text-anchor="middle" font-family="'Courier New',monospace" font-size="8" fill="#3a4560">update</text>
+                            <!-- Step 3 -->
+                            <text x="468" y="18" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="#5a6478">3. Update Centroids</text>
+                            <circle cx="436" cy="70" r="5" fill="#f7667a"/><circle cx="456" cy="55" r="5" fill="#f7667a"/>
+                            <circle cx="450" cy="85" r="5" fill="#f7667a"/><circle cx="478" cy="100" r="5" fill="#f7667a"/>
+                            <circle cx="488" cy="135" r="5" fill="#4f8ef7"/><circle cx="506" cy="115" r="5" fill="#4f8ef7"/>
+                            <circle cx="435" cy="130" r="5" fill="#4f8ef7"/><circle cx="462" cy="145" r="5" fill="#4f8ef7"/>
+                            <!-- new centroids -->
+                            <circle cx="455" cy="78"  r="9" fill="none" stroke="#f7667a" stroke-width="2.5"/><text x="455" y="82" text-anchor="middle" font-family="'Courier New',monospace" font-size="8" fill="#f7667a">C1</text>
+                            <circle cx="473" cy="130" r="9" fill="none" stroke="#4f8ef7" stroke-width="2.5"/><text x="473" y="134" text-anchor="middle" font-family="'Courier New',monospace" font-size="8" fill="#4f8ef7">C2</text>
+                            <!-- Arrow -->
+                            <line x1="530" y1="100" x2="560" y2="100" stroke="#3a4560" stroke-width="1.5" marker-end="url(#f)"/>
+                            <text x="545" y="93" text-anchor="middle" font-family="'Courier New',monospace" font-size="8" fill="#3a4560">converge</text>
+                            <!-- Step 4 -->
+                            <text x="645" y="18" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="#38c9b8">4. Converged ✓</text>
+                            <circle cx="610" cy="68" r="5" fill="#f7667a"/><circle cx="628" cy="54" r="5" fill="#f7667a"/>
+                            <circle cx="618" cy="83" r="5" fill="#f7667a"/><circle cx="643" cy="72" r="5" fill="#f7667a"/>
+                            <circle cx="655" cy="132" r="5" fill="#4f8ef7"/><circle cx="672" cy="114" r="5" fill="#4f8ef7"/>
+                            <circle cx="605" cy="128" r="5" fill="#4f8ef7"/><circle cx="638" cy="143" r="5" fill="#4f8ef7"/>
+                            <!-- Cluster regions -->
+                            <ellipse cx="625" cy="70" rx="38" ry="28" fill="#f7667a" opacity=".1" stroke="#f7667a" stroke-width="1" stroke-dasharray="3,2"/>
+                            <ellipse cx="640" cy="130" rx="42" ry="22" fill="#4f8ef7" opacity=".1" stroke="#4f8ef7" stroke-width="1" stroke-dasharray="3,2"/>
+                        </svg>
+                    </div>
+        
+                    <div class="qa-block">
+                        <div class="qa-q" onclick="toggle(this)">
+                            <span class="qa-num">Q58–67</span>
+                            <span class="qa-text">K-Means, Hierarchical Clustering, DBSCAN, GMM, Association Rules (Apriori, FP-Growth)</span>
+                            <span class="qa-arrow">▼</span>
+                        </div>
+                        <div class="qa-a">
+                            <p><strong>K-Means</strong> — divides data into K clusters. Each cluster has a centroid (average). Goal: minimize distance of points to their centroid. Requires predefined K (use Elbow Method or Silhouette Score).</p>
+                            <p><strong>K-Means++</strong> — smarter initialization by choosing centroids far apart. Reduces chance of poor clustering. <strong>Fuzzy C-Means</strong> — soft clustering where each point has a probability of belonging to multiple clusters.</p>
+                            <p><strong>Hierarchical Clustering</strong> — doesn't need predefined K. Builds a dendrogram. Agglomerative (bottom-up): merge closest clusters. Divisive (top-down): split large clusters. Linkage methods: Single (nearest), Complete (furthest), Average, Ward's (minimize variance).</p>
+                            <p><strong>DBSCAN</strong> — density-based. Groups closely packed points, marks low-density points as noise. Detects arbitrary shapes. Requires eps and minPts parameters. <strong>OPTICS</strong> extends DBSCAN for varying densities.</p>
+                            <p><strong>GMM</strong> — probabilistic clustering using Gaussian distributions. Soft assignments (probability per cluster). Handles elliptical clusters. Uses EM algorithm.</p>
+                            <p><strong>Association Rules</strong> — finds relationships in transactional data. Uses: Support (fraction of transactions with itemset), Confidence (likelihood of consequent given antecedent), Lift (co-occurrence vs independence).</p>
+                            <p><strong>Apriori</strong> — finds frequent itemsets iteratively using minimum support threshold. <strong>FP-Growth</strong> — faster alternative using FP-Tree compressed data structure. Fewer dataset scans.</p>
+                        </div>
+                    </div>
+                </div>
+        
+                <!-- ══════════════════════════════════════════
+                     SECTION 13 — DIMENSIONALITY REDUCTION
+                ══════════════════════════════════════════ -->
+                <div class="section-block" id="s13">
+                    <div class="section-header">
+                        <span class="section-badge purple">Section 13</span>
+                        <span class="section-title">Dimensionality Reduction &amp; Recommendation Systems</span>
+                    </div>
+        
+                    <div class="diag">
+                        <div class="diag-title">PCA — Projecting to Principal Components</div>
+                        <svg viewBox="0 0 580 240" xmlns="http://www.w3.org/2000/svg" width="100%" style="max-width:580px;min-width:360px;">
+                            <defs><marker id="g" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#5a6478"/></marker></defs>
+                            <!-- Original 2D space -->
+                            <text x="130" y="20" text-anchor="middle" font-family="'Courier New',monospace" font-size="11" fill="#aaaaaa">Original Space</text>
+                            <line x1="20" y1="190" x2="255" y2="190" stroke="#252b38" stroke-width="1.2" marker-end="url(#g)"/>
+                            <line x1="20" y1="190" x2="20"  y2="30"  stroke="#252b38" stroke-width="1.2" marker-end="url(#g)"/>
+                            <!-- Data scatter -->
+                            <circle cx="60"  cy="155" r="5" fill="#4f8ef7"/><circle cx="85"  cy="130" r="5" fill="#4f8ef7"/>
+                            <circle cx="110" cy="108" r="5" fill="#4f8ef7"/><circle cx="135" cy="85"  r="5" fill="#4f8ef7"/>
+                            <circle cx="155" cy="65"  r="5" fill="#4f8ef7"/><circle cx="180" cy="50"  r="5" fill="#4f8ef7"/>
+                            <circle cx="75"  cy="140" r="5" fill="#4f8ef7"/><circle cx="145" cy="95"  r="5" fill="#4f8ef7"/>
+                            <!-- PC1 direction arrow -->
+                            <line x1="45" y1="168" x2="195" y2="40" stroke="#f7c67a" stroke-width="2" marker-end="url(#g)"/>
+                            <text x="195" y="35" font-family="'Courier New',monospace" font-size="9" fill="#f7c67a">PC1 (max variance)</text>
+                            <!-- PC2 direction arrow -->
+                            <line x1="115" y1="165" x2="60"  y2="100" stroke="#f7667a" stroke-width="1.5" marker-end="url(#g)" stroke-dasharray="4,3"/>
+                            <text x="25" y="95" font-family="'Courier New',monospace" font-size="9" fill="#f7667a">PC2</text>
+                            <!-- Projection lines -->
+                            <line x1="60" y1="155" x2="72" y2="143" stroke="#3a4560" stroke-width="1" stroke-dasharray="2,2"/>
+                            <line x1="110" cy="108" x2="118" y2="100" stroke="#3a4560" stroke-width="1" stroke-dasharray="2,2"/>
+        
+                            <!-- Arrow -->
+                            <text x="285" y="110" font-family="'Courier New',monospace" font-size="22" fill="#38c9b8">→</text>
+                            <text x="283" y="128" font-family="'Courier New',monospace" font-size="9" fill="#38c9b8">PCA</text>
+        
+                            <!-- Reduced 1D space -->
+                            <text x="450" y="20" text-anchor="middle" font-family="'Courier New',monospace" font-size="11" fill="#aaaaaa">Reduced Space (PC1)</text>
+                            <line x1="320" y1="130" x2="580" y2="130" stroke="#f7c67a" stroke-width="2" marker-end="url(#g)"/>
+                            <circle cx="345" cy="130" r="5" fill="#4f8ef7"/><circle cx="368" cy="130" r="5" fill="#4f8ef7"/>
+                            <circle cx="391" cy="130" r="5" fill="#4f8ef7"/><circle cx="414" cy="130" r="5" fill="#4f8ef7"/>
+                            <circle cx="437" cy="130" r="5" fill="#4f8ef7"/><circle cx="460" cy="130" r="5" fill="#4f8ef7"/>
+                            <circle cx="356" cy="130" r="5" fill="#4f8ef7"/><circle cx="425" cy="130" r="5" fill="#4f8ef7"/>
+                            <text x="450" y="155" text-anchor="middle" font-family="Georgia,serif" font-size="10" fill="#f7c67a">PC1</text>
+                            <text x="450" y="175" text-anchor="middle" font-family="Georgia,serif" font-size="10" fill="#8892a4">Captures maximum variance</text>
+                            <text x="450" y="192" text-anchor="middle" font-family="Georgia,serif" font-size="10" fill="#5a6478">dimensionality: 2D → 1D</text>
+                        </svg>
+                    </div>
+        
+                    <div class="qa-block">
+                        <div class="qa-q" onclick="toggle(this)">
+                            <span class="qa-num">Q68–74</span>
+                            <span class="qa-text">PCA, NMF, LDA, t-SNE, Manifold Learning, Recommendation Systems, EM Algorithm</span>
+                            <span class="qa-arrow">▼</span>
+                        </div>
+                        <div class="qa-a">
+                            <p><strong>PCA</strong> — transforms high-dimensional data to lower dimensions preserving maximum variance. Steps: standardize → covariance matrix → eigenvalues/eigenvectors → select top k principal components → transform. Sensitive to scaling.</p>
+                            <p><strong>NMF</strong> — factorizes non-negative matrix into two lower-rank non-negative matrices. Interpretable components. Used for topic modeling, image processing.</p>
+                            <p><strong>LDA (Latent Dirichlet Allocation)</strong> — probabilistic topic modeling. Each document = mixture of topics. Each topic = distribution over words.</p>
+                            <p><strong>t-SNE</strong> — non-linear reduction for visualization in 2D/3D. Preserves local neighborhoods (similar points stay close). Computationally expensive. Does not preserve global distances.</p>
+                            <p><strong>Manifold Learning techniques:</strong> Isomap (geodesic distances), LLE (local linear embedding), UMAP (local + global, faster than t-SNE), MDS (pairwise distances).</p>
+                            <p><strong>Content-Based Filtering</strong> — recommends items similar to what user liked before (item features). Suffers from cold start for new users.</p>
+                            <p><strong>Collaborative Filtering</strong> — recommends based on similar users (user-based) or similar items (item-based). Requires large interaction data.</p>
+                            <p><strong>EM Algorithm</strong> — for models with hidden/latent variables. E-step: estimate probabilities of hidden states. M-step: update parameters to maximize likelihood. Repeat until convergence. Used in GMM, missing data imputation.</p>
+                        </div>
+                    </div>
+                </div>
+        
+                <!-- ══════════════════════════════════════════
+                     SECTION 14 — TIME SERIES
+                ══════════════════════════════════════════ -->
+                <div class="section-block" id="s14">
+                    <div class="section-header">
+                        <span class="section-badge warn">Section 14</span>
+                        <span class="section-title">Time Series Analysis &amp; Forecasting</span>
+                    </div>
+        
+                    <div class="diag">
+                        <div class="diag-title">Time Series Components — Decomposition</div>
+                        <svg viewBox="0 0 700 200" xmlns="http://www.w3.org/2000/svg" width="100%" style="max-width:700px;min-width:440px;">
+                            <defs><marker id="h" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#3a4560"/></marker></defs>
+                            <!-- Trend panel -->
+                            <rect x="10" y="10" width="155" height="90" rx="7" fill="#13161d" stroke="#4f8ef7" stroke-width="1.5"/>
+                            <text x="87" y="28" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="#4f8ef7">TREND</text>
+                            <path d="M20,85 Q60,70 90,58 Q120,46 160,35" stroke="#4f8ef7" stroke-width="2" fill="none"/>
+                            <text x="87" y="95" text-anchor="middle" font-family="Georgia,serif" font-size="9" fill="#5a6478">long-term direction</text>
+                            <!-- Seasonality panel -->
+                            <rect x="185" y="10" width="155" height="90" rx="7" fill="#13161d" stroke="#38c9b8" stroke-width="1.5"/>
+                            <text x="262" y="28" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="#38c9b8">SEASONALITY</text>
+                            <path d="M194,65 Q210,35 226,65 Q242,95 258,65 Q274,35 290,65 Q306,95 330,65" stroke="#38c9b8" stroke-width="2" fill="none"/>
+                            <text x="262" y="95" text-anchor="middle" font-family="Georgia,serif" font-size="9" fill="#5a6478">fixed periodic pattern</text>
+                            <!-- Cyclical panel -->
+                            <rect x="360" y="10" width="155" height="90" rx="7" fill="#13161d" stroke="#f7c67a" stroke-width="1.5"/>
+                            <text x="437" y="28" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="#f7c67a">CYCLIC</text>
+                            <path d="M368,70 Q400,30 437,65 Q470,95 510,55" stroke="#f7c67a" stroke-width="2" fill="none"/>
+                            <text x="437" y="95" text-anchor="middle" font-family="Georgia,serif" font-size="9" fill="#5a6478">no fixed period</text>
+                            <!-- Noise panel -->
+                            <rect x="535" y="10" width="155" height="90" rx="7" fill="#13161d" stroke="#f7667a" stroke-width="1.5"/>
+                            <text x="612" y="28" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="#f7667a">NOISE</text>
+                            <path d="M543,60 L556,45 L570,70 L583,35 L596,65 L610,50 L623,75 L636,42 L650,60 L663,55 L678,68" stroke="#f7667a" stroke-width="1.8" fill="none"/>
+                            <text x="612" y="95" text-anchor="middle" font-family="Georgia,serif" font-size="9" fill="#5a6478">random variation</text>
+                            <!-- Combined -->
+                            <text x="350" y="145" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="#aaaaaa">Original Series = Trend + Seasonality + Cyclical + Noise</text>
+                            <path d="M20,175 Q60,158 90,155 Q110,148 126,158 Q142,168 158,155 Q180,140 210,148 Q250,162 280,145 Q330,128 380,140 Q430,162 470,145 Q510,128 560,140 Q600,162 660,148" stroke="#7c5af7" stroke-width="2" fill="none"/>
+                        </svg>
+                    </div>
+        
+                    <div class="qa-block">
+                        <div class="qa-q" onclick="toggle(this)">
+                            <span class="qa-num">Q75–78</span>
+                            <span class="qa-text">ARIMA, SARIMA, Exponential Smoothing &amp; Concept Drift</span>
+                            <span class="qa-arrow">▼</span>
+                        </div>
+                        <div class="qa-a">
+                            <p><strong>ARIMA(p,d,q)</strong> — for non-stationary time series. AR: uses past values. I: differencing for stationarity. MA: uses past forecast errors. Good when no strong seasonality.</p>
+                            <p><strong>SARIMA(p,d,q)(P,D,Q,m)</strong> — extends ARIMA with seasonal components. m = periods per season (e.g., 12 for monthly data with yearly seasonality). Use for electricity demand, retail sales.</p>
+                            <p><strong>Exponential Smoothing</strong> — gives more weight to recent observations. Three types:</p>
+                            <ul>
+                                <li><strong>SES</strong> — no trend or seasonality. Weight α controls recency</li>
+                                <li><strong>Holt's</strong> — adds trend component</li>
+                                <li><strong>Holt-Winters</strong> — handles both trend and seasonality (additive or multiplicative)</li>
+                            </ul>
+                            <p><strong>Concept Drift</strong> — statistical properties of data change over time, making trained models less accurate. Types: Sudden, Gradual, Recurring. Handle by: regular retraining, adaptive learning algorithms that update with new data.</p>
+                        </div>
+                    </div>
+                </div>
+        
+                <!-- ══════════════════════════════════════════
+                     SECTION 15 — REINFORCEMENT LEARNING
+                ══════════════════════════════════════════ -->
+                <div class="section-block" id="s15">
+                    <div class="section-header">
+                        <span class="section-badge green">Section 15</span>
+                        <span class="section-title">Reinforcement Learning</span>
+                    </div>
+        
+                    <div class="diag">
+                        <div class="diag-title">RL Agent-Environment Loop</div>
+                        <svg viewBox="0 0 620 220" xmlns="http://www.w3.org/2000/svg" width="100%" style="max-width:620px;min-width:380px;">
+                            <defs>
+                                <marker id="i1" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#38c9b8"/></marker>
+                                <marker id="i2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#f7c67a"/></marker>
+                            </defs>
+                            <!-- Agent -->
+                            <rect x="60" y="80" width="150" height="60" rx="10" fill="#13201a" stroke="#38c9b8" stroke-width="2"/>
+                            <text x="135" y="106" text-anchor="middle" font-family="'Courier New',monospace" font-size="12" fill="#38c9b8" font-weight="700">AGENT</text>
+                            <text x="135" y="124" text-anchor="middle" font-family="Georgia,serif" font-size="10" fill="#5a6478">learns &amp; decides</text>
+                            <!-- Environment -->
+                            <rect x="410" y="80" width="150" height="60" rx="10" fill="#1e1a10" stroke="#f7c67a" stroke-width="2"/>
+                            <text x="485" y="106" text-anchor="middle" font-family="'Courier New',monospace" font-size="12" fill="#f7c67a" font-weight="700">ENVIRONMENT</text>
+                            <text x="485" y="124" text-anchor="middle" font-family="Georgia,serif" font-size="10" fill="#5a6478">responds to actions</text>
+                            <!-- Action arrow top -->
+                            <path d="M210,95 Q310,40 410,95" stroke="#38c9b8" stroke-width="2" fill="none" marker-end="url(#i1)"/>
+                            <text x="310" y="50" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="#38c9b8">Action (aₜ)</text>
+                            <!-- State + Reward arrows bottom -->
+                            <path d="M410,125 Q310,178 210,125" stroke="#f7c67a" stroke-width="2" fill="none" marker-end="url(#i2)"/>
+                            <text x="310" y="180" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="#f7c67a">State (sₜ₊₁) + Reward (rₜ₊₁)</text>
+                            <!-- Labels -->
+                            <text x="310" y="210" text-anchor="middle" font-family="Georgia,serif" font-size="10" fill="#5a6478">Agent maximizes cumulative reward over time</text>
+                        </svg>
+                    </div>
+        
+                    <div class="diag">
+                        <div class="diag-title">Q-Learning vs SARSA — Off-Policy vs On-Policy</div>
+                        <svg viewBox="0 0 680 160" xmlns="http://www.w3.org/2000/svg" width="100%" style="max-width:680px;min-width:440px;">
+                            <rect x="10" y="10" width="315" height="140" rx="9" fill="#13161d" stroke="#4f8ef7" stroke-width="1.5"/>
+                            <text x="167" y="32" text-anchor="middle" font-family="'Courier New',monospace" font-size="11" fill="#4f8ef7">Q-LEARNING (Off-Policy)</text>
+                            <text x="167" y="54" text-anchor="middle" font-family="Georgia,serif" font-size="10" fill="#8892a4">Updates using greedy best action</text>
+                            <text x="25" y="76" font-family="'Courier New',monospace" font-size="10" fill="#5a6478">Q(s,a) ← Q(s,a) + α[R + γ max Q(s',a') - Q(s,a)]</text>
+                            <text x="167" y="108" text-anchor="middle" font-family="Georgia,serif" font-size="10" fill="#5a6478">More aggressive → optimal policy faster</text>
+                            <text x="167" y="127" text-anchor="middle" font-family="Georgia,serif" font-size="10" fill="#5a6478">Ignores exploratory moves in update</text>
+                            <text x="167" y="146" text-anchor="middle" font-family="Georgia,serif" font-size="10" fill="#5a6478">Best for: most standard RL problems</text>
+        
+                            <rect x="355" y="10" width="315" height="140" rx="9" fill="#13161d" stroke="#f7c67a" stroke-width="1.5"/>
+                            <text x="512" y="32" text-anchor="middle" font-family="'Courier New',monospace" font-size="11" fill="#f7c67a">SARSA (On-Policy)</text>
+                            <text x="512" y="54" text-anchor="middle" font-family="Georgia,serif" font-size="10" fill="#8892a4">Updates using actual next action taken</text>
+                            <text x="370" y="76" font-family="'Courier New',monospace" font-size="10" fill="#5a6478">Q(s,a) ← Q(s,a) + α[R + γ Q(s',a') - Q(s,a)]</text>
+                            <text x="512" y="108" text-anchor="middle" font-family="Georgia,serif" font-size="10" fill="#5a6478">More conservative → safer in risky envs</text>
+                            <text x="512" y="127" text-anchor="middle" font-family="Georgia,serif" font-size="10" fill="#5a6478">Accounts for exploratory moves</text>
+                            <text x="512" y="146" text-anchor="middle" font-family="Georgia,serif" font-size="10" fill="#5a6478">Best for: risky or safety-critical tasks</text>
+                        </svg>
+                    </div>
+        
+                    <div class="qa-block">
+                        <div class="qa-q" onclick="toggle(this)">
+                            <span class="qa-num">Q79–90</span>
+                            <span class="qa-text">RL Fundamentals — MDP, Bellman, Value Iteration, Policy Gradient, Actor-Critic</span>
+                            <span class="qa-arrow">▼</span>
+                        </div>
+                        <div class="qa-a">
+                            <p><strong>Reinforcement Learning</strong> — agent learns by interacting with environment. Takes actions → receives reward or penalty → adjusts behavior to maximize long-term cumulative reward.</p>
+                            <p><strong>MDP (Markov Decision Process)</strong> — mathematical framework: States (S), Actions (A), Transition Probability (P), Reward (R), Policy (π). Markov property: next state depends only on current state and action.</p>
+                            <p><strong>Optimal Policy (π*)</strong> — strategy that maximizes expected cumulative reward. No other policy achieves higher long-term reward.</p>
+                            <p><strong>Bellman Equation</strong> — recursive formula breaking long-term return into immediate reward + discounted future value.</p>
+                            <div class="formula">V(s) = E[Rₜ₊₁ + γ V(Sₜ₊₁) | Sₜ = s]</div>
+                            <p><strong>Dynamic Programming</strong> — solves MDPs using Bellman equations when environment is fully known. Value Iteration: directly computes optimal value function. Policy Iteration: alternates evaluation and improvement.</p>
+                            <p><strong>Model-Free RL</strong> — learns from experience without knowing transition probabilities (Q-Learning, SARSA, DQN). <strong>Model-Based RL</strong> — uses/learns environment model for planning (Dyna-Q, MCTS). More sample-efficient but complex.</p>
+                            <p><strong>Deep Q-Learning (DQN)</strong> — neural network approximates Q-function. Uses Experience Replay (break correlation) and Target Network (stable targets). Handles large/continuous state spaces.</p>
+                            <p><strong>Policy Gradient</strong> — directly optimizes the policy π_θ(a|s) using gradient ascent. Works well in continuous action spaces. REINFORCE: Monte Carlo policy gradient, high variance. <strong>Actor-Critic</strong>: combines policy gradient (actor) + value function (critic). Lower variance, basis of A2C and PPO.</p>
+                        </div>
+                    </div>
+                </div>
+        
+            </article>
+            <div id="related-topics" class="related-topics"></div>
+        </div>
+        <div id="footer-placeholder"></div>
+        
+        <script src="/shared/js/navbar.js"></script>
+        <script src="/shared/js/breadcrumb.js"></script>
+        <script src="/shared/js/related.js"></script>
+        <script src="/shared/js/background-animation.js"></script>
+        <script>
+            function toggle(el) {
+                const block = el.parentElement;
+                block.classList.toggle('open');
+            }
+            // Open first item in each section by default
+            document.querySelectorAll('.section-block').forEach(sec => {
+                const first = sec.querySelector('.qa-block');
+                if (first) first.classList.add('open');
+            });
+        </script>
+        </body>
+        </html>holder"></div>
     <div class="container">
         <div id="breadcrumb" class="breadcrumb"></div>
         <article class="topic-content">

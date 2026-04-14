@@ -7,24 +7,349 @@
     <title>POLYNOMIAL REGRESSION | ML Ecosystem</title>
     <link rel="stylesheet" href="/shared/css/global.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        .topic-content h2 {
+            color: var(--accent);
+            border-left: 3px solid var(--accent);
+            padding-left: 10px;
+        }
+
+        .chart-box {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 10px;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .callout {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--accent);
+            padding: 14px 16px;
+            border-radius: 12px;
+            margin: 14px 0;
+            color: var(--text-main);
+        }
+
+        .callout strong { color: var(--accent); }
+
+        .data-table-wrap {
+            overflow-x: auto;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin: 16px 0 24px;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 760px;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Courier New", monospace;
+            font-size: 12px;
+        }
+
+        .data-table th, .data-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-main);
+            text-align: left;
+            white-space: nowrap;
+        }
+
+        .data-table th {
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-size: 11px;
+            background: rgba(127, 127, 127, 0.06);
+        }
+
+        .data-table tr:last-child td { border-bottom: none; }
+
+        .pill-row { display:flex; flex-wrap:wrap; gap:8px; margin: 12px 0 6px; }
+        .pill {
+            display:inline-block;
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: rgba(8, 145, 178, 0.10);
+            border: 1px solid rgba(8, 145, 178, 0.22);
+            color: var(--text-main);
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Courier New", monospace;
+            font-size: 12px;
+        }
+
+        .mini-title {
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Courier New", monospace;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            font-size: 12px;
+            color: var(--text-dim);
+            margin-top: 10px;
+        }
+
+        .terminal {
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            padding: 15px;
+            border-radius: 10px;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Courier New", monospace;
+            box-shadow: var(--shadow-soft);
+            overflow-x: auto;
+            line-height: 1.65;
+        }
+
+        canvas {
+            width: 100%;
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+        }
+    </style>
 </head>
 <body>
     <div id="navbar-placeholder"></div>
     <div class="container">
         <div id="breadcrumb" class="breadcrumb"></div>
         <article class="topic-content">
-            <h1>POLYNOMIAL REGRESSION</h1>
-            <p>Welcome to the detailed exploration of POLYNOMIAL REGRESSION.</p>
-            <p>Machine Learning is an interconnected web of knowledge. This topic is a crucial part of the ecosystem, contributing to how models learn, adapt, and make predictions.</p>
-            
-            <div class="placeholder-text">
-                <h3>Core Concepts</h3>
-                <ul>
-                    <li>Fundamental principles of POLYNOMIAL REGRESSION</li>
-                    <li>Key applications in real-world scenarios</li>
-                    <li>Relationship with other ML clusters</li>
-                </ul>
+            <h1>POLYNOMIAL REGRESSION (Deep Dive)</h1>
+
+            <h2>What is Polynomial Regression?</h2>
+            <p>
+                Polynomial regression is a type of regression analysis in which the relationship between the independent
+                variable and the dependent variable is modeled as an <strong>n-th degree polynomial</strong>. It helps capture
+                complex (curved) relationships that linear regression cannot fit well.
+            </p>
+
+            <h2>Why Polynomial Regression?</h2>
+            <p>
+                Choosing between linear regression and polynomial regression depends on the dataset. A non-linear dataset
+                can't be fitted well with a straight line — polynomial features allow the model to capture non-linear patterns.
+            </p>
+
+            <div class="callout">
+                <strong>Intuition:</strong> Linear regression fits a straight line. Polynomial regression fits a curve by adding
+                powers of \(x\) like \(x^2\), \(x^3\), ... \(x^n\).
             </div>
+
+            <h2>Equation of Polynomial Regression</h2>
+            <div class="terminal">
+y = w₀ + w₁x + w₂x² + w₃x³ + ... + wₙxⁿ + ε
+            </div>
+            <p class="mini-title">Quadratic (degree 2)</p>
+            <div class="terminal">
+y = w₀ + w₁x + w₂x² + ε
+            </div>
+
+            <h2>How does Polynomial Regression Work?</h2>
+            <p>
+                Polynomial regression works similarly to linear regression, but it first transforms the input into
+                polynomial features \((x^2, x^3, \dots)\). These transformed features are treated like multiple inputs,
+                and a linear regressor is trained on them.
+            </p>
+
+            <div class="callout">
+                <strong>Key idea:</strong> Polynomial regression is a special case of multiple linear regression, where
+                the extra features are derived from the original feature.
+            </div>
+
+            <h2>Implementation of Polynomial Regression using Python</h2>
+            <p>
+                We will use the dataset <strong>ice_cream_selling_data.csv</strong> (49 examples) where:
+                Temperature (C) is the input feature \(X\) and Ice Cream Sales (units) is the target \(y\).
+            </p>
+
+            <h3>Dataset (ice_cream_selling_data.csv)</h3>
+            <div class="data-table-wrap">
+                <table class="data-table" aria-label="Ice cream selling dataset table">
+                    <thead>
+                        <tr>
+                            <th>Temperature (C)</th>
+                            <th>Ice Cream Sales (units)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>-4.662262677</td><td>41.84298632</td></tr>
+                        <tr><td>-4.316559447</td><td>34.66111954</td></tr>
+                        <tr><td>-4.213984765</td><td>39.38300088</td></tr>
+                        <tr><td>-3.949661089</td><td>37.53984488</td></tr>
+                        <tr><td>-3.578553716</td><td>32.28453119</td></tr>
+                        <tr><td>-3.455711698</td><td>30.00113848</td></tr>
+                        <tr><td>-3.108440121</td><td>22.63540128</td></tr>
+                        <tr><td>-3.081303324</td><td>25.36502221</td></tr>
+                        <tr><td>-2.672460827</td><td>19.22697005</td></tr>
+                        <tr><td>-2.652286793</td><td>20.27967918</td></tr>
+                        <tr><td>-2.651498033</td><td>13.27582850</td></tr>
+                        <tr><td>-2.288263998</td><td>18.12399121</td></tr>
+                        <tr><td>-2.111869690</td><td>11.21829447</td></tr>
+                        <tr><td>-1.818937609</td><td>10.01286785</td></tr>
+                        <tr><td>-1.660347730</td><td>12.61518115</td></tr>
+                        <tr><td>-1.326378983</td><td>10.95773134</td></tr>
+                        <tr><td>-1.173123268</td><td>6.68912264</td></tr>
+                        <tr><td>-0.773330043</td><td>9.392968661</td></tr>
+                        <tr><td>-0.673752802</td><td>5.210162615</td></tr>
+                        <tr><td>-0.149634867</td><td>4.673642541</td></tr>
+                        <tr><td>-0.036156498</td><td>0.328625517</td></tr>
+                        <tr><td>-0.033895286</td><td>0.897603187</td></tr>
+                        <tr><td>0.008607699</td><td>3.165600008</td></tr>
+                        <tr><td>0.149244574</td><td>1.931416029</td></tr>
+                        <tr><td>0.688780908</td><td>2.576782245</td></tr>
+                        <tr><td>0.693598873</td><td>4.625689458</td></tr>
+                        <tr><td>0.874905029</td><td>0.789973651</td></tr>
+                        <tr><td>1.024180814</td><td>2.313806358</td></tr>
+                        <tr><td>1.240711619</td><td>1.292360811</td></tr>
+                        <tr><td>1.359812674</td><td>0.953115312</td></tr>
+                        <tr><td>1.740000012</td><td>3.782570136</td></tr>
+                        <tr><td>1.850551926</td><td>4.857987801</td></tr>
+                        <tr><td>1.999310369</td><td>8.943823209</td></tr>
+                        <tr><td>2.075100597</td><td>8.170734936</td></tr>
+                        <tr><td>2.318591240</td><td>7.412094028</td></tr>
+                        <tr><td>2.471945997</td><td>10.33663062</td></tr>
+                        <tr><td>2.784836463</td><td>15.99661997</td></tr>
+                        <tr><td>2.831760211</td><td>12.56823739</td></tr>
+                        <tr><td>2.959932091</td><td>21.34291574</td></tr>
+                        <tr><td>3.020874314</td><td>20.11441346</td></tr>
+                        <tr><td>3.211366144</td><td>22.83940550</td></tr>
+                        <tr><td>3.270044068</td><td>16.98327874</td></tr>
+                        <tr><td>3.316072519</td><td>25.14208223</td></tr>
+                        <tr><td>3.335932412</td><td>26.10474041</td></tr>
+                        <tr><td>3.610778478</td><td>28.91218793</td></tr>
+                        <tr><td>3.704057438</td><td>17.84395652</td></tr>
+                        <tr><td>4.130867961</td><td>34.53074274</td></tr>
+                        <tr><td>4.133533788</td><td>27.69838335</td></tr>
+                        <tr><td>4.899031514</td><td>41.51482194</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Step 1: Data Preparation</h3>
+            <div class="terminal">
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.preprocessing import PolynomialFeatures
+
+data = pd.read_csv('ice_cream_selling_data.csv')
+X = data.iloc[:, 0].values.reshape(-1, 1)
+y = data.iloc[:, 1].values
+            </div>
+
+            <h3>Visualize the original data points</h3>
+            <div class="terminal">
+plt.scatter(X, y, color="green")
+plt.title("Original Data")
+plt.xlabel("Temperature (C)")
+plt.ylabel("Ice Cream Sales (units)")
+plt.show()
+            </div>
+
+            <div class="chart-box">
+                <div class="mini-title">Graph 1: Original Data (Scatter)</div>
+                <canvas id="polyScatter" height="260"></canvas>
+            </div>
+
+            <h3>Create polynomial features (degree = 2)</h3>
+            <div class="terminal">
+degree = 2
+poly_features = PolynomialFeatures(degree=degree)
+X_poly = poly_features.fit_transform(X)
+            </div>
+
+            <h3>Step 2: Model Training (Linear Regression on polynomial features)</h3>
+            <div class="terminal">
+from sklearn.linear_model import LinearRegression
+
+lr_model = LinearRegression()
+lr_model.fit(X_poly, y)
+            </div>
+
+            <h3>Step 3: Prediction</h3>
+            <div class="terminal">
+y_pred = lr_model.predict(X_poly)
+df = pd.DataFrame({'Actual Values': y, 'Predicted Values': y_pred})
+print(df)
+            </div>
+
+            <h3>Step 4: Evaluation (R² Score)</h3>
+            <div class="terminal">
+from sklearn.metrics import r2_score
+
+r2 = r2_score(y, y_pred)
+print(r2)  # example: 0.9321...
+            </div>
+
+            <h3>Step 5: Visualize the polynomial regression curve</h3>
+            <div class="terminal">
+plt.scatter(X, y, color="green")
+plt.plot(X, y_pred, color='red', label=f'Polynomial Regression (degree={degree})')
+plt.xlabel("Temperature (C)")
+plt.ylabel("Ice Cream Sales (units)")
+plt.legend()
+plt.title("Polynomial Regression")
+plt.show()
+            </div>
+
+            <div class="chart-box">
+                <div class="mini-title">Graph 2: Best-fit Polynomial Curve (degree 2)</div>
+                <canvas id="polyFit" height="260"></canvas>
+            </div>
+
+            <h3>Predict for new temperature</h3>
+            <div class="terminal">
+X_new = np.array([[1.9929]])
+X_new_poly = poly_features.transform(X_new)
+y_new_pred = lr_model.predict(X_new_poly)
+print(y_new_pred)
+            </div>
+
+            <h2>Applications in Deep Learning, NLP &amp; Generative AI</h2>
+            <p>Polynomial features help capture curvature and non-linear effects — this idea appears in many ML systems.</p>
+
+            <h3>Deep Learning</h3>
+            <ul>
+                <li><strong>Non-linear modeling intuition:</strong> polynomial terms mimic non-linear feature interactions (a stepping stone to neural nets).</li>
+                <li><strong>Feature engineering baseline:</strong> compare polynomial regression vs neural networks on tabular data.</li>
+                <li><strong>Calibration / regression heads:</strong> predicting continuous targets often ends with a linear layer; polynomial features can boost classical baselines.</li>
+            </ul>
+
+            <h3>NLP</h3>
+            <ul>
+                <li><strong>Text scoring:</strong> polynomial interactions between numeric text features (length, frequency, readability metrics).</li>
+                <li><strong>Embedding interactions:</strong> lightweight non-linear mapping by adding squared terms on selected embedding components (baseline experiments).</li>
+                <li><strong>Sentiment intensity:</strong> predict a continuous sentiment score using engineered features.</li>
+            </ul>
+
+            <h3>Generative AI (GenAI)</h3>
+            <ul>
+                <li><strong>Reward / quality scoring:</strong> score generated outputs from multiple signals with non-linear interactions.</li>
+                <li><strong>Safety &amp; calibration:</strong> model “risk vs quality” curves where effects are not linear.</li>
+                <li><strong>Post-processing:</strong> fit non-linear relationships in evaluation metrics (e.g., temperature vs output quality).</li>
+            </ul>
+
+            <h3>Other common uses</h3>
+            <div class="pill-row">
+                <span class="pill">Curve fitting</span>
+                <span class="pill">Demand vs price curves</span>
+                <span class="pill">Sensor calibration</span>
+                <span class="pill">Physics/chemistry trends</span>
+                <span class="pill">Weather vs yield</span>
+            </div>
+
+            <h2>Project Ideas (with Names)</h2>
+            <p>Portfolio-ready projects you can build using Polynomial Regression.</p>
+            <ol>
+                <li><strong>IceCream Sales Forecaster</strong> — predict sales from temperature using degree-2/3 polynomial curves.</li>
+                <li><strong>DemandCurve Lab</strong> — model demand vs price with non-linear elasticity.</li>
+                <li><strong>CropYield CurveFit</strong> — yield vs rainfall/temperature (start with one variable).</li>
+                <li><strong>EnergyLoad Curves</strong> — energy usage vs temperature (non-linear seasonal patterns).</li>
+                <li><strong>SensorCalibrator</strong> — calibrate sensor readings where bias changes non-linearly.</li>
+                <li><strong>Marketing ROI Curve</strong> — ROI vs ad spend (diminishing returns captured by curvature).</li>
+                <li><strong>BatteryHealth Predictor</strong> — cycle count vs capacity loss (curved decay).</li>
+            </ol>
         </article>
         <div id="related-topics" class="related-topics"></div>
     </div>
@@ -34,5 +359,214 @@
     <script src="/shared/js/breadcrumb.js"></script>
     <script src="/shared/js/related.js"></script>
     <script src="/shared/js/background-animation.js"></script>
+
+    <script>
+        function cssVar(name, fallback) {
+            const v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+            return v || fallback;
+        }
+
+        function themePalette() {
+            const dark = document.documentElement.getAttribute('data-theme') === 'dark';
+            return {
+                dark,
+                text: cssVar('--text-main', dark ? '#e2e8f0' : '#1e293b'),
+                muted: cssVar('--text-muted', dark ? '#94a3b8' : '#64748b'),
+                border: cssVar('--border', dark ? 'rgba(255,255,255,0.08)' : 'rgba(15,23,42,0.08)'),
+                accent: cssVar('--accent', dark ? '#22d3ee' : '#0891b2'),
+                accent2: cssVar('--blue', dark ? '#60a5fa' : '#2563eb'),
+                warn: dark ? '#facc15' : '#ca8a04',
+            };
+        }
+
+        function paintCanvasBg(ctx, canvas) {
+            const pal = themePalette();
+            ctx.save();
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = pal.dark ? 'rgba(0,0,0,0.28)' : 'rgba(255,255,255,0.85)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.restore();
+        }
+
+        const iceCreamData = [
+            { x: -4.662262677, y: 41.84298632 },
+            { x: -4.316559447, y: 34.66111954 },
+            { x: -4.213984765, y: 39.38300088 },
+            { x: -3.949661089, y: 37.53984488 },
+            { x: -3.578553716, y: 32.28453119 },
+            { x: -3.455711698, y: 30.00113848 },
+            { x: -3.108440121, y: 22.63540128 },
+            { x: -3.081303324, y: 25.36502221 },
+            { x: -2.672460827, y: 19.22697005 },
+            { x: -2.652286793, y: 20.27967918 },
+            { x: -2.651498033, y: 13.27582850 },
+            { x: -2.288263998, y: 18.12399121 },
+            { x: -2.111869690, y: 11.21829447 },
+            { x: -1.818937609, y: 10.01286785 },
+            { x: -1.660347730, y: 12.61518115 },
+            { x: -1.326378983, y: 10.95773134 },
+            { x: -1.173123268, y: 6.68912264 },
+            { x: -0.773330043, y: 9.392968661 },
+            { x: -0.673752802, y: 5.210162615 },
+            { x: -0.149634867, y: 4.673642541 },
+            { x: -0.036156498, y: 0.328625517 },
+            { x: -0.033895286, y: 0.897603187 },
+            { x: 0.008607699, y: 3.165600008 },
+            { x: 0.149244574, y: 1.931416029 },
+            { x: 0.688780908, y: 2.576782245 },
+            { x: 0.693598873, y: 4.625689458 },
+            { x: 0.874905029, y: 0.789973651 },
+            { x: 1.024180814, y: 2.313806358 },
+            { x: 1.240711619, y: 1.292360811 },
+            { x: 1.359812674, y: 0.953115312 },
+            { x: 1.740000012, y: 3.782570136 },
+            { x: 1.850551926, y: 4.857987801 },
+            { x: 1.999310369, y: 8.943823209 },
+            { x: 2.075100597, y: 8.170734936 },
+            { x: 2.318591240, y: 7.412094028 },
+            { x: 2.471945997, y: 10.33663062 },
+            { x: 2.784836463, y: 15.99661997 },
+            { x: 2.831760211, y: 12.56823739 },
+            { x: 2.959932091, y: 21.34291574 },
+            { x: 3.020874314, y: 20.11441346 },
+            { x: 3.211366144, y: 22.83940550 },
+            { x: 3.270044068, y: 16.98327874 },
+            { x: 3.316072519, y: 25.14208223 },
+            { x: 3.335932412, y: 26.10474041 },
+            { x: 3.610778478, y: 28.91218793 },
+            { x: 3.704057438, y: 17.84395652 },
+            { x: 4.130867961, y: 34.53074274 },
+            { x: 4.133533788, y: 27.69838335 },
+            { x: 4.899031514, y: 41.51482194 },
+        ];
+
+        function fitQuadratic(points) {
+            // Least squares fit for y = a x^2 + b x + c
+            let Sx = 0, Sx2 = 0, Sx3 = 0, Sx4 = 0;
+            let Sy = 0, Sxy = 0, Sx2y = 0;
+            const n = points.length;
+            for (const p of points) {
+                const x = p.x, y = p.y;
+                const x2 = x * x;
+                Sx += x;
+                Sx2 += x2;
+                Sx3 += x2 * x;
+                Sx4 += x2 * x2;
+                Sy += y;
+                Sxy += x * y;
+                Sx2y += x2 * y;
+            }
+
+            // Solve normal equations:
+            // [Sx4 Sx3 Sx2][a] = [Sx2y]
+            // [Sx3 Sx2 Sx ][b]   [Sxy ]
+            // [Sx2 Sx  n  ][c]   [Sy  ]
+            const A = [
+                [Sx4, Sx3, Sx2],
+                [Sx3, Sx2, Sx ],
+                [Sx2, Sx , n  ],
+            ];
+            const B = [Sx2y, Sxy, Sy];
+
+            // Gaussian elimination (3x3)
+            for (let i = 0; i < 3; i++) {
+                // pivot
+                let maxRow = i;
+                for (let r = i + 1; r < 3; r++) {
+                    if (Math.abs(A[r][i]) > Math.abs(A[maxRow][i])) maxRow = r;
+                }
+                if (maxRow !== i) {
+                    [A[i], A[maxRow]] = [A[maxRow], A[i]];
+                    [B[i], B[maxRow]] = [B[maxRow], B[i]];
+                }
+                const pivot = A[i][i] || 1e-12;
+                for (let c = i; c < 3; c++) A[i][c] /= pivot;
+                B[i] /= pivot;
+                for (let r = 0; r < 3; r++) {
+                    if (r === i) continue;
+                    const f = A[r][i];
+                    for (let c = i; c < 3; c++) A[r][c] -= f * A[i][c];
+                    B[r] -= f * B[i];
+                }
+            }
+            const [a, b, c] = B;
+            return { a, b, c };
+        }
+
+        function drawScatter(canvasId, points, drawCurve) {
+            const c = document.getElementById(canvasId);
+            if (!c) return;
+            const ctx = c.getContext('2d');
+            c.width = 920;
+            const W = c.width, H = c.height;
+            const pal = themePalette();
+            paintCanvasBg(ctx, c);
+
+            const pad = 56;
+            const minX = Math.min(...points.map(p => p.x));
+            const maxX = Math.max(...points.map(p => p.x));
+            const minY = Math.min(...points.map(p => p.y));
+            const maxY = Math.max(...points.map(p => p.y));
+
+            const toX = x => pad + ((x - minX) / (maxX - minX)) * (W - pad - 20);
+            const toY = y => (H - pad) - ((y - minY) / (maxY - minY)) * (H - pad * 2);
+
+            // grid
+            ctx.strokeStyle = pal.dark ? 'rgba(255,255,255,0.10)' : 'rgba(15,23,42,0.10)';
+            ctx.lineWidth = 1;
+            for (let i = 1; i < 6; i++) {
+                const gx = pad + (W - pad - 20) * i / 6;
+                const gy = pad + (H - pad * 2) * i / 6;
+                ctx.beginPath(); ctx.moveTo(gx, pad); ctx.lineTo(gx, H - pad); ctx.stroke();
+                ctx.beginPath(); ctx.moveTo(pad, gy); ctx.lineTo(W - 20, gy); ctx.stroke();
+            }
+
+            // axes
+            ctx.strokeStyle = pal.dark ? 'rgba(255,255,255,0.22)' : 'rgba(15,23,42,0.22)';
+            ctx.beginPath();
+            ctx.moveTo(pad, pad);
+            ctx.lineTo(pad, H - pad);
+            ctx.lineTo(W - 20, H - pad);
+            ctx.stroke();
+
+            // points
+            for (const p of points) {
+                ctx.fillStyle = pal.accent;
+                ctx.beginPath();
+                ctx.arc(toX(p.x), toY(p.y), 3.8, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            if (drawCurve) {
+                const { a, b, c: cc } = fitQuadratic(points);
+                ctx.strokeStyle = pal.warn;
+                ctx.lineWidth = 2.5;
+                ctx.beginPath();
+                const steps = 140;
+                for (let i = 0; i <= steps; i++) {
+                    const x = minX + (maxX - minX) * (i / steps);
+                    const y = a * x * x + b * x + cc;
+                    const px = toX(x), py = toY(y);
+                    if (i === 0) ctx.moveTo(px, py);
+                    else ctx.lineTo(px, py);
+                }
+                ctx.stroke();
+            }
+
+            // labels
+            ctx.fillStyle = pal.muted;
+            ctx.font = '12px ui-monospace, monospace';
+            ctx.fillText('Temperature (C)', pad, pad - 10);
+            ctx.fillText('Ice Cream Sales (units)', pad, H - 10);
+        }
+
+        function renderPolyCharts() {
+            drawScatter('polyScatter', iceCreamData, false);
+            drawScatter('polyFit', iceCreamData, true);
+        }
+
+        document.addEventListener('DOMContentLoaded', renderPolyCharts);
+        window.addEventListener('ml-theme-change', renderPolyCharts);
+    </script>
 </body>
 </html>

@@ -81,6 +81,22 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     }
 
+    // Inject site-wide chatbot widget on every page (loaded once).
+    (function ensureChatbot() {
+        // theme-init.js already injects this; keep as safe fallback.
+        if (window.__mlChatbotLoaded) return;
+        const already = Array.from(document.scripts).some((s) => (s.src || '').includes('/shared/js/chatbot.js'));
+        if (already) {
+            window.__mlChatbotLoaded = true;
+            return;
+        }
+        window.__mlChatbotLoaded = true;
+        const script = document.createElement('script');
+        script.src = sharedAssetUrl('js/chatbot.js');
+        script.defer = true;
+        document.head.appendChild(script);
+    })();
+
     const footerPlaceholder = document.getElementById('footer-placeholder');
     if (footerPlaceholder) {
         const fUrl = sharedAssetUrl('footer.html');

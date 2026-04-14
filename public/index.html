@@ -338,6 +338,258 @@
             flex-direction: column;
             align-items: center;
             width: 100%;
+            position: relative;
+        }
+
+        /* Animated connectors for step guidance (root -> steps) */
+        .tree-connectors {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: visible;
+        }
+
+        .tree-connector-path {
+            fill: none;
+            stroke: rgba(8, 145, 178, 0.55);
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-dasharray: 10 10;
+            filter: drop-shadow(0 10px 20px rgba(8, 145, 178, 0.14));
+            opacity: 0.72;
+            animation: connector-dash 2.2s linear infinite;
+        }
+
+        @keyframes connector-dash {
+            to { stroke-dashoffset: -40; }
+        }
+
+        .tree-connector-glow {
+            fill: none;
+            stroke: rgba(99, 102, 241, 0.25);
+            stroke-width: 6;
+            stroke-linecap: round;
+            opacity: 0.5;
+            filter: blur(2px);
+        }
+
+        .tree-connector-arrow {
+            fill: rgba(8, 145, 178, 0.92);
+        }
+
+        html[data-theme="dark"] .tree-connector-path {
+            stroke: rgba(34, 211, 238, 0.55);
+            filter: drop-shadow(0 10px 22px rgba(34, 211, 238, 0.16));
+        }
+
+        html[data-theme="dark"] .tree-connector-glow {
+            stroke: rgba(167, 139, 250, 0.22);
+        }
+
+        .step-badge {
+            position: absolute;
+            left: -12px;
+            top: -12px;
+            width: 28px;
+            height: 28px;
+            border-radius: 999px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+            color: #0b1220;
+            background: linear-gradient(135deg, rgba(8, 145, 178, 0.95), rgba(99, 102, 241, 0.92));
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            box-shadow: 0 12px 30px rgba(8, 145, 178, 0.22);
+            z-index: 3;
+        }
+
+        html[data-theme="dark"] .step-badge {
+            color: rgba(15, 23, 42, 0.95);
+            background: linear-gradient(135deg, rgba(34, 211, 238, 0.95), rgba(167, 139, 250, 0.92));
+            box-shadow: 0 12px 30px rgba(34, 211, 238, 0.18);
+        }
+
+        /* Recommended Study Flow (step-wise) */
+        .study-flow {
+            width: 100%;
+            max-width: 980px;
+            background: rgba(255, 255, 255, 0.55);
+            border: 1px solid rgba(15, 23, 42, 0.08);
+            border-radius: clamp(16px, 4vw, 30px);
+            padding: clamp(1.25rem, 4vw, 2.25rem);
+            box-shadow: 0 10px 38px rgba(15, 23, 42, 0.06);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+        }
+
+        .study-flow-header {
+            text-align: left;
+            margin-bottom: 1.25rem;
+            display: flex;
+            gap: 0.75rem;
+            align-items: baseline;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .study-flow-title {
+            margin: 0;
+            font-family: 'Orbitron', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            font-size: clamp(0.9rem, 2.8vw, 1.05rem);
+            color: #0f172a;
+        }
+
+        .study-flow-subtitle {
+            margin: 0;
+            color: #64748b;
+            font-size: 0.9rem;
+            line-height: 1.45;
+        }
+
+        .study-flow-rail {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 14px;
+            margin-top: 0.75rem;
+        }
+
+        .flow-step {
+            position: relative;
+            padding-left: 44px;
+        }
+
+        .flow-step::before {
+            content: "";
+            position: absolute;
+            left: 18px;
+            top: 0;
+            bottom: -14px;
+            width: 2px;
+            background: linear-gradient(180deg, rgba(8, 145, 178, 0.38), rgba(99, 102, 241, 0.22));
+        }
+
+        .flow-step:last-child::before {
+            bottom: 40%;
+        }
+
+        .flow-dot {
+            position: absolute;
+            left: 8px;
+            top: 16px;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(8, 145, 178, 0.95), rgba(99, 102, 241, 0.95));
+            box-shadow: 0 10px 30px rgba(8, 145, 178, 0.2);
+        }
+
+        .flow-label {
+            display: inline-block;
+            font-family: 'Courier New', monospace;
+            font-size: 0.68rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: rgba(100, 116, 139, 0.92);
+            margin-bottom: 6px;
+        }
+
+        .flow-card {
+            display: block;
+            text-decoration: none;
+            color: inherit;
+            background: var(--node-bg);
+            border: 1px solid var(--node-border);
+            border-radius: 18px;
+            padding: 14px 16px;
+            transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+        }
+
+        .flow-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(8, 145, 178, 0.55);
+            box-shadow: 0 16px 44px rgba(15, 23, 42, 0.12);
+        }
+
+        .flow-card-title {
+            margin: 0 0 4px;
+            font-weight: 800;
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            font-size: 0.86rem;
+            color: #0f172a;
+        }
+
+        .flow-card-desc {
+            margin: 0;
+            color: #64748b;
+            font-size: 0.9rem;
+            line-height: 1.45;
+        }
+
+        .flow-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .flow-badge {
+            font-family: 'Courier New', monospace;
+            font-size: 11px;
+            letter-spacing: 0.06em;
+            color: rgba(8, 145, 178, 0.95);
+            background: rgba(248, 250, 252, 0.9);
+            border: 1px solid rgba(15, 23, 42, 0.08);
+            border-radius: 999px;
+            padding: 6px 10px;
+        }
+
+        .flow-split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        @media (max-width: 860px) {
+            .flow-split {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        html[data-theme="dark"] .study-flow {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 36px rgba(0, 0, 0, 0.45);
+        }
+
+        html[data-theme="dark"] .study-flow-title {
+            color: #e2e8f0;
+        }
+
+        html[data-theme="dark"] .study-flow-subtitle,
+        html[data-theme="dark"] .flow-label,
+        html[data-theme="dark"] .flow-card-desc {
+            color: #94a3b8;
+        }
+
+        html[data-theme="dark"] .flow-card-title {
+            color: #f1f5f9;
+        }
+
+        html[data-theme="dark"] .flow-badge {
+            background: rgba(0, 0, 0, 0.28);
+            border-color: rgba(255, 255, 255, 0.1);
+            color: rgba(103, 232, 249, 0.95);
         }
 
         .tree-node {
@@ -631,7 +883,16 @@
             <p>A structured journey through the ML ecosystem. Click any topic to explore.</p>
         </div>
 
+        <section class="study-flow" aria-label="Recommended study flow">
+            <div class="study-flow-header">
+                <h2 class="study-flow-title">Recommended Study Flow</h2>
+                <p class="study-flow-subtitle">Topic-wise, step-by-step path (start from 1).</p>
+            </div>
+            <div id="study-roadmap" class="study-flow-rail"></div>
+        </section>
+
         <div id="tree-root" class="tree">
+            <svg id="tree-connectors" class="tree-connectors" aria-hidden="true"></svg>
             <!-- Root Node -->
             <a href="/index.html" class="tree-node root">ML ECOSYSTEM HOME</a>
             
@@ -810,6 +1071,143 @@
 
         const branchesContainer = document.getElementById('main-branches');
 
+        // Recommended step-wise flow (prevents confusion by showing "what to study first")
+        const roadmap = [
+            {
+                label: 'Topic 1',
+                title: 'Introduction',
+                desc: 'Start here for the big picture of ML.',
+                link: '/topics/introduction.html',
+                badges: ['Start here', 'Big picture']
+            },
+            {
+                label: 'Topic 2',
+                title: 'Getting Started',
+                desc: 'Tools, mindset, and how to begin.',
+                link: '/topics/getting-started.html',
+                badges: ['Setup', 'Beginner']
+            },
+            {
+                label: 'Topic 3',
+                title: 'Basic Concepts',
+                desc: 'Core words: features, labels, training, testing.',
+                link: '/topics/basic-concepts.html',
+                badges: ['Foundation']
+            },
+            {
+                label: 'Topic 4',
+                title: 'Types of Data',
+                desc: 'Know what data you have and what models need.',
+                link: '/topics/types-of-data.html',
+                badges: ['Data first']
+            },
+            {
+                label: 'Topic 5',
+                title: 'Statistics',
+                desc: 'Build intuition for distributions and variation.',
+                link: '/topics/statistics.html',
+                badges: ['Math basics']
+            },
+            {
+                label: 'Topic 6',
+                title: 'Data Preparation',
+                desc: 'Cleaning, missing values, scaling, splitting.',
+                link: '/topics/data-preparation.html',
+                badges: ['Preprocessing', 'Real-world']
+            },
+            {
+                label: 'Topic 7',
+                title: 'Supervised Learning',
+                desc: 'Learn how models predict from labeled data.',
+                link: '/topics/supervised-learning.html',
+                badges: ['Most used']
+            },
+            {
+                label: 'Branch',
+                split: true,
+                branches: [
+                    {
+                        title: 'Regression',
+                        desc: 'If output is a number (price, score, time).',
+                        link: '/topics/regression.html',
+                        badges: ['Numeric output']
+                    },
+                    {
+                        title: 'Classification',
+                        desc: 'If output is a class/label (spam/ham).',
+                        link: '/topics/classification.html',
+                        badges: ['Label output']
+                    }
+                ]
+            },
+            {
+                label: 'Optional',
+                title: 'Clustering',
+                desc: 'When you don’t have labels: group similar data.',
+                link: '/topics/clustering.html',
+                badges: ['Unsupervised']
+            },
+            {
+                label: 'Advanced',
+                split: true,
+                branches: [
+                    {
+                        title: 'Deep Learning',
+                        desc: 'Neural networks for vision, text, complex data.',
+                        link: '/topics/deep-learning.html',
+                        badges: ['Neural nets']
+                    },
+                    {
+                        title: 'Reinforcement Learning',
+                        desc: 'Learning by rewards and actions (agents).',
+                        link: '/topics/reinforcement-learning.html',
+                        badges: ['Rewards', 'Agents']
+                    }
+                ]
+            }
+        ];
+
+        function renderFlowCard(item) {
+            const badges = Array.isArray(item.badges) && item.badges.length
+                ? `<div class="flow-badges">${item.badges.map(b => `<span class="flow-badge">${b}</span>`).join('')}</div>`
+                : '';
+
+            return `
+                <a class="flow-card" href="${item.link}">
+                    <h3 class="flow-card-title">${item.title}</h3>
+                    <p class="flow-card-desc">${item.desc}</p>
+                    ${badges}
+                </a>
+            `;
+        }
+
+        const roadmapContainer = document.getElementById('study-roadmap');
+        if (roadmapContainer) {
+            roadmap.forEach((step) => {
+                const wrap = document.createElement('div');
+                wrap.className = 'flow-step';
+
+                if (step.split) {
+                    const topLabel = step.label || 'Next';
+                    wrap.innerHTML = `
+                        <span class="flow-dot" aria-hidden="true"></span>
+                        <div class="flow-label">${topLabel}</div>
+                        <div class="flow-split">
+                            ${step.branches.map(renderFlowCard).join('')}
+                        </div>
+                    `;
+                } else {
+                    wrap.innerHTML = `
+                        <span class="flow-dot" aria-hidden="true"></span>
+                        <div class="flow-label">${step.label}</div>
+                        ${renderFlowCard(step)}
+                    `;
+                }
+
+                roadmapContainer.appendChild(wrap);
+            });
+        }
+
         treeData.forEach((branch, bIndex) => {
             const group = document.createElement('div');
             group.className = 'tree-group';
@@ -819,6 +1217,14 @@
             const clusterNode = document.createElement('div');
             clusterNode.className = `tree-node cluster ${branch.class}`;
             clusterNode.textContent = branch.title;
+
+            // Step badges for the entire tree structure (1..N)
+            clusterNode.style.position = 'relative';
+            const badge = document.createElement('span');
+            badge.className = 'step-badge';
+            badge.textContent = String(bIndex + 1);
+            badge.title = `Step ${bIndex + 1}`;
+            clusterNode.appendChild(badge);
             
             const leafContainer = document.createElement('div');
             leafContainer.className = 'leaf-container';
@@ -837,6 +1243,82 @@
             group.appendChild(leafContainer);
             branchesContainer.appendChild(group);
         });
+
+        // Animated connectors (root -> all cluster steps)
+        function drawTreeConnectors() {
+            const svg = document.getElementById('tree-connectors');
+            const tree = document.getElementById('tree-root');
+            const root = tree?.querySelector('.tree-node.root');
+            if (!svg || !tree || !root) return;
+
+            const targets = Array.from(tree.querySelectorAll('.tree-node.cluster'));
+
+            const treeRect = tree.getBoundingClientRect();
+            if (treeRect.width <= 0 || treeRect.height <= 0) return;
+
+            svg.setAttribute('viewBox', `0 0 ${treeRect.width} ${treeRect.height}`);
+            svg.setAttribute('width', `${treeRect.width}`);
+            svg.setAttribute('height', `${treeRect.height}`);
+            svg.innerHTML = '';
+
+            function centerBottom(el) {
+                const r = el.getBoundingClientRect();
+                return { x: (r.left - treeRect.left) + r.width / 2, y: (r.top - treeRect.top) + r.height };
+            }
+            function centerTop(el) {
+                const r = el.getBoundingClientRect();
+                return { x: (r.left - treeRect.left) + r.width / 2, y: (r.top - treeRect.top) };
+            }
+
+            const start = centerBottom(root);
+
+            const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+            const marker = document.createElementNS('http://www.w3.org/2000/svg', 'marker');
+            marker.setAttribute('id', 'arrowHead');
+            marker.setAttribute('markerWidth', '10');
+            marker.setAttribute('markerHeight', '10');
+            marker.setAttribute('refX', '8');
+            marker.setAttribute('refY', '5');
+            marker.setAttribute('orient', 'auto');
+            const arrowPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+            arrowPath.setAttribute('d', 'M 0 0 L 10 5 L 0 10 z');
+            arrowPath.setAttribute('class', 'tree-connector-arrow');
+            marker.appendChild(arrowPath);
+            defs.appendChild(marker);
+            svg.appendChild(defs);
+
+            targets.forEach((t, i) => {
+                const end = centerTop(t);
+                // Slight arc; alternate bend direction to reduce overlap when many lines exist
+                const bendBase = 0.28;
+                const bendJitter = ((i % 6) - 2.5) * 0.03; // -0.075..+0.075
+                const bend = Math.max(0.12, Math.min(0.44, bendBase + bendJitter));
+                const cx1 = start.x + (end.x - start.x) * bend;
+                const cy1 = start.y + 26 + (i % 4) * 6;
+                const cx2 = start.x + (end.x - start.x) * (1 - bend);
+                const cy2 = end.y - 24 - (i % 3) * 4;
+                const d = `M ${start.x} ${start.y} C ${cx1} ${cy1}, ${cx2} ${cy2}, ${end.x} ${end.y}`;
+
+                const glow = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                glow.setAttribute('d', d);
+                glow.setAttribute('class', 'tree-connector-glow');
+                svg.appendChild(glow);
+
+                const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                path.setAttribute('d', d);
+                path.setAttribute('class', 'tree-connector-path');
+                path.setAttribute('marker-end', 'url(#arrowHead)');
+                path.style.animationDelay = `${i * 0.14}s`;
+                svg.appendChild(path);
+            });
+        }
+
+        const scheduleConnectors = () => requestAnimationFrame(() => requestAnimationFrame(drawTreeConnectors));
+        window.addEventListener('resize', scheduleConnectors);
+        window.addEventListener('ml-theme-change', scheduleConnectors);
+        document.getElementById('landing-title').addEventListener('click', scheduleConnectors);
+        document.getElementById('landing-subtitle').addEventListener('click', scheduleConnectors);
+        scheduleConnectors();
     </script>
 </body>
 </html>

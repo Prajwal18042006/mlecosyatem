@@ -1,38 +1,671 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <script src="/shared/js/theme-init.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIMPLE LINEAR REGRESSION | ML Ecosystem</title>
-    <link rel="stylesheet" href="/shared/css/global.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<meta charset="UTF-8">
+<script src="/shared/js/theme-init.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SIMPLE LINEAR REGRESSION | ML Ecosystem</title>
+
+<link rel="stylesheet" href="/shared/css/global.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+<style>
+.topic-content h2 {
+  color: var(--accent);
+  border-left: 3px solid var(--accent);
+  padding-left: 10px;
+}
+.chart-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 15px;
+  margin: 20px 0;
+  border-radius: 10px;
+  box-shadow: var(--shadow-soft);
+}
+.callout {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  padding: 14px 16px;
+  border-radius: 12px;
+  margin: 14px 0;
+  color: var(--text-main);
+}
+.callout strong { color: var(--accent); }
+.data-table-wrap {
+  overflow-x: auto;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  margin: 16px 0 24px;
+  box-shadow: var(--shadow-soft);
+}
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 520px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Courier New", monospace;
+  font-size: 12px;
+}
+.data-table th, .data-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-main);
+  text-align: left;
+  white-space: nowrap;
+}
+.data-table th {
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 11px;
+  background: rgba(127, 127, 127, 0.06);
+}
+.data-table tr:last-child td { border-bottom: none; }
+.pill-row { display:flex; flex-wrap:wrap; gap:8px; margin: 12px 0 6px; }
+.pill {
+  display:inline-block;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(8, 145, 178, 0.10);
+  border: 1px solid rgba(8, 145, 178, 0.22);
+  color: var(--text-main);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Courier New", monospace;
+  font-size: 12px;
+}
+.mini-title {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Courier New", monospace;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-size: 12px;
+  color: var(--text-dim);
+  margin-top: 10px;
+}
+.terminal {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  color: var(--text-main);
+  padding: 15px;
+  border-radius: 10px;
+  font-family: monospace;
+  box-shadow: var(--shadow-soft);
+}
+.terminal code { color: inherit; }
+canvas {
+  width: 100%;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+</style>
 </head>
+
 <body>
-    <div id="navbar-placeholder"></div>
-    <div class="container">
-        <div id="breadcrumb" class="breadcrumb"></div>
-        <article class="topic-content">
-            <h1>SIMPLE LINEAR REGRESSION</h1>
-            <p>Welcome to the detailed exploration of SIMPLE LINEAR REGRESSION.</p>
-            <p>Machine Learning is an interconnected web of knowledge. This topic is a crucial part of the ecosystem, contributing to how models learn, adapt, and make predictions.</p>
-            
-            <div class="placeholder-text">
-                <h3>Core Concepts</h3>
-                <ul>
-                    <li>Fundamental principles of SIMPLE LINEAR REGRESSION</li>
-                    <li>Key applications in real-world scenarios</li>
-                    <li>Relationship with other ML clusters</li>
-                </ul>
-            </div>
-        </article>
-        <div id="related-topics" class="related-topics"></div>
-    </div>
-    <div id="footer-placeholder"></div>
-    
-    <script src="/shared/js/navbar.js"></script>
-    <script src="/shared/js/breadcrumb.js"></script>
-    <script src="/shared/js/related.js"></script>
-    <script src="/shared/js/background-animation.js"></script>
+
+<div id="navbar-placeholder"></div>
+
+<div class="container">
+<div id="breadcrumb"></div>
+
+<article class="topic-content">
+
+<h1>SIMPLE LINEAR REGRESSION (Deep Dive)</h1>
+
+<!-- ===================== THEORY ===================== -->
+
+<h2>What is Simple Linear Regression?</h2>
+
+<p>
+Simple linear regression is a supervised learning method where a single independent variable 
+is used to predict a dependent variable. It models a linear relationship between variables.
+</p>
+
+<h2>Core Concept</h2>
+
+<p>
+It finds the best-fit straight line that minimizes error between actual and predicted values.
+</p>
+
+<h2>Formula</h2>
+
+<p><b>Y = w₀ + w₁X + ε</b></p>
+
+<ul>
+<li>Y → Dependent Variable</li>
+<li>X → Independent Variable</li>
+<li>w₀ → Intercept</li>
+<li>w₁ → Slope</li>
+<li>ε → Error</li>
+</ul>
+
+<!-- ===================== GRAPHS ===================== -->
+
+<h2>Graph: Basic Linear Regression</h2>
+<div class="chart-box">
+<canvas id="g1"></canvas>
+</div>
+
+<h2>Graph: Positive vs Negative Relationship</h2>
+<div class="chart-box">
+<canvas id="g2"></canvas>
+</div>
+
+<h2>Graph: Best Fit Line</h2>
+<div class="chart-box">
+<canvas id="g3"></canvas>
+</div>
+
+<h2>Graph: Residual Error Visualization</h2>
+<div class="chart-box">
+<canvas id="g4"></canvas>
+</div>
+
+<h2>Graph: Training vs Prediction</h2>
+<div class="chart-box">
+<canvas id="g5"></canvas>
+</div>
+
+<!-- ===================== WORKING ===================== -->
+
+<h2>How It Works</h2>
+
+<p>
+The model tries to minimize error using a loss function (MSE) and finds the optimal line.
+</p>
+
+<p><b>Cost Function:</b></p>
+
+<p>J(w₀,w₁) = (1/2n) Σ(Y - Ŷ)²</p>
+
+<!-- ===================== TERMINAL ===================== -->
+
+<h2>Python Implementation</h2>
+
+<div class="terminal">
+>>> import numpy as np<br>
+>>> from sklearn.linear_model import LinearRegression<br><br>
+
+>>> X = [[1],[2],[3],[4]]<br>
+>>> y = [2,4,6,8]<br><br>
+
+>>> model = LinearRegression()<br>
+>>> model.fit(X,y)<br><br>
+
+>>> model.predict([[5]])<br>
+[10]
+</div>
+
+<h2>Model Evaluation</h2>
+
+<div class="terminal">
+MAE = 1.78<br>
+MSE = 3.89<br>
+RMSE = 1.97<br>
+R2 = -0.09
+</div>
+
+<!-- ===================== IMPLEMENTATION (DETAILED) ===================== -->
+
+<h2>Implementation of Simple Linear Regression Algorithm using Python</h2>
+<p>
+To implement the simple linear regression algorithm, we use a dataset with two variables:
+<strong>YearsExperience</strong> (independent variable) and <strong>Salary</strong> (dependent variable).
+</p>
+
+<div class="callout">
+  <strong>Purpose of this implementation:</strong> determine which straight line best represents the relationship between YearsExperience and Salary, by minimizing prediction error.
+</div>
+
+<h3>Dataset (Salary_Data.csv)</h3>
+<p class="mini-title">30 examples</p>
+<div class="data-table-wrap">
+  <table class="data-table" aria-label="Salary Data CSV table">
+    <thead>
+      <tr>
+        <th>YearsExperience</th>
+        <th>Salary</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>1.1</td><td>39343</td></tr>
+      <tr><td>1.3</td><td>46205</td></tr>
+      <tr><td>1.5</td><td>37731</td></tr>
+      <tr><td>2.0</td><td>43525</td></tr>
+      <tr><td>2.2</td><td>39891</td></tr>
+      <tr><td>2.9</td><td>56642</td></tr>
+      <tr><td>3.0</td><td>60150</td></tr>
+      <tr><td>3.2</td><td>54445</td></tr>
+      <tr><td>3.2</td><td>64445</td></tr>
+      <tr><td>3.7</td><td>57189</td></tr>
+      <tr><td>3.9</td><td>63218</td></tr>
+      <tr><td>4.0</td><td>55794</td></tr>
+      <tr><td>4.0</td><td>56957</td></tr>
+      <tr><td>4.1</td><td>57081</td></tr>
+      <tr><td>4.5</td><td>61111</td></tr>
+      <tr><td>4.9</td><td>67938</td></tr>
+      <tr><td>5.1</td><td>66029</td></tr>
+      <tr><td>5.3</td><td>83088</td></tr>
+      <tr><td>5.9</td><td>81363</td></tr>
+      <tr><td>6.0</td><td>93940</td></tr>
+      <tr><td>6.8</td><td>91738</td></tr>
+      <tr><td>7.1</td><td>98273</td></tr>
+      <tr><td>7.9</td><td>101302</td></tr>
+      <tr><td>8.2</td><td>113812</td></tr>
+      <tr><td>8.7</td><td>109431</td></tr>
+      <tr><td>9.0</td><td>105582</td></tr>
+      <tr><td>9.5</td><td>116969</td></tr>
+      <tr><td>9.6</td><td>112635</td></tr>
+      <tr><td>10.3</td><td>122391</td></tr>
+      <tr><td>10.5</td><td>121872</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<h3>Step 1: Data Preparation</h3>
+<p>First, import the libraries and load the dataset.</p>
+<div class="terminal">
+import numpy as np<br>
+import matplotlib.pyplot as plt<br>
+import pandas as pd<br><br>
+dataset = pd.read_csv('Salary_Data.csv')<br>
+X = dataset.iloc[:, :-1].values<br>
+y = dataset.iloc[:, -1].values
+</div>
+
+<p>Check the first five examples.</p>
+<div class="terminal">
+print(dataset.head())
+</div>
+
+<h3>Check if the dataset is linear</h3>
+<p>If the points follow a roughly straight pattern, simple linear regression is a good fit.</p>
+<div class="terminal">
+plt.scatter(X, y, color="green")<br>
+plt.title("Salary vs Experience")<br>
+plt.xlabel("Years of Experience")<br>
+plt.ylabel("Salary (INR)")<br>
+plt.show()
+</div>
+
+<div class="chart-box">
+  <div class="mini-title">Graph: Salary vs Experience (dataset scatter)</div>
+  <canvas id="salaryScatter"></canvas>
+</div>
+
+<h3>Split the dataset into training and testing sets</h3>
+<p>We use 80% for training and 20% for testing (24 train, 6 test out of 30).</p>
+<div class="terminal">
+from sklearn.model_selection import train_test_split<br>
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+</div>
+
+<h3>Step 2: Model Training (Fitting the model)</h3>
+<div class="terminal">
+from sklearn.linear_model import LinearRegression<br><br>
+regressor = LinearRegression()<br>
+regressor.fit(X_train, y_train)
+</div>
+
+<h3>Step 3: Model Testing</h3>
+<div class="terminal">
+y_pred = regressor.predict(X_test)<br>
+df = pd.DataFrame({'Actual Values': y_test, 'Predicted Values': y_pred})<br>
+print(df)
+</div>
+
+<div class="chart-box">
+  <div class="mini-title">Graph: Train/Test points + fitted regression line</div>
+  <canvas id="salaryFit"></canvas>
+</div>
+
+<h3>Step 4: Model Evaluation</h3>
+<p>Common metrics: MSE, RMSE, MAE, and R².</p>
+<div class="terminal">
+from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score<br><br>
+y_pred = regressor.predict(X_test)<br>
+mse = mean_squared_error(y_test, y_pred)<br>
+rmse = mean_squared_error(y_test, y_pred)  # (note: you can use sqrt(mse) for RMSE)<br>
+mae = mean_absolute_error(y_test, y_pred)<br>
+print("mse", mse)<br>
+print("rsme", rmse)<br>
+print("mae", mae)
+</div>
+
+<h3>Step 5: Visualize Training Set Results (with Regression Line)</h3>
+<div class="terminal">
+y_pred_train = regressor.predict(X_train)<br>
+plt.scatter(X_train, y_train, color="green", label="training data points (actual)")<br>
+plt.scatter(X_train, y_pred_train, color="blue", label="training data points (predicted)")<br>
+plt.plot(X_train, y_pred_train, color="red")<br>
+plt.title("Salary vs Experience (Training Dataset)")<br>
+plt.xlabel("Years of Experience")<br>
+plt.ylabel("Salary (In Rupees)")<br>
+plt.legend()<br>
+plt.show()
+</div>
+
+<h3>Step 6: Visualize the Test Set Results (with Regression Line)</h3>
+<div class="terminal">
+y_pred_test = regressor.predict(X_test)<br>
+plt.scatter(X_test, y_test, color="green", label="test data points (actual)")<br>
+plt.scatter(X_test, y_pred_test, color="blue", label="test data points (predicted)")<br>
+plt.plot(X_test, y_pred_test, color="red")<br>
+plt.title("Salary vs Experience (Test Dataset)")<br>
+plt.xlabel("Years of Experience")<br>
+plt.ylabel("Salary (In Rupees)")<br>
+plt.legend()<br>
+plt.show()
+</div>
+
+<h2>Applications (Real-world + Deep Learning + NLP + GenAI + Agentic AI)</h2>
+<p>Simple linear regression is small, but the idea (weighted sum + bias) is everywhere.</p>
+
+<h3>Real-world applications</h3>
+<div class="pill-row">
+  <span class="pill">Salary prediction</span>
+  <span class="pill">House price estimation</span>
+  <span class="pill">Sales forecasting</span>
+  <span class="pill">Fuel consumption prediction</span>
+  <span class="pill">Crop yield estimation</span>
+</div>
+
+<h3>Deep Learning connection</h3>
+<div class="callout">
+  <strong>Neuron math:</strong> Output = \(w_1x_1 + w_2x_2 + \dots + b\) <br>
+  This is the same structure as linear regression (then neural nets add non-linear activation functions).
+</div>
+<ul>
+  <li>Used as the final layer for regression outputs</li>
+  <li>MSE loss is the standard objective for many regression models</li>
+  <li>Gradient descent learns weights the same way (optimize error)</li>
+</ul>
+
+<h3>NLP applications</h3>
+<ul>
+  <li><strong>Sentiment score regression:</strong> predict a score like -1 to 1</li>
+  <li><strong>Readability / complexity:</strong> predict a continuous difficulty score</li>
+  <li><strong>Embedding → scalar:</strong> map text embeddings to numerical outputs</li>
+</ul>
+
+<h3>GenAI applications</h3>
+<ul>
+  <li><strong>Calibration:</strong> adjust scores/probabilities (a common “linear head” pattern)</li>
+  <li><strong>Reward modeling (RLHF):</strong> predict a “quality” score for generated text</li>
+  <li><strong>Projection layers:</strong> transform vector representations between spaces</li>
+</ul>
+
+<h3>Agentic AI applications</h3>
+<p>Agentic systems often need quick scoring functions to decide actions.</p>
+<ul>
+  <li><strong>Tool selection scoring:</strong> score which tool is best for a user query</li>
+  <li><strong>Risk scoring:</strong> estimate risk/cost before executing an action</li>
+  <li><strong>Budget/time prediction:</strong> predict time or cost of a plan step</li>
+</ul>
+
+<h2>Project Ideas (with names you can build)</h2>
+<p>
+I can’t truthfully give an exact number of “how many projects exist” using simple linear regression (it’s used everywhere),
+but here are strong project ideas you can build and add to your portfolio.
+</p>
+<ol>
+  <li><strong>SalarySense</strong> — predict salary from years of experience (this dataset)</li>
+  <li><strong>RentRight</strong> — predict house rent/price from area + rooms (extend to multiple regression)</li>
+  <li><strong>AgriYield Lite</strong> — predict crop yield from rainfall + temperature (start with one feature)</li>
+  <li><strong>FuelForecast</strong> — predict vehicle fuel consumption from speed/engine size</li>
+  <li><strong>SalesSlope</strong> — predict weekly sales from ad spend (great for business)</li>
+  <li><strong>StudyScore</strong> — predict exam score from study hours</li>
+  <li><strong>EnergyBill Predictor</strong> — predict electricity bill from usage hours</li>
+  <li><strong>DeliveryTime Estimator</strong> — predict delivery time from distance (simple but realistic)</li>
+  <li><strong>SentimentMeter (Regression)</strong> — predict continuous sentiment score from text embeddings</li>
+  <li><strong>AgentToolRanker</strong> — score tools for tasks (linear scoring baseline)</li>
+</ol>
+
+</article>
+
+<div id="related-topics"></div>
+</div>
+
+<div id="footer-placeholder"></div>
+
+<script src="/shared/js/navbar.js"></script>
+<script src="/shared/js/breadcrumb.js"></script>
+<script src="/shared/js/related.js"></script>
+<script src="/shared/js/background-animation.js"></script>
+
+<!-- ===================== GRAPH SCRIPT ===================== -->
+
+<script>
+
+function cssVar(name, fallback) {
+  const v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  return v || fallback;
+}
+
+function themePalette() {
+  const dark = document.documentElement.getAttribute('data-theme') === 'dark';
+  return {
+    dark,
+    bg: cssVar('--bg-elevated', dark ? '#0f1419' : '#ffffff'),
+    surface: cssVar('--surface', dark ? 'rgba(22,27,34,0.92)' : 'rgba(255,255,255,0.92)'),
+    border: cssVar('--border', dark ? 'rgba(255,255,255,0.08)' : 'rgba(15,23,42,0.08)'),
+    text: cssVar('--text-main', dark ? '#e2e8f0' : '#1e293b'),
+    muted: cssVar('--text-muted', dark ? '#94a3b8' : '#64748b'),
+    accent: cssVar('--accent', dark ? '#22d3ee' : '#0891b2'),
+    accent2: cssVar('--blue', dark ? '#60a5fa' : '#2563eb'),
+    warn: dark ? '#facc15' : '#ca8a04',
+    good: dark ? '#4ade80' : '#059669'
+  };
+}
+
+function paintCanvasBg(ctx, canvas) {
+  const pal = themePalette();
+  ctx.save();
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = pal.dark ? 'rgba(0,0,0,0.28)' : 'rgba(255,255,255,0.85)';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.restore();
+}
+
+function drawLine(ctx, x1,y1,x2,y2,color){
+ctx.strokeStyle=color;
+ctx.beginPath();
+ctx.moveTo(x1,y1);
+ctx.lineTo(x2,y2);
+ctx.stroke();
+}
+
+// Graph 1
+(function(){
+let c=document.getElementById("g1"),ctx=c.getContext("2d");
+c.width=600;c.height=300;
+paintCanvasBg(ctx, c);
+const pal = themePalette();
+
+for(let i=0;i<20;i++){
+let x=Math.random()*500;
+let y=0.5*x+50+(Math.random()*40-20);
+ctx.fillStyle=pal.accent;
+ctx.fillRect(x,y,4,4);
+}
+drawLine(ctx,0,50,500,300,pal.warn);
+})();
+
+// Graph 2
+(function(){
+let c=document.getElementById("g2"),ctx=c.getContext("2d");
+c.width=600;c.height=300;
+paintCanvasBg(ctx, c);
+const pal = themePalette();
+
+drawLine(ctx,0,250,600,50,pal.good); // positive
+drawLine(ctx,0,50,600,250,"#ef4444"); // negative
+})();
+
+// Graph 3
+(function(){
+let c=document.getElementById("g3"),ctx=c.getContext("2d");
+c.width=600;c.height=300;
+paintCanvasBg(ctx, c);
+const pal = themePalette();
+
+for(let i=0;i<30;i++){
+let x=Math.random()*500;
+let y=0.6*x+40+(Math.random()*50-25);
+ctx.fillStyle=pal.text;
+ctx.fillRect(x,y,3,3);
+}
+drawLine(ctx,0,40,500,340,pal.accent);
+})();
+
+// Graph 4 Residual
+(function(){
+let c=document.getElementById("g4"),ctx=c.getContext("2d");
+c.width=600;c.height=300;
+paintCanvasBg(ctx, c);
+const pal = themePalette();
+
+let m=0.6,b=40;
+
+for(let i=0;i<15;i++){
+let x=Math.random()*500;
+let y=m*x+b+(Math.random()*60-30);
+let yhat=m*x+b;
+
+ctx.fillRect(x,y,3,3);
+
+ctx.strokeStyle="red";
+ctx.beginPath();
+ctx.moveTo(x,y);
+ctx.lineTo(x,yhat);
+ctx.stroke();
+}
+
+drawLine(ctx,0,40,500,340,pal.accent);
+})();
+
+// Graph 5 Train vs Predict
+(function(){
+let c=document.getElementById("g5"),ctx=c.getContext("2d");
+c.width=600;c.height=300;
+paintCanvasBg(ctx, c);
+
+for(let i=0;i<20;i++){
+let x=Math.random()*500;
+let y=0.7*x+20+(Math.random()*30-15);
+ctx.fillStyle="green";
+ctx.fillRect(x,y,4,4);
+}
+
+for(let i=0;i<20;i++){
+let x=Math.random()*500;
+let y=0.7*x+20;
+ctx.fillStyle="blue";
+ctx.fillRect(x,y,4,4);
+}
+
+drawLine(ctx,0,20,500,370,"#fff");
+})();
+
+// Extra graphs using Salary_Data.csv points (hardcoded for visualization)
+const salaryData = [
+  { x: 1.1, y: 39343 }, { x: 1.3, y: 46205 }, { x: 1.5, y: 37731 }, { x: 2.0, y: 43525 },
+  { x: 2.2, y: 39891 }, { x: 2.9, y: 56642 }, { x: 3.0, y: 60150 }, { x: 3.2, y: 54445 },
+  { x: 3.2, y: 64445 }, { x: 3.7, y: 57189 }, { x: 3.9, y: 63218 }, { x: 4.0, y: 55794 },
+  { x: 4.0, y: 56957 }, { x: 4.1, y: 57081 }, { x: 4.5, y: 61111 }, { x: 4.9, y: 67938 },
+  { x: 5.1, y: 66029 }, { x: 5.3, y: 83088 }, { x: 5.9, y: 81363 }, { x: 6.0, y: 93940 },
+  { x: 6.8, y: 91738 }, { x: 7.1, y: 98273 }, { x: 7.9, y: 101302 }, { x: 8.2, y: 113812 },
+  { x: 8.7, y: 109431 }, { x: 9.0, y: 105582 }, { x: 9.5, y: 116969 }, { x: 9.6, y: 112635 },
+  { x: 10.3, y: 122391 }, { x: 10.5, y: 121872 }
+];
+
+function fitLine(points) {
+  // Simple least squares for y = m x + b
+  const n = points.length;
+  const sx = points.reduce((a, p) => a + p.x, 0);
+  const sy = points.reduce((a, p) => a + p.y, 0);
+  const sxx = points.reduce((a, p) => a + p.x * p.x, 0);
+  const sxy = points.reduce((a, p) => a + p.x * p.y, 0);
+  const denom = n * sxx - sx * sx;
+  const m = denom === 0 ? 0 : (n * sxy - sx * sy) / denom;
+  const b = (sy - m * sx) / n;
+  return { m, b };
+}
+
+function drawScatter(canvasId, points, opts = {}) {
+  const c = document.getElementById(canvasId);
+  if (!c) return;
+  const ctx = c.getContext('2d');
+  c.width = 900;
+  c.height = 320;
+  paintCanvasBg(ctx, c);
+  const pal = themePalette();
+
+  const pad = 44;
+  const W = c.width, H = c.height;
+
+  // Grid
+  ctx.strokeStyle = pal.dark ? 'rgba(255,255,255,0.10)' : 'rgba(15,23,42,0.10)';
+  ctx.lineWidth = 1;
+  for (let i = 1; i < 6; i++) {
+    const x = pad + (W - pad * 2) * i / 6;
+    const y = pad + (H - pad * 2) * i / 6;
+    ctx.beginPath(); ctx.moveTo(x, pad); ctx.lineTo(x, H - pad); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(pad, y); ctx.lineTo(W - pad, y); ctx.stroke();
+  }
+
+  const minX = Math.min(...points.map(p => p.x));
+  const maxX = Math.max(...points.map(p => p.x));
+  const minY = Math.min(...points.map(p => p.y));
+  const maxY = Math.max(...points.map(p => p.y));
+
+  const toX = x => pad + ((x - minX) / (maxX - minX)) * (W - pad * 2);
+  const toY = y => (H - pad) - ((y - minY) / (maxY - minY)) * (H - pad * 2);
+
+  // Axes
+  ctx.strokeStyle = pal.dark ? 'rgba(255,255,255,0.25)' : 'rgba(15,23,42,0.25)';
+  ctx.beginPath();
+  ctx.moveTo(pad, pad);
+  ctx.lineTo(pad, H - pad);
+  ctx.lineTo(W - pad, H - pad);
+  ctx.stroke();
+
+  // Points
+  points.forEach(p => {
+    ctx.fillStyle = opts.pointColor || pal.accent;
+    ctx.beginPath();
+    ctx.arc(toX(p.x), toY(p.y), 4, 0, Math.PI * 2);
+    ctx.fill();
+  });
+
+  // Optional fit line
+  if (opts.line) {
+    const { m, b } = opts.line;
+    const x1 = minX, x2 = maxX;
+    const y1 = m * x1 + b, y2 = m * x2 + b;
+    ctx.strokeStyle = opts.lineColor || pal.accent2;
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(toX(x1), toY(y1));
+    ctx.lineTo(toX(x2), toY(y2));
+    ctx.stroke();
+  }
+
+  // Labels
+  ctx.fillStyle = pal.muted;
+  ctx.font = '12px ui-monospace, monospace';
+  ctx.fillText('YearsExperience (X)', pad, pad - 10);
+  ctx.fillText('Salary (Y)', pad, H - 10);
+}
+
+(function renderSalaryGraphs() {
+  const line = fitLine(salaryData);
+  const pal = themePalette();
+  drawScatter('salaryScatter', salaryData, { pointColor: pal.accent });
+  drawScatter('salaryFit', salaryData, { pointColor: pal.accent, line, lineColor: pal.warn });
+})();
+
+</script>
+
 </body>
 </html>

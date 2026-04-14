@@ -5,34 +5,223 @@
     <script src="/shared/js/theme-init.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>REGRESSION | ML Ecosystem</title>
+
     <link rel="stylesheet" href="/shared/css/global.css">
+
+    <!-- Three.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <!-- Chart.js for graphs -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        .terminal {
+            background: #000;
+            color: #0f0;
+            padding: 15px;
+            border-radius: 10px;
+            font-family: monospace;
+            overflow-x: auto;
+        }
+
+        .graph-container {
+            margin: 30px 0;
+        }
+
+        canvas {
+            background: #111;
+            border-radius: 10px;
+            padding: 10px;
+        }
+    </style>
 </head>
+
 <body>
-    <div id="navbar-placeholder"></div>
-    <div class="container">
-        <div id="breadcrumb" class="breadcrumb"></div>
-        <article class="topic-content">
-            <h1>REGRESSION</h1>
-            <p>Welcome to the detailed exploration of REGRESSION.</p>
-            <p>Machine Learning is an interconnected web of knowledge. This topic is a crucial part of the ecosystem, contributing to how models learn, adapt, and make predictions.</p>
-            
-            <div class="placeholder-text">
-                <h3>Core Concepts</h3>
-                <ul>
-                    <li>Fundamental principles of REGRESSION</li>
-                    <li>Key applications in real-world scenarios</li>
-                    <li>Relationship with other ML clusters</li>
-                </ul>
-            </div>
-        </article>
-        <div id="related-topics" class="related-topics"></div>
-    </div>
-    <div id="footer-placeholder"></div>
-    
-    <script src="/shared/js/navbar.js"></script>
-    <script src="/shared/js/breadcrumb.js"></script>
-    <script src="/shared/js/related.js"></script>
-    <script src="/shared/js/background-animation.js"></script>
+
+<div id="navbar-placeholder"></div>
+
+<div class="container">
+
+<div id="breadcrumb" class="breadcrumb"></div>
+
+<article class="topic-content">
+
+<h1>REGRESSION</h1>
+
+<p>
+Regression analysis is a statistical technique used to predict continuous numeric values 
+based on relationships between variables.
+</p>
+
+<h2>What is Regression?</h2>
+
+<p>
+Regression is a supervised learning technique where the model learns relationships 
+between independent (input) and dependent (output) variables.
+</p>
+
+<!-- GRAPH 1 -->
+<div class="graph-container">
+    <h3>Linear Regression Visualization</h3>
+    <canvas id="linearGraph"></canvas>
+</div>
+
+<h2>Key Terminologies</h2>
+
+<ul>
+<li><b>Independent Variables:</b> Inputs / features</li>
+<li><b>Dependent Variable:</b> Target output</li>
+<li><b>Regression Line:</b> Best fit line</li>
+<li><b>Overfitting:</b> Model fits training too well</li>
+<li><b>Underfitting:</b> Model too simple</li>
+<li><b>Outliers:</b> Extreme values</li>
+<li><b>Multicollinearity:</b> Feature dependency</li>
+</ul>
+
+<h2>How Regression Works</h2>
+
+<p>
+Regression learns from labeled data and predicts continuous values 
+based on learned patterns.
+</p>
+
+<h2>Types of Regression</h2>
+
+<ul>
+<li>Linear Regression</li>
+<li>Logistic Regression</li>
+<li>Polynomial Regression</li>
+<li>Lasso Regression</li>
+<li>Ridge Regression</li>
+<li>Decision Tree Regression</li>
+<li>Random Forest Regression</li>
+<li>Support Vector Regression</li>
+</ul>
+
+<!-- GRAPH 2 -->
+<div class="graph-container">
+    <h3>Polynomial Regression Curve</h3>
+    <canvas id="polyGraph"></canvas>
+</div>
+
+<h2>Linear Regression Formula</h2>
+
+<p><b>Y = mX + b</b></p>
+
+<ul>
+<li>Y = Output</li>
+<li>X = Input</li>
+<li>m = Slope</li>
+<li>b = Intercept</li>
+</ul>
+
+<h2>Evaluation Metrics</h2>
+
+<ul>
+<li>MAE (Mean Absolute Error)</li>
+<li>MSE (Mean Squared Error)</li>
+<li>RMSE</li>
+<li>R² Score</li>
+</ul>
+
+<!-- GRAPH 3 -->
+<div class="graph-container">
+    <h3>Error Metrics Comparison</h3>
+    <canvas id="errorGraph"></canvas>
+</div>
+
+<h2>Applications</h2>
+
+<ul>
+<li>Forecasting (GDP, prices)</li>
+<li>Finance risk prediction</li>
+<li>Business optimization</li>
+<li>Economics</li>
+</ul>
+
+<h2>Python Implementation</h2>
+
+<div class="terminal">
+import numpy as np<br>
+from sklearn import linear_model<br>
+import matplotlib.pyplot as plt<br><br>
+
+X = np.array([[1],[2],[3],[4]])<br>
+y = np.array([2,4,6,8])<br><br>
+
+model = linear_model.LinearRegression()<br>
+model.fit(X,y)<br><br>
+
+pred = model.predict([[5]])<br>
+print(pred)
+</div>
+
+<h2>Model Evaluation Output</h2>
+
+<div class="terminal">
+Mean Absolute Error = 1.78<br>
+Mean Squared Error = 3.89<br>
+R2 Score = -0.09
+</div>
+
+<h2>Conclusion</h2>
+
+<p>
+Regression is one of the most important machine learning techniques used for 
+prediction and forecasting.
+</p>
+
+</article>
+
+<div id="related-topics" class="related-topics"></div>
+
+</div>
+
+<div id="footer-placeholder"></div>
+
+<!-- Scripts -->
+<script src="/shared/js/navbar.js"></script>
+<script src="/shared/js/breadcrumb.js"></script>
+<script src="/shared/js/related.js"></script>
+<script src="/shared/js/background-animation.js"></script>
+
+<script>
+// Linear Graph
+new Chart(document.getElementById("linearGraph"), {
+    type: 'line',
+    data: {
+        labels: [1,2,3,4,5],
+        datasets: [{
+            label: 'Linear Regression',
+            data: [2,4,6,8,10]
+        }]
+    }
+});
+
+// Polynomial Graph
+new Chart(document.getElementById("polyGraph"), {
+    type: 'line',
+    data: {
+        labels: [1,2,3,4,5],
+        datasets: [{
+            label: 'Polynomial Curve',
+            data: [1,4,9,16,25]
+        }]
+    }
+});
+
+// Error Graph
+new Chart(document.getElementById("errorGraph"), {
+    type: 'bar',
+    data: {
+        labels: ['MAE','MSE','RMSE'],
+        datasets: [{
+            label: 'Errors',
+            data: [1.7,3.8,2.1]
+        }]
+    }
+});
+</script>
+
 </body>
 </html>

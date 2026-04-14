@@ -1,38 +1,1308 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <script src="/shared/js/theme-init.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LINEAR REGRESSION | ML Ecosystem</title>
-    <link rel="stylesheet" href="/shared/css/global.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <meta charset="UTF-8">
+  <script src="/shared/js/theme-init.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>REGRESSION | ML Ecosystem</title>
+  <link rel="stylesheet" href="/shared/css/global.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <style>
+    /* ── Chart & Content Styles ── */
+    .topic-content h2 {
+      font-size: 1.4rem;
+      margin: 2.5rem 0 0.8rem;
+      color: var(--accent, #00ffe7);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border-left: 3px solid var(--accent, #00ffe7);
+      padding-left: 0.75rem;
+    }
+    .topic-content h3 {
+      font-size: 1.1rem;
+      margin: 1.8rem 0 0.5rem;
+      color: var(--accent2, #a78bfa);
+      letter-spacing: 0.05em;
+    }
+    .topic-content p {
+      line-height: 1.75;
+      margin-bottom: 1rem;
+    }
+    .topic-content ul {
+      padding-left: 1.4rem;
+      margin-bottom: 1rem;
+    }
+    .topic-content ul li {
+      margin-bottom: 0.45rem;
+      line-height: 1.65;
+    }
+
+    /* ── Info Cards (terminologies) ── */
+    .term-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0 2rem;
+    }
+    .term-card {
+      background: rgba(0,255,231,0.04);
+      border: 1px solid rgba(0,255,231,0.18);
+      border-radius: 8px;
+      padding: 1rem 1.2rem;
+      transition: border-color 0.25s, background 0.25s;
+    }
+    .term-card:hover {
+      border-color: rgba(0,255,231,0.5);
+      background: rgba(0,255,231,0.08);
+    }
+    .term-card .term-title {
+      font-weight: 700;
+      color: var(--accent, #00ffe7);
+      margin-bottom: 0.35rem;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .term-card p { margin: 0; font-size: 0.88rem; }
+
+    /* ── Regression Type Cards ── */
+    .reg-type-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.1rem;
+      margin: 1.5rem 0 2rem;
+    }
+    .reg-card {
+      background: rgba(167,139,250,0.05);
+      border: 1px solid rgba(167,139,250,0.2);
+      border-radius: 10px;
+      padding: 1.2rem 1.4rem;
+      transition: all 0.25s;
+    }
+    .reg-card:hover {
+      border-color: rgba(167,139,250,0.5);
+      background: rgba(167,139,250,0.1);
+      transform: translateY(-2px);
+    }
+    .reg-card .reg-num {
+      font-size: 0.72rem;
+      color: var(--accent, #00ffe7);
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 0.3rem;
+    }
+    .reg-card h4 {
+      margin: 0 0 0.55rem;
+      color: var(--accent2, #a78bfa);
+      font-size: 1rem;
+    }
+    .reg-card p { margin: 0; font-size: 0.86rem; line-height: 1.6; }
+
+    /* ── Canvas Charts ── */
+    .chart-section {
+      margin: 2rem 0;
+    }
+    .chart-wrapper {
+      background: rgba(0,0,0,0.35);
+      border: 1px solid rgba(0,255,231,0.15);
+      border-radius: 10px;
+      padding: 1.2rem;
+      margin: 1rem 0 2rem;
+    }
+    .chart-wrapper h4 {
+      margin: 0 0 0.8rem;
+      font-size: 0.85rem;
+      color: var(--accent, #00ffe7);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      opacity: 0.85;
+    }
+    canvas.chart-canvas {
+      display: block;
+      width: 100%;
+      border-radius: 6px;
+    }
+
+    /* ── Formula Box ── */
+    .formula-box {
+      background: rgba(0,255,231,0.06);
+      border: 1px solid rgba(0,255,231,0.3);
+      border-radius: 8px;
+      padding: 1rem 1.5rem;
+      margin: 1rem 0;
+      text-align: center;
+      font-size: 1.25rem;
+      letter-spacing: 0.05em;
+      color: #fff;
+      font-family: 'Courier New', monospace;
+    }
+    .formula-box span { color: var(--accent, #00ffe7); }
+
+    /* ── Terminal ── */
+    .terminal {
+      background: #0d0d0d;
+      border: 1px solid #333;
+      border-radius: 8px;
+      margin: 1.2rem 0 2rem;
+      overflow: hidden;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.82rem;
+    }
+    .terminal-bar {
+      background: #1e1e1e;
+      padding: 0.5rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      border-bottom: 1px solid #333;
+    }
+    .terminal-dot {
+      width: 12px; height: 12px;
+      border-radius: 50%;
+    }
+    .dot-red   { background: #ff5f57; }
+    .dot-yellow{ background: #febc2e; }
+    .dot-green { background: #28c840; }
+    .terminal-title {
+      margin-left: 0.5rem;
+      font-size: 0.75rem;
+      color: #666;
+      letter-spacing: 0.05em;
+    }
+    .terminal-body {
+      padding: 1rem 1.2rem;
+      line-height: 1.7;
+      color: #c8c8c8;
+    }
+    .terminal-body .prompt { color: #00ffe7; }
+    .terminal-body .comment { color: #5a5a5a; }
+    .terminal-body .string  { color: #a3e635; }
+    .terminal-body .kw      { color: #a78bfa; }
+    .terminal-body .num     { color: #fb923c; }
+    .terminal-body .out     { color: #facc15; }
+    .terminal-body .err     { color: #f87171; }
+
+    /* ── Metrics Table ── */
+    .metrics-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0 2rem;
+      font-size: 0.88rem;
+    }
+    .metrics-table th {
+      background: rgba(0,255,231,0.08);
+      color: var(--accent, #00ffe7);
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      padding: 0.65rem 1rem;
+      text-align: left;
+      border-bottom: 1px solid rgba(0,255,231,0.25);
+    }
+    .metrics-table td {
+      padding: 0.6rem 1rem;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .metrics-table tr:hover td { background: rgba(255,255,255,0.03); }
+
+    /* ── How It Works steps ── */
+    .steps-flow {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin: 1rem 0 2rem;
+      align-items: center;
+    }
+    .step-bubble {
+      background: rgba(167,139,250,0.1);
+      border: 1px solid rgba(167,139,250,0.3);
+      border-radius: 50px;
+      padding: 0.5rem 1.1rem;
+      font-size: 0.82rem;
+      color: #d8b4fe;
+      white-space: nowrap;
+    }
+    .step-arrow { color: #555; font-size: 1.1rem; }
+
+    /* ── Applications grid ── */
+    .app-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 0.9rem;
+      margin: 1rem 0 2rem;
+    }
+    .app-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      padding: 0.9rem 1rem;
+      text-align: center;
+      transition: all 0.2s;
+    }
+    .app-card:hover {
+      border-color: rgba(0,255,231,0.3);
+      background: rgba(0,255,231,0.05);
+    }
+    .app-card .app-icon { font-size: 1.6rem; margin-bottom: 0.4rem; }
+    .app-card .app-label { font-size: 0.82rem; font-weight: 600; color: #ccc; }
+    .app-card p { font-size: 0.78rem; margin: 0.3rem 0 0; color: #888; }
+
+    /* Model selection callout */
+    .callout {
+      background: rgba(251,146,60,0.07);
+      border-left: 4px solid #fb923c;
+      border-radius: 0 8px 8px 0;
+      padding: 0.9rem 1.2rem;
+      margin: 1rem 0;
+      font-size: 0.9rem;
+    }
+    .callout strong { color: #fb923c; }
+  </style>
 </head>
 <body>
-    <div id="navbar-placeholder"></div>
-    <div class="container">
-        <div id="breadcrumb" class="breadcrumb"></div>
-        <article class="topic-content">
-            <h1>LINEAR REGRESSION</h1>
-            <p>Welcome to the detailed exploration of LINEAR REGRESSION.</p>
-            <p>Machine Learning is an interconnected web of knowledge. This topic is a crucial part of the ecosystem, contributing to how models learn, adapt, and make predictions.</p>
-            
-            <div class="placeholder-text">
-                <h3>Core Concepts</h3>
-                <ul>
-                    <li>Fundamental principles of LINEAR REGRESSION</li>
-                    <li>Key applications in real-world scenarios</li>
-                    <li>Relationship with other ML clusters</li>
-                </ul>
-            </div>
-        </article>
-        <div id="related-topics" class="related-topics"></div>
+<div id="navbar-placeholder"></div>
+
+<div class="container">
+  <div id="breadcrumb" class="breadcrumb"></div>
+
+  <article class="topic-content">
+    <h1>REGRESSION</h1>
+
+    <!-- ═══════════════════════════════════════════
+         SECTION 1 · WHAT IS REGRESSION
+    ═══════════════════════════════════════════ -->
+    <h2>What is Regression Analysis?</h2>
+    <p>In machine learning, <strong>regression analysis</strong> is a statistical technique that predicts continuous numeric values based on the relationship between independent and dependent variables. The main goal of regression analysis is to plot a line or curve that best fits the data and to estimate how one variable affects another.</p>
+    <p>Regression analysis is a fundamental concept in machine learning and it is used in many applications such as forecasting, predictive analytics, and more.</p>
+    <p>In machine learning, regression is a type of <strong>supervised learning</strong>. The key objective of regression-based tasks is to predict output labels or responses — which are continuous numeric values — for the given input data. The output will be based on what the model has learned in the training phase.</p>
+    <p>Regression models use the input data features (independent variables) and their corresponding continuous numeric output values (dependent or outcome variables) to learn specific associations between inputs and corresponding outputs.</p>
+
+    <!-- Visual: Supervised Learning Flow -->
+    <div class="chart-wrapper">
+      <h4>Supervised Learning Flow — Regression</h4>
+      <canvas class="chart-canvas" id="flowCanvas" height="90"></canvas>
     </div>
-    <div id="footer-placeholder"></div>
-    
-    <script src="/shared/js/navbar.js"></script>
-    <script src="/shared/js/breadcrumb.js"></script>
-    <script src="/shared/js/related.js"></script>
-    <script src="/shared/js/background-animation.js"></script>
+
+    <!-- ═══════════════════════════════════════════
+         SECTION 2 · TERMINOLOGIES
+    ═══════════════════════════════════════════ -->
+    <h2>Terminologies Used in Regression Analysis</h2>
+    <p>Let us understand some basic terminologies used in regression analysis before going into further detail.</p>
+
+    <div class="term-grid">
+      <div class="term-card">
+        <div class="term-title">Independent Variables</div>
+        <p>Used to predict the value of the dependent variable. Also called <em>predictors</em>. In a dataset, these are represented as <strong>features</strong>.</p>
+      </div>
+      <div class="term-card">
+        <div class="term-title">Dependent Variables</div>
+        <p>Variables whose values we want to predict. These are the main factors in regression analysis — represented as <strong>target variables</strong>.</p>
+      </div>
+      <div class="term-card">
+        <div class="term-title">Regression Line</div>
+        <p>A straight line or curve that a regressor plots to best fit the data points in the feature space.</p>
+      </div>
+      <div class="term-card">
+        <div class="term-title">Overfitting</div>
+        <p>When the model performs well on training data but poorly on test data. Also referred to as the problem of <strong>high variance</strong>.</p>
+      </div>
+      <div class="term-card">
+        <div class="term-title">Underfitting</div>
+        <p>When the model doesn't perform well even on training data. Also referred to as the problem of <strong>high bias</strong>.</p>
+      </div>
+      <div class="term-card">
+        <div class="term-title">Outliers</div>
+        <p>Data points that don't fit the pattern of the rest of the data — extremely high or extremely low values in the dataset.</p>
+      </div>
+      <div class="term-card">
+        <div class="term-title">Multicollinearity</div>
+        <p>Occurs when independent variables (features) have dependencies among themselves, which can distort model coefficients.</p>
+      </div>
+    </div>
+
+    <!-- Overfitting / Underfitting Chart -->
+    <div class="chart-wrapper">
+      <h4>Overfitting vs Underfitting vs Good Fit</h4>
+      <canvas class="chart-canvas" id="fitCanvas" height="200"></canvas>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         SECTION 3 · HOW REGRESSION WORKS
+    ═══════════════════════════════════════════ -->
+    <h2>How Does Regression Work?</h2>
+    <p>Regression in machine learning is a supervised learning approach. Basically, regression is a statistical technique that finds a relationship between dependent and independent variables. To implement regression in machine learning, a regression algorithm is trained with a labeled dataset containing features (independent variables) and target values (dependent variables).</p>
+    <p>During the <strong>training phase</strong>, the regression algorithm learns the relationship between independent variables (predictors) and dependent variables (target). The regression models then predict new values based on the learned relationship between predictors and targets.</p>
+
+    <div class="steps-flow">
+      <div class="step-bubble">📦 Labeled Dataset</div>
+      <div class="step-arrow">→</div>
+      <div class="step-bubble">🧠 Training Phase</div>
+      <div class="step-arrow">→</div>
+      <div class="step-bubble">📐 Learn Relationship</div>
+      <div class="step-arrow">→</div>
+      <div class="step-bubble">🔮 Predict New Values</div>
+      <div class="step-arrow">→</div>
+      <div class="step-bubble">📊 Continuous Output</div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         SECTION 4 · TYPES OF REGRESSION
+    ═══════════════════════════════════════════ -->
+    <h2>Types of Regression in Machine Learning</h2>
+    <p>Generally, the classification of regression methods is done based on three metrics — the <em>number of independent variables</em>, <em>type of dependent variables</em>, and <em>shape of the regression line</em>. Below are the commonly used types of regression:</p>
+
+    <div class="reg-type-grid">
+      <div class="reg-card"><div class="reg-num">01</div><h4>Linear Regression</h4><p>Analyzes a linear relationship between a dependent variable and independent variables. Divided into simple and multiple linear regression.</p></div>
+      <div class="reg-card"><div class="reg-num">02</div><h4>Logistic Regression</h4><p>Predicts the probability of an event occurring. Uses a sigmoid function to map outputs between 0 and 1. Ideal for binary classification.</p></div>
+      <div class="reg-card"><div class="reg-num">03</div><h4>Polynomial Regression</h4><p>Models the relationship as an n-th degree polynomial. Captures non-linear relationships beyond simple linear regression.</p></div>
+      <div class="reg-card"><div class="reg-num">04</div><h4>Lasso Regression</h4><p>L1 regularization technique that adds the sum of absolute coefficients as a penalty. Prevents overfitting on high-dimensional data.</p></div>
+      <div class="reg-card"><div class="reg-num">05</div><h4>Ridge Regression</h4><p>L2 regularization that adds the square of coefficient magnitudes as a penalty. Reduces complexity and handles multicollinearity.</p></div>
+      <div class="reg-card"><div class="reg-num">06</div><h4>Decision Tree Regression</h4><p>Splits data into subsets based on input feature values, assigning each subset a numeric prediction value.</p></div>
+      <div class="reg-card"><div class="reg-num">07</div><h4>Random Forest Regression</h4><p>Ensemble of decision trees using bagging. Combines multiple trees to improve accuracy and reduce variance.</p></div>
+      <div class="reg-card"><div class="reg-num">08</div><h4>Support Vector Regression</h4><p>Uses SVM to solve regression problems. Handles linear and non-linear relationships; highly resistant to outliers.</p></div>
+    </div>
+
+    <!-- ─── 4a. LINEAR REGRESSION ─── -->
+    <h3>1. Linear Regression</h3>
+    <p>Linear regression is the most commonly used regression model in machine learning. It analyzes the linear relationship between a dependent variable with a given set of independent variables. A linear relationship means when the value of one or more independent variables changes, the dependent variable changes accordingly.</p>
+    <p>Linear regression is further divided into two subcategories: <strong>simple linear regression</strong> and <strong>multiple linear regression</strong> (multivariate).</p>
+    <p>In simple linear regression, a single independent variable is used to predict the dependent variable.</p>
+
+    <div class="formula-box">
+      <span>Y</span> = m<span>X</span> + b
+    </div>
+
+    <ul>
+      <li><strong>Y</strong> — the dependent variable we are trying to predict</li>
+      <li><strong>X</strong> — the independent variable used to make predictions</li>
+      <li><strong>m</strong> — the slope of the regression line (effect of X on Y)</li>
+      <li><strong>b</strong> — the Y-intercept (value of Y when X = 0)</li>
+    </ul>
+
+    <div class="chart-wrapper">
+      <h4>Simple Linear Regression — Scatter Plot with Regression Line</h4>
+      <canvas class="chart-canvas" id="linearCanvas" height="220"></canvas>
+    </div>
+
+    <!-- ─── 4b. LOGISTIC ─── -->
+    <h3>2. Logistic Regression</h3>
+    <p>Logistic regression is a popular machine learning algorithm used for predicting the probability of an event occurring. It is a generalized linear model where the target variable follows a Bernoulli distribution. Logistic regression uses a logistic (sigmoid) function to learn the relationship between independent and dependent variables. The sigmoid function produces a probability between 0 and 1.</p>
+    <p>It is mostly used in binary classification problems, where the target variable is categorical with two classes.</p>
+
+    <div class="chart-wrapper">
+      <h4>Sigmoid Function — Logistic Regression Output Curve</h4>
+      <canvas class="chart-canvas" id="sigmoidCanvas" height="200"></canvas>
+    </div>
+
+    <!-- ─── 4c. POLYNOMIAL ─── -->
+    <h3>3. Polynomial Regression</h3>
+    <p>Polynomial regression models the relationship between the independent variable and the dependent variable as an n-th degree polynomial function. It allows for more complex relationships to be captured, beyond the linear relationship in simple regression. It is widely used for non-linear regressions and is more sensitive to outliers.</p>
+
+    <div class="chart-wrapper">
+      <h4>Polynomial Regression — Degree 1 vs Degree 3</h4>
+      <canvas class="chart-canvas" id="polyCanvas" height="220"></canvas>
+    </div>
+
+    <!-- ─── 4d. LASSO & RIDGE ─── -->
+    <h3>4. Lasso Regression</h3>
+    <p>Lasso regression is a regularization technique that uses a penalty to prevent overfitting and improve accuracy. It performs <strong>L1 regularization</strong>, modifying the loss function by adding the penalty equivalent to the summation of the <em>absolute value</em> of coefficients. It is often used to handle high-dimensional and high-correlation data.</p>
+
+    <h3>5. Ridge Regression</h3>
+    <p>Ridge regression is a regularization technique that performs <strong>L2 regularization</strong>. It modifies the loss function by adding the penalty equivalent to the <em>square of the magnitude</em> of coefficients. It helps reduce model complexity, improve prediction accuracy, and corrects multicollinearity in regression analysis.</p>
+
+    <div class="chart-wrapper">
+      <h4>L1 (Lasso) vs L2 (Ridge) — Coefficient Shrinkage</h4>
+      <canvas class="chart-canvas" id="regularCanvas" height="200"></canvas>
+    </div>
+
+    <!-- ─── 4e. DECISION TREE & RANDOM FOREST ─── -->
+    <h3>6. Decision Tree Regression</h3>
+    <p>Decision tree regression uses the decision tree algorithm to predict numerical values. It works by splitting the data into smaller subsets based on input feature values and assigning each subset a numerical value. The tree fits local linear regressions that approximate a curve, and each leaf represents a numeric value. The algorithm tries to reduce the Mean Square Error at each child node.</p>
+
+    <h3>7. Random Forest Regression</h3>
+    <p>Random forest regression is a supervised machine learning algorithm that uses an ensemble of decision trees to predict continuous target variables. It uses a bagging technique involving randomly selecting subsets of training data to build smaller decision trees. These smaller models are combined into a random forest model that outputs a single prediction value, improving accuracy and reducing variance.</p>
+
+    <div class="chart-wrapper">
+      <h4>Decision Tree vs Random Forest — Prediction Comparison</h4>
+      <canvas class="chart-canvas" id="treeCanvas" height="200"></canvas>
+    </div>
+
+    <!-- ─── 4f. SVR ─── -->
+    <h3>8. Support Vector Regression</h3>
+    <p>Support Vector Regression (SVR) uses support vector machines to solve regression problems. It can learn non-linear relationships between input data (feature variables) and output data (target values). SVR handles linear as well as non-linear relationships in datasets, is resistant to outliers, and has high prediction accuracy.</p>
+
+    <!-- ═══════════════════════════════════════════
+         SECTION 5 · MODEL TYPES
+    ═══════════════════════════════════════════ -->
+    <h2>Types of Regression Models</h2>
+    <div class="term-grid">
+      <div class="term-card">
+        <div class="term-title">Simple Regression Model</div>
+        <p>The most basic regression model in which predictions are formed from a single, univariate feature of the data.</p>
+      </div>
+      <div class="term-card">
+        <div class="term-title">Multiple Regression Model</div>
+        <p>Predictions are formed from multiple features of the data, allowing for more complex real-world modeling.</p>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         SECTION 6 · EVALUATION METRICS
+    ═══════════════════════════════════════════ -->
+    <h2>Evaluation Metrics for Regression</h2>
+    <p>Common evaluation/performance metrics for regression models:</p>
+
+    <table class="metrics-table">
+      <thead>
+        <tr>
+          <th>Metric</th>
+          <th>Formula / Description</th>
+          <th>Interpretation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>MAE</strong> — Mean Absolute Error</td>
+          <td>Average of |predicted − actual|</td>
+          <td>Lower is better. Robust to outliers.</td>
+        </tr>
+        <tr>
+          <td><strong>MSE</strong> — Mean Squared Error</td>
+          <td>Average of (predicted − actual)²</td>
+          <td>Lower is better. Penalises large errors heavily.</td>
+        </tr>
+        <tr>
+          <td><strong>Median Absolute Error</strong></td>
+          <td>Median of |predicted − actual|</td>
+          <td>Very robust to outliers.</td>
+        </tr>
+        <tr>
+          <td><strong>RMSE</strong> — Root MSE</td>
+          <td>√MSE</td>
+          <td>Same units as target variable.</td>
+        </tr>
+        <tr>
+          <td><strong>R² Score</strong></td>
+          <td>1 − (SS_res / SS_tot)</td>
+          <td>Best = 1.0; can be negative for very poor models.</td>
+        </tr>
+        <tr>
+          <td><strong>MAPE</strong></td>
+          <td>100 × mean(|actual − pred| / |actual|)</td>
+          <td>Percentage equivalent of MAE.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="chart-wrapper">
+      <h4>Metrics Comparison — Sample Model Performance</h4>
+      <canvas class="chart-canvas" id="metricsCanvas" height="200"></canvas>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         SECTION 7 · MODEL SELECTION
+    ═══════════════════════════════════════════ -->
+    <h2>How to Select the Best Regression Model?</h2>
+    <div class="callout">
+      <strong>Key Consideration:</strong> Evaluate model performance using metrics such as MSE, MAE, and R-squared. Compare models like linear regression, decision trees, and random forests, then choose the model with the highest performance metrics, the lowest complexity, and the best interpretability for your specific use case.
+    </div>
+    <p>You can consider factors like performance metrics, model complexity, interpretability, and the size/type of your dataset to select the best regression model. No single model is universally the best.</p>
+
+    <!-- ═══════════════════════════════════════════
+         SECTION 8 · APPLICATIONS
+    ═══════════════════════════════════════════ -->
+    <h2>Applications of Regression in Machine Learning</h2>
+
+    <div class="app-grid">
+      <div class="app-card">
+        <div class="app-icon">📈</div>
+        <div class="app-label">Forecasting</div>
+        <p>Predict GDP, oil prices, stock prices, or other continuous values over time.</p>
+      </div>
+      <div class="app-card">
+        <div class="app-icon">⚙️</div>
+        <div class="app-label">Optimization</div>
+        <p>Optimise business processes, e.g. predicting peak customer hours for a store.</p>
+      </div>
+      <div class="app-card">
+        <div class="app-icon">🔧</div>
+        <div class="app-label">Error Correction</div>
+        <p>Help make and correct business decisions using regression-based insights.</p>
+      </div>
+      <div class="app-card">
+        <div class="app-icon">💰</div>
+        <div class="app-label">Economics</div>
+        <p>Predict supply, demand, consumption, and inventory investment.</p>
+      </div>
+      <div class="app-card">
+        <div class="app-icon">🏦</div>
+        <div class="app-label">Finance</div>
+        <p>Minimise risk portfolios and predict customer behaviour for financial companies.</p>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         SECTION 9 · PYTHON CODE
+    ═══════════════════════════════════════════ -->
+    <h2>Building a Regressor in Python</h2>
+    <p>A regressor model can be constructed from scratch in Python. Scikit-learn, a Python library for machine learning, can also be used to build a regressor. In the following example, we build a basic linear regressor that fits a line to data.</p>
+
+    <!-- Step 1 -->
+    <h3>Step 1 — Import Necessary Python Packages</h3>
+    <div class="terminal">
+      <div class="terminal-bar">
+        <div class="terminal-dot dot-red"></div>
+        <div class="terminal-dot dot-yellow"></div>
+        <div class="terminal-dot dot-green"></div>
+        <span class="terminal-title">regression_step1.py</span>
+      </div>
+      <div class="terminal-body">
+<span class="comment"># Step 1: Importing necessary python packages</span><br>
+<span class="kw">import</span> numpy <span class="kw">as</span> np<br>
+<span class="kw">from</span> sklearn <span class="kw">import</span> linear_model<br>
+<span class="kw">import</span> sklearn.metrics <span class="kw">as</span> sm<br>
+<span class="kw">import</span> matplotlib.pyplot <span class="kw">as</span> plt
+      </div>
+    </div>
+
+    <!-- Step 2 -->
+    <h3>Step 2 — Import Dataset</h3>
+    <div class="terminal">
+      <div class="terminal-bar">
+        <div class="terminal-dot dot-red"></div>
+        <div class="terminal-dot dot-yellow"></div>
+        <div class="terminal-dot dot-green"></div>
+        <span class="terminal-title">regression_step2.py</span>
+      </div>
+      <div class="terminal-body">
+<span class="comment"># Step 2: Importing dataset</span><br>
+input = <span class="string">r'C:\linear.txt'</span><br><br>
+<span class="comment"># Load data using numpy</span><br>
+input_data = np.loadtxt(input, delimiter=<span class="string">','</span>)<br>
+X, y = input_data[:, :-<span class="num">1</span>], input_data[:, -<span class="num">1</span>]
+      </div>
+    </div>
+
+    <!-- Step 3 -->
+    <h3>Step 3 — Organise Data into Training &amp; Testing Sets</h3>
+    <div class="terminal">
+      <div class="terminal-bar">
+        <div class="terminal-dot dot-red"></div>
+        <div class="terminal-dot dot-yellow"></div>
+        <div class="terminal-dot dot-green"></div>
+        <span class="terminal-title">regression_step3.py</span>
+      </div>
+      <div class="terminal-body">
+<span class="comment"># Step 3: Organizing data into training & testing sets</span><br>
+training_samples = <span class="kw">int</span>(<span class="num">0.6</span> * <span class="kw">len</span>(X))<br>
+testing_samples  = <span class="kw">len</span>(X) - num_training<br><br>
+X_train, y_train = X[:training_samples],  y[:training_samples]<br>
+X_test,  y_test  = X[training_samples:],  y[training_samples:]
+      </div>
+    </div>
+
+    <!-- Step 4 -->
+    <h3>Step 4 — Model Evaluation &amp; Prediction</h3>
+    <div class="terminal">
+      <div class="terminal-bar">
+        <div class="terminal-dot dot-red"></div>
+        <div class="terminal-dot dot-yellow"></div>
+        <div class="terminal-dot dot-green"></div>
+        <span class="terminal-title">regression_step4.py</span>
+      </div>
+      <div class="terminal-body">
+<span class="comment"># Step 4: Build and train the linear regressor</span><br>
+reg_linear = linear_model.LinearRegression()<br><br>
+<span class="comment"># Train with training samples</span><br>
+reg_linear.fit(X_train, y_train)<br><br>
+<span class="comment"># Predict with testing data</span><br>
+y_test_pred = reg_linear.predict(X_test)
+      </div>
+    </div>
+
+    <!-- Step 5 -->
+    <h3>Step 5 — Plot &amp; Visualisation</h3>
+    <div class="terminal">
+      <div class="terminal-bar">
+        <div class="terminal-dot dot-red"></div>
+        <div class="terminal-dot dot-yellow"></div>
+        <div class="terminal-dot dot-green"></div>
+        <span class="terminal-title">regression_step5.py</span>
+      </div>
+      <div class="terminal-body">
+<span class="comment"># Step 5: Plot the results</span><br>
+plt.scatter(X_test, y_test, color=<span class="string">'red'</span>)<br>
+plt.plot(X_test, y_test_pred, color=<span class="string">'black'</span>, linewidth=<span class="num">2</span>)<br>
+plt.xticks(())<br>
+plt.yticks(())<br>
+plt.show()
+      </div>
+    </div>
+
+    <div class="chart-wrapper">
+      <h4>Output — Regression Line Fitted to Test Data Points</h4>
+      <canvas class="chart-canvas" id="outputCanvas" height="220"></canvas>
+    </div>
+
+    <!-- Step 6 -->
+    <h3>Step 6 — Performance Computation</h3>
+    <div class="terminal">
+      <div class="terminal-bar">
+        <div class="terminal-dot dot-red"></div>
+        <div class="terminal-dot dot-yellow"></div>
+        <div class="terminal-dot dot-green"></div>
+        <span class="terminal-title">regression_step6.py</span>
+      </div>
+      <div class="terminal-body">
+<span class="comment"># Step 6: Performance metrics</span><br>
+<span class="kw">print</span>(<span class="string">"Regressor model performance:"</span>)<br>
+<span class="kw">print</span>(<span class="string">"Mean absolute error(MAE) ="</span>, <span class="kw">round</span>(sm.mean_absolute_error(y_test, y_test_pred), <span class="num">2</span>))<br>
+<span class="kw">print</span>(<span class="string">"Mean squared error(MSE) ="</span>, <span class="kw">round</span>(sm.mean_squared_error(y_test, y_test_pred), <span class="num">2</span>))<br>
+<span class="kw">print</span>(<span class="string">"Median absolute error ="</span>, <span class="kw">round</span>(sm.median_absolute_error(y_test, y_test_pred), <span class="num">2</span>))<br>
+<span class="kw">print</span>(<span class="string">"Explain variance score ="</span>, <span class="kw">round</span>(sm.explained_variance_score(y_test, y_test_pred), <span class="num">2</span>))<br>
+<span class="kw">print</span>(<span class="string">"R2 score ="</span>, <span class="kw">round</span>(sm.r2_score(y_test, y_test_pred), <span class="num">2</span>))
+      </div>
+    </div>
+
+    <!-- Terminal Output -->
+    <div class="terminal">
+      <div class="terminal-bar">
+        <div class="terminal-dot dot-red"></div>
+        <div class="terminal-dot dot-yellow"></div>
+        <div class="terminal-dot dot-green"></div>
+        <span class="terminal-title">OUTPUT</span>
+      </div>
+      <div class="terminal-body">
+<span class="out">Regressor model performance:</span><br>
+<span class="out">Mean absolute error(MAE) = 1.78</span><br>
+<span class="out">Mean squared error(MSE) = 3.89</span><br>
+<span class="out">Median absolute error = 2.01</span><br>
+<span class="out">Explain variance score = -0.09</span><br>
+<span class="out">R2 score = -0.09</span>
+      </div>
+    </div>
+
+    <!-- Full Python example combined -->
+    <h3>Full Combined Python Script</h3>
+    <div class="terminal">
+      <div class="terminal-bar">
+        <div class="terminal-dot dot-red"></div>
+        <div class="terminal-dot dot-yellow"></div>
+        <div class="terminal-dot dot-green"></div>
+        <span class="terminal-title">linear_regressor_full.py</span>
+      </div>
+      <div class="terminal-body">
+<span class="prompt">$</span> python linear_regressor_full.py<br><br>
+<span class="comment"># ── Imports ──────────────────────────────</span><br>
+<span class="kw">import</span> numpy <span class="kw">as</span> np<br>
+<span class="kw">from</span> sklearn <span class="kw">import</span> linear_model<br>
+<span class="kw">import</span> sklearn.metrics <span class="kw">as</span> sm<br>
+<span class="kw">import</span> matplotlib.pyplot <span class="kw">as</span> plt<br><br>
+
+<span class="comment"># ── Load Data ────────────────────────────</span><br>
+input_data = np.loadtxt(<span class="string">r'C:\linear.txt'</span>, delimiter=<span class="string">','</span>)<br>
+X, y = input_data[:, :-<span class="num">1</span>], input_data[:, -<span class="num">1</span>]<br><br>
+
+<span class="comment"># ── Train/Test Split ─────────────────────</span><br>
+n = <span class="kw">int</span>(<span class="num">0.6</span> * <span class="kw">len</span>(X))<br>
+X_train, y_train = X[:n], y[:n]<br>
+X_test,  y_test  = X[n:], y[n:]<br><br>
+
+<span class="comment"># ── Train Model ──────────────────────────</span><br>
+reg = linear_model.LinearRegression()<br>
+reg.fit(X_train, y_train)<br>
+y_pred = reg.predict(X_test)<br><br>
+
+<span class="comment"># ── Visualise ────────────────────────────</span><br>
+plt.scatter(X_test, y_test, color=<span class="string">'red'</span>)<br>
+plt.plot(X_test, y_pred, color=<span class="string">'black'</span>, linewidth=<span class="num">2</span>)<br>
+plt.show()<br><br>
+
+<span class="comment"># ── Metrics ──────────────────────────────</span><br>
+<span class="kw">print</span>(<span class="string">f"MAE  : {sm.mean_absolute_error(y_test, y_pred):.2f}"</span>)<br>
+<span class="kw">print</span>(<span class="string">f"MSE  : {sm.mean_squared_error(y_test, y_pred):.2f}"</span>)<br>
+<span class="kw">print</span>(<span class="string">f"RMSE : {np.sqrt(sm.mean_squared_error(y_test, y_pred)):.2f}"</span>)<br>
+<span class="kw">print</span>(<span class="string">f"R²   : {sm.r2_score(y_test, y_pred):.2f}"</span>)<br><br>
+
+<span class="out">MAE  : 1.78</span><br>
+<span class="out">MSE  : 3.89</span><br>
+<span class="out">RMSE : 1.97</span><br>
+<span class="out">R²   : -0.09</span>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         EXTRA · APPLICATIONS OF LINEAR REGRESSION
+    ═══════════════════════════════════════════ -->
+    <h2>Applications of Linear Regression</h2>
+    <p>Linear Regression is one of the most practical algorithms in Machine Learning — it appears everywhere from everyday predictions to advanced AI systems.</p>
+
+    <h3>1. Real-World Applications (Basic to Industry)</h3>
+
+    <h4>💰 Finance</h4>
+    <ul>
+      <li>Predict stock price trends</li>
+      <li>Estimate house prices</li>
+      <li>Risk modeling</li>
+    </ul>
+    <div class="callout">
+      <strong>Example:</strong> Predict house price based on area, location, and rooms.
+    </div>
+
+    <h4>🌾 Agriculture (useful for your project)</h4>
+    <ul>
+      <li>Crop yield prediction</li>
+      <li>Fertilizer recommendation</li>
+      <li>Weather-based production</li>
+    </ul>
+    <div class="callout">
+      <strong>Example:</strong> \( \text{Yield} = w_1\cdot(\text{rainfall}) + w_2\cdot(\text{soil quality}) + w_3\cdot(\text{temperature}) \)
+    </div>
+
+    <h4>🏢 Business Analytics</h4>
+    <ul>
+      <li>Sales forecasting</li>
+      <li>Customer demand prediction</li>
+      <li>Marketing ROI estimation</li>
+    </ul>
+
+    <h4>🚗 Engineering</h4>
+    <ul>
+      <li>Predict fuel consumption</li>
+      <li>Performance optimization</li>
+    </ul>
+
+    <h3>2. Linear Regression in Deep Learning</h3>
+    <p>Linear Regression is the foundation of neural networks.</p>
+    <div class="callout">
+      <strong>Inside a neuron:</strong> Output = \(w_1x_1 + w_2x_2 + \dots + b\) <br>
+      <strong>Key insight:</strong> Linear regression = a single neuron. Deep learning = many stacked regressions + activation functions.
+    </div>
+    <ul>
+      <li>Used in the final layer for regression tasks</li>
+      <li>MSE loss is a standard training objective for regression</li>
+      <li>Weight updates rely on gradient descent (built on the same linear structure)</li>
+    </ul>
+
+    <h3>3. Linear Regression in NLP</h3>
+    <p>Even in NLP, regression can be used when the output is a score or continuous value.</p>
+    <ul>
+      <li><strong>Sentiment score prediction:</strong> predict a score between -1 and 1</li>
+      <li><strong>Text complexity:</strong> predict readability level</li>
+      <li><strong>Embedding projection:</strong> map text embeddings to numeric outputs</li>
+    </ul>
+    <div class="callout">
+      <strong>Example:</strong> Sentiment Score = \(w_1\cdot(\text{word}_1) + w_2\cdot(\text{word}_2) + \dots\)
+    </div>
+
+    <h3>4. Linear Regression in Generative AI (Gen AI)</h3>
+    <p>Generative AI is mostly deep learning, but regression-style layers are still used for scoring and calibration tasks.</p>
+    <ul>
+      <li><strong>Output calibration:</strong> fine-tune scores/probabilities</li>
+      <li><strong>Reward models (RLHF):</strong> predict a “goodness score” for an output</li>
+      <li><strong>Embedding mapping:</strong> transform vectors between spaces</li>
+    </ul>
+
+    <div class="callout">
+      <strong>Study tip:</strong> If you understand Linear Regression deeply (loss, gradients, and weights), you’ll find it much easier to learn Neural Networks, Deep Learning, and even RLHF concepts later.
+    </div>
+
+  </article>
+
+  <div id="related-topics" class="related-topics"></div>
+</div>
+
+<div id="footer-placeholder"></div>
+
+<!-- Shared scripts (unchanged) -->
+<script src="/shared/js/navbar.js"></script>
+<script src="/shared/js/breadcrumb.js"></script>
+<script src="/shared/js/related.js"></script>
+<script src="/shared/js/background-animation.js"></script>
+
+<!-- ═══════════════════════════════════════════════════════
+     ALL CHART DRAWING LOGIC
+═══════════════════════════════════════════════════════ -->
+<script>
+/* Utility helpers */
+const ACCENT  = '#00ffe7';
+const ACCENT2 = '#a78bfa';
+const ORANGE  = '#fb923c';
+const PINK    = '#f472b6';
+const YELLOW  = '#facc15';
+const GREEN   = '#4ade80';
+const RED     = '#f87171';
+const GRID    = 'rgba(255,255,255,0.07)';
+const TEXT    = 'rgba(255,255,255,0.55)';
+
+function getCtx(id) {
+  const c = document.getElementById(id);
+  if (!c) return null;
+  c.width  = c.offsetWidth  || c.parentElement.offsetWidth || 600;
+  c.height = parseInt(c.getAttribute('height')) || 200;
+  return c.getContext('2d');
+}
+
+function drawGrid(ctx, w, h, steps = 5) {
+  ctx.strokeStyle = GRID;
+  ctx.lineWidth   = 0.5;
+  for (let i = 1; i < steps; i++) {
+    const x = w * i / steps, y = h * i / steps;
+    ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke();
+  }
+}
+
+function axisLabel(ctx, text, x, y, color = TEXT) {
+  ctx.fillStyle = color;
+  ctx.font = '10px monospace';
+  ctx.fillText(text, x, y);
+}
+
+/* ── 1. Flow Canvas ─────────────────────── */
+(function() {
+  const ctx = getCtx('flowCanvas');
+  if (!ctx) return;
+  const W = ctx.canvas.width, H = ctx.canvas.height;
+  ctx.clearRect(0, 0, W, H);
+
+  const items = ['Input Data','Features (X)','Model Training','Regression Line','Predict Y'];
+  const colors = [ACCENT2, ACCENT, ORANGE, YELLOW, GREEN];
+  const bw = W / items.length - 10;
+  const bh = H - 20;
+  const y  = 10;
+
+  items.forEach((label, i) => {
+    const x = i * (bw + 10) + 5;
+    ctx.fillStyle = colors[i] + '22';
+    ctx.strokeStyle = colors[i];
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.roundRect(x, y, bw, bh, 6);
+    ctx.fill(); ctx.stroke();
+
+    ctx.fillStyle = colors[i];
+    ctx.font = 'bold 10px monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText(label, x + bw / 2, y + bh / 2 + 4);
+
+    if (i < items.length - 1) {
+      ctx.strokeStyle = colors[i];
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(x + bw, y + bh / 2);
+      ctx.lineTo(x + bw + 10, y + bh / 2);
+      ctx.stroke();
+    }
+  });
+  ctx.textAlign = 'left';
+})();
+
+/* ── 2. Fit Canvas (overfit/underfit/good) ── */
+(function() {
+  const ctx = getCtx('fitCanvas');
+  if (!ctx) return;
+  const W = ctx.canvas.width, H = ctx.canvas.height;
+  ctx.clearRect(0, 0, W, H);
+
+  const panW = Math.floor(W / 3) - 6;
+  const labels = ['Underfitting', 'Good Fit', 'Overfitting'];
+  const colors = [ORANGE, GREEN, RED];
+  const margin = 30;
+
+  labels.forEach((label, idx) => {
+    const ox = idx * (panW + 6) + 3;
+    const oy = 24, ph = H - 32;
+    ctx.fillStyle = 'rgba(0,0,0,0.25)';
+    ctx.strokeStyle = colors[idx] + '55';
+    ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.roundRect(ox, oy, panW, ph, 5); ctx.fill(); ctx.stroke();
+
+    ctx.fillStyle = colors[idx];
+    ctx.font = 'bold 10px monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText(label, ox + panW / 2, 16);
+
+    // Generate some fake scatter data
+    const pts = [];
+    for (let i = 0; i < 14; i++) {
+      const xr = i / 13;
+      const yr = 0.7 * xr + (Math.sin(i * 2.3) * 0.1) + 0.15;
+      pts.push({ xr, yr });
+    }
+
+    const px = xr => ox + margin + xr * (panW - margin * 2);
+    const py = yr => oy + ph - margin - yr * (ph - margin * 2);
+
+    // dots
+    pts.forEach(p => {
+      ctx.beginPath();
+      ctx.arc(px(p.xr), py(p.yr), 2.5, 0, Math.PI * 2);
+      ctx.fillStyle = '#fff6';
+      ctx.fill();
+    });
+
+    // line
+    ctx.strokeStyle = colors[idx];
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+
+    if (idx === 0) {
+      // underfit: flat line
+      ctx.moveTo(px(0), py(0.45));
+      ctx.lineTo(px(1), py(0.45));
+    } else if (idx === 1) {
+      // good fit: straight diagonal
+      ctx.moveTo(px(0), py(0.15));
+      ctx.lineTo(px(1), py(0.85));
+    } else {
+      // overfit: wavy through all points
+      ctx.moveTo(px(pts[0].xr), py(pts[0].yr));
+      for (let i = 1; i < pts.length; i++) {
+        const p = pts[i], pp = pts[i-1];
+        const cp1x = px(pp.xr + (p.xr - pp.xr) * 0.5);
+        const cp1y = py(pp.yr - 0.1 * (i % 2 === 0 ? 1 : -1));
+        ctx.quadraticCurveTo(cp1x, cp1y, px(p.xr), py(p.yr));
+      }
+    }
+    ctx.stroke();
+  });
+  ctx.textAlign = 'left';
+})();
+
+/* ── 3. Linear Canvas ─────────────────────── */
+(function() {
+  const ctx = getCtx('linearCanvas');
+  if (!ctx) return;
+  const W = ctx.canvas.width, H = ctx.canvas.height;
+  ctx.clearRect(0, 0, W, H);
+  drawGrid(ctx, W, H);
+
+  const mx = 50, my = 20, pw = W - mx - 20, ph = H - my - 35;
+  const m = 0.7, b = 10;
+
+  const data = [];
+  for (let i = 0; i < 30; i++) {
+    const x = 5 + Math.random() * 90;
+    data.push({ x, y: m * x + b + (Math.random() - 0.5) * 20 });
+  }
+
+  const toX = v => mx + (v / 100) * pw;
+  const toY = v => my + ph - (v / 100) * ph;
+
+  // Axes
+  ctx.strokeStyle = '#ffffff33';
+  ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(mx, my); ctx.lineTo(mx, my + ph); ctx.lineTo(mx + pw, my + ph); ctx.stroke();
+  axisLabel(ctx, 'X (Independent)', mx + pw / 2 - 30, my + ph + 22, TEXT);
+  ctx.save(); ctx.translate(14, my + ph / 2); ctx.rotate(-Math.PI / 2);
+  axisLabel(ctx, 'Y (Dependent)', -30, 0, TEXT); ctx.restore();
+
+  // Scatter
+  data.forEach(p => {
+    ctx.beginPath(); ctx.arc(toX(p.x), toY(p.y), 3, 0, Math.PI * 2);
+    ctx.fillStyle = ACCENT2 + 'cc'; ctx.fill();
+  });
+
+  // Regression line
+  ctx.strokeStyle = ACCENT; ctx.lineWidth = 2.5;
+  ctx.beginPath();
+  ctx.moveTo(toX(0), toY(b));
+  ctx.lineTo(toX(100), toY(m * 100 + b));
+  ctx.stroke();
+
+  // Residual lines
+  data.slice(0, 8).forEach(p => {
+    const yhat = m * p.x + b;
+    ctx.strokeStyle = RED + '66'; ctx.lineWidth = 1;
+    ctx.setLineDash([3, 3]);
+    ctx.beginPath(); ctx.moveTo(toX(p.x), toY(p.y)); ctx.lineTo(toX(p.x), toY(yhat)); ctx.stroke();
+    ctx.setLineDash([]);
+  });
+
+  // Legend
+  ctx.fillStyle = ACCENT; ctx.font = '10px monospace';
+  ctx.fillText('── Regression Line', toX(55), toY(80));
+  ctx.fillStyle = ACCENT2; ctx.fillText('● Data Points', toX(55), toY(70));
+  ctx.fillStyle = RED;     ctx.fillText('-- Residuals', toX(55), toY(60));
+})();
+
+/* ── 4. Sigmoid Canvas ─────────────────────── */
+(function() {
+  const ctx = getCtx('sigmoidCanvas');
+  if (!ctx) return;
+  const W = ctx.canvas.width, H = ctx.canvas.height;
+  ctx.clearRect(0, 0, W, H);
+  drawGrid(ctx, W, H);
+
+  const mx = 50, my = 20, pw = W - mx - 20, ph = H - my - 35;
+  const sig = x => 1 / (1 + Math.exp(-x));
+  const toX  = v => mx + ((v + 6) / 12) * pw;
+  const toY  = v => my + ph - v * ph;
+
+  ctx.strokeStyle = '#ffffff33'; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(mx, my); ctx.lineTo(mx, my + ph); ctx.lineTo(mx + pw, my + ph); ctx.stroke();
+
+  // 0.5 threshold line
+  ctx.strokeStyle = ORANGE + '55'; ctx.lineWidth = 1; ctx.setLineDash([5,5]);
+  ctx.beginPath(); ctx.moveTo(mx, my + ph * 0.5); ctx.lineTo(mx + pw, my + ph * 0.5); ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.fillStyle = ORANGE; ctx.font = '10px monospace';
+  ctx.fillText('threshold = 0.5', mx + pw - 100, my + ph * 0.5 - 5);
+
+  // Sigmoid curve
+  ctx.strokeStyle = ACCENT2; ctx.lineWidth = 3;
+  ctx.beginPath();
+  for (let x = -6; x <= 6; x += 0.05) {
+    const sx = toX(x), sy = my + ph - sig(x) * ph;
+    x === -6 ? ctx.moveTo(sx, sy) : ctx.lineTo(sx, sy);
+  }
+  ctx.stroke();
+
+  axisLabel(ctx, 'z (log-odds)', mx + pw / 2 - 30, my + ph + 22, TEXT);
+  ctx.save(); ctx.translate(14, my + ph / 2); ctx.rotate(-Math.PI / 2);
+  axisLabel(ctx, 'σ(z) Probability', -40, 0, TEXT); ctx.restore();
+
+  ctx.fillStyle = ACCENT2; ctx.font = '11px monospace';
+  ctx.fillText('σ(z) = 1 / (1 + e⁻ᶻ)', mx + 10, my + 18);
+})();
+
+/* ── 5. Polynomial Canvas ─────────────────── */
+(function() {
+  const ctx = getCtx('polyCanvas');
+  if (!ctx) return;
+  const W = ctx.canvas.width, H = ctx.canvas.height;
+  ctx.clearRect(0, 0, W, H);
+  drawGrid(ctx, W, H);
+
+  const mx = 50, my = 20, pw = W - mx - 20, ph = H - my - 35;
+
+  const data = [];
+  for (let i = 0; i < 25; i++) {
+    const x = (i / 24) * 2 - 1;
+    data.push({ x, y: 0.5 * x * x + 0.3 * x + (Math.random() - 0.5) * 0.15 });
+  }
+
+  const toX = v => mx + ((v + 1) / 2) * pw;
+  const toY = v => my + ph - ((v + 0.2) / 0.9) * ph;
+
+  ctx.strokeStyle = '#ffffff33'; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(mx, my); ctx.lineTo(mx, my + ph); ctx.lineTo(mx + pw, my + ph); ctx.stroke();
+
+  // Dots
+  data.forEach(p => {
+    ctx.beginPath(); ctx.arc(toX(p.x), toY(p.y), 3, 0, Math.PI * 2);
+    ctx.fillStyle = '#fff5'; ctx.fill();
+  });
+
+  // Linear (degree 1)
+  ctx.strokeStyle = ORANGE; ctx.lineWidth = 2; ctx.setLineDash([4,3]);
+  ctx.beginPath();
+  ctx.moveTo(toX(-1), toY(-0.5 * 0.6 + 0.3 * -1));
+  ctx.lineTo(toX(1), toY(0.5 * 0.6 + 0.3 * 1));
+  ctx.stroke(); ctx.setLineDash([]);
+
+  // Polynomial (degree 3 approx)
+  ctx.strokeStyle = ACCENT; ctx.lineWidth = 2.5;
+  ctx.beginPath();
+  for (let x = -1; x <= 1; x += 0.02) {
+    const y = 0.5 * x * x + 0.3 * x;
+    x === -1 ? ctx.moveTo(toX(x), toY(y)) : ctx.lineTo(toX(x), toY(y));
+  }
+  ctx.stroke();
+
+  ctx.fillStyle = ACCENT; ctx.font = '10px monospace';
+  ctx.fillText('── Polynomial (deg 2)', mx + 10, my + 15);
+  ctx.fillStyle = ORANGE;
+  ctx.fillText('--- Linear (deg 1)', mx + 10, my + 30);
+})();
+
+/* ── 6. Regularisation Canvas ─────────────── */
+(function() {
+  const ctx = getCtx('regularCanvas');
+  if (!ctx) return;
+  const W = ctx.canvas.width, H = ctx.canvas.height;
+  ctx.clearRect(0, 0, W, H);
+
+  const labels = ['w₁','w₂','w₃','w₄','w₅','w₆','w₇','w₈'];
+  const original = [0.9, -0.7, 0.5, 0.85, -0.6, 0.4, -0.3, 0.7];
+  const lasso    = [0.4, 0, 0.1, 0.5, 0, 0, 0, 0.3];
+  const ridge    = [0.55, -0.35, 0.28, 0.6, -0.3, 0.2, -0.12, 0.45];
+
+  const mx = 50, my = 20, pw = W - mx - 20, ph = H - my - 35;
+  const bw = pw / labels.length - 4;
+  const zero = my + ph * 0.5;
+  const scale = ph * 0.45;
+
+  drawGrid(ctx, W, H);
+  ctx.strokeStyle = '#ffffff33'; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(mx, my); ctx.lineTo(mx, my + ph); ctx.lineTo(mx + pw, my + ph); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(mx, zero); ctx.lineTo(mx + pw, zero); ctx.stroke();
+
+  const sets = [
+    { data: original, color: ACCENT2 + '88', label: 'Original' },
+    { data: lasso,    color: ORANGE,          label: 'Lasso (L1)' },
+    { data: ridge,    color: ACCENT,          label: 'Ridge (L2)' }
+  ];
+
+  sets.forEach((s, si) => {
+    s.data.forEach((v, i) => {
+      const x = mx + i * (bw + 4) + si * (bw / 3) + 2;
+      const barH = Math.abs(v) * scale;
+      const y = v >= 0 ? zero - barH : zero;
+      ctx.fillStyle = s.color;
+      ctx.fillRect(x, y, bw / 3 - 1, barH);
+    });
+  });
+
+  // Legend
+  let lx = mx + pw - 180;
+  sets.forEach((s, i) => {
+    ctx.fillStyle = s.color; ctx.fillRect(lx, my + 8 + i * 16, 12, 10);
+    ctx.fillStyle = TEXT; ctx.font = '10px monospace';
+    ctx.fillText(s.label, lx + 16, my + 17 + i * 16);
+  });
+
+  labels.forEach((l, i) => {
+    ctx.fillStyle = TEXT; ctx.font = '10px monospace'; ctx.textAlign = 'center';
+    ctx.fillText(l, mx + i * (bw + 4) + bw / 2 + 2, my + ph + 18);
+  });
+  ctx.textAlign = 'left';
+})();
+
+/* ── 7. Tree Canvas ─────────────────────────── */
+(function() {
+  const ctx = getCtx('treeCanvas');
+  if (!ctx) return;
+  const W = ctx.canvas.width, H = ctx.canvas.height;
+  ctx.clearRect(0, 0, W, H);
+  drawGrid(ctx, W, H);
+
+  const mx = 50, my = 20, pw = W - mx - 20, ph = H - my - 35;
+
+  const data = [];
+  for (let i = 0; i < 40; i++) {
+    const x = i / 39;
+    data.push({ x, y: Math.sin(x * Math.PI * 2) * 0.4 + 0.5 + (Math.random() - 0.5) * 0.08 });
+  }
+
+  const toX = v => mx + v * pw;
+  const toY = v => my + ph - v * ph;
+
+  ctx.strokeStyle = '#ffffff33'; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(mx, my); ctx.lineTo(mx, my + ph); ctx.lineTo(mx + pw, my + ph); ctx.stroke();
+
+  data.forEach(p => {
+    ctx.beginPath(); ctx.arc(toX(p.x), toY(p.y), 2, 0, Math.PI * 2);
+    ctx.fillStyle = '#fff4'; ctx.fill();
+  });
+
+  // Decision tree: step function
+  ctx.strokeStyle = ORANGE; ctx.lineWidth = 2.5;
+  ctx.beginPath();
+  const steps = 6;
+  for (let s = 0; s < steps; s++) {
+    const xs = s / steps, xe = (s + 1) / steps;
+    const ys = data.filter(p => p.x >= xs && p.x < xe).reduce((a, b) => a + b.y, 0) /
+               (data.filter(p => p.x >= xs && p.x < xe).length || 1);
+    s === 0 ? ctx.moveTo(toX(xs), toY(ys)) : ctx.lineTo(toX(xs), toY(ys));
+    ctx.lineTo(toX(xe), toY(ys));
+  }
+  ctx.stroke();
+
+  // Random forest: smooth average
+  ctx.strokeStyle = ACCENT; ctx.lineWidth = 2.5;
+  ctx.beginPath();
+  for (let i = 0; i < data.length; i++) {
+    const smooth = data.slice(Math.max(0, i - 3), i + 4).reduce((a, b) => a + b.y, 0) / Math.min(data.length, 7);
+    i === 0 ? ctx.moveTo(toX(data[i].x), toY(smooth)) : ctx.lineTo(toX(data[i].x), toY(smooth));
+  }
+  ctx.stroke();
+
+  ctx.fillStyle = ACCENT; ctx.font = '10px monospace'; ctx.fillText('── Random Forest', mx + 10, my + 15);
+  ctx.fillStyle = ORANGE; ctx.fillText('── Decision Tree', mx + 10, my + 30);
+})();
+
+/* ── 8. Metrics Canvas (bar chart) ─────────── */
+(function() {
+  const ctx = getCtx('metricsCanvas');
+  if (!ctx) return;
+  const W = ctx.canvas.width, H = ctx.canvas.height;
+  ctx.clearRect(0, 0, W, H);
+
+  const metrics = ['MAE', 'MSE', 'Median\nAbs Err', 'RMSE', 'R² ×10'];
+  const values  = [1.78, 3.89, 2.01, 1.97, -0.09 * 10];
+  const colors  = [ACCENT, ACCENT2, ORANGE, GREEN, RED];
+  const mx = 50, my = 20, pw = W - mx - 20, ph = H - my - 40;
+  const maxV = 5;
+  const bw   = pw / metrics.length - 8;
+
+  drawGrid(ctx, W, H);
+  ctx.strokeStyle = '#ffffff33'; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(mx, my); ctx.lineTo(mx, my + ph); ctx.lineTo(mx + pw, my + ph); ctx.stroke();
+
+  metrics.forEach((label, i) => {
+    const x = mx + i * (pw / metrics.length) + 4;
+    const barH = (Math.abs(values[i]) / maxV) * ph;
+    const y = values[i] >= 0 ? my + ph - barH : my + ph;
+    ctx.fillStyle = colors[i] + 'bb';
+    ctx.fillRect(x, y, bw, barH);
+    ctx.strokeStyle = colors[i]; ctx.lineWidth = 1.5;
+    ctx.strokeRect(x, y, bw, barH);
+
+    ctx.fillStyle = '#fff'; ctx.font = 'bold 10px monospace'; ctx.textAlign = 'center';
+    ctx.fillText(values[i].toFixed(2), x + bw / 2, values[i] >= 0 ? y - 5 : y + barH + 14);
+
+    ctx.fillStyle = TEXT; ctx.font = '9px monospace';
+    label.split('\n').forEach((line, li) => ctx.fillText(line, x + bw / 2, my + ph + 14 + li * 12));
+  });
+  ctx.textAlign = 'left';
+})();
+
+/* ── 9. Output Canvas (scatter + line) ─────── */
+(function() {
+  const ctx = getCtx('outputCanvas');
+  if (!ctx) return;
+  const W = ctx.canvas.width, H = ctx.canvas.height;
+  ctx.clearRect(0, 0, W, H);
+  drawGrid(ctx, W, H);
+
+  const mx = 50, my = 20, pw = W - mx - 20, ph = H - my - 35;
+  const m = 0.65, b = 8;
+  const data = [];
+  for (let i = 0; i < 20; i++) {
+    const x = 5 + i * 4.5;
+    data.push({ x, y: m * x + b + (Math.random() - 0.5) * 22 });
+  }
+
+  const toX = v => mx + (v / 100) * pw;
+  const toY = v => my + ph - (v / 100) * ph;
+
+  ctx.strokeStyle = '#ffffff33'; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(mx, my); ctx.lineTo(mx, my + ph); ctx.lineTo(mx + pw, my + ph); ctx.stroke();
+
+  data.forEach(p => {
+    ctx.beginPath(); ctx.arc(toX(p.x), toY(p.y), 4, 0, Math.PI * 2);
+    ctx.fillStyle = RED + 'cc'; ctx.fill();
+  });
+
+  ctx.strokeStyle = '#000'; ctx.lineWidth = 3;
+  ctx.beginPath();
+  ctx.moveTo(toX(0), toY(b));
+  ctx.lineTo(toX(100), toY(m * 100 + b));
+  ctx.stroke();
+
+  ctx.strokeStyle = ACCENT; ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  ctx.moveTo(toX(0), toY(b));
+  ctx.lineTo(toX(100), toY(m * 100 + b));
+  ctx.stroke();
+
+  ctx.fillStyle = RED;   ctx.font = '10px monospace'; ctx.fillText('● Test Data Points', toX(5), toY(80));
+  ctx.fillStyle = ACCENT; ctx.fillText('── Regression Line', toX(5), toY(70));
+  axisLabel(ctx, 'X', mx + pw - 10, my + ph + 22, TEXT);
+  axisLabel(ctx, 'Y', mx - 20, my + 10, TEXT);
+})();
+</script>
 </body>
 </html>
